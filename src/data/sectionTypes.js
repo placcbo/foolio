@@ -1,0 +1,112 @@
+export const SECTION_TYPES = [
+  {
+    type: 'summary',
+    label: 'Summary',
+    icon: '\u{1F4C4}',
+    description: 'Add a short summary of your key strengths, experience, and career goals.',
+    kind: 'text',
+  },
+  {
+    type: 'education',
+    label: 'Education',
+    icon: '\u{1F393}',
+    description: 'Add your degrees and schools. Include your focus, honors, or exchange terms.',
+    kind: 'entries',
+  },
+  {
+    type: 'experience',
+    label: 'Professional Experience',
+    icon: '\u{1F4BC}',
+    description: 'Add your professional roles and employer history including internships.',
+    kind: 'entries',
+  },
+  {
+    type: 'skills',
+    label: 'Skills',
+    icon: '\u{1F9E0}',
+    description: 'Add your hard and soft skills that help you stand out from the crowd today.',
+    kind: 'tags',
+  },
+  {
+    type: 'languages',
+    label: 'Languages',
+    icon: '\u{1F310}',
+    description: 'Add your languages and proficiency level to show your communication range.',
+    kind: 'tags',
+  },
+  {
+    type: 'certificates',
+    label: 'Certificates',
+    icon: '\u{1F4DC}',
+    description: 'Add your industry certificates or licences. Include issuer and date earned.',
+    kind: 'entries',
+  },
+  {
+    type: 'interests',
+    label: 'Interests',
+    icon: '\u{1F3AF}',
+    description: 'Add relevant personal interests that support your career story and cultural fit.',
+    kind: 'tags',
+  },
+  {
+    type: 'projects',
+    label: 'Projects',
+    icon: '\u{1F4C1}',
+    description: 'Add key projects you participated in and highlight your challenges, role, and impact.',
+    kind: 'entries',
+  },
+  {
+    type: 'courses',
+    label: 'Courses',
+    icon: '\u{1F4DA}',
+    description: 'Add online or in-person courses and trainings you joined and completed.',
+    kind: 'entries',
+  },
+  {
+    type: 'awards',
+    label: 'Awards',
+    icon: '\u{1F3C6}',
+    description: 'Add your awards and recognitions from industry, competitions, or academia.',
+    kind: 'entries',
+  },
+  {
+    type: 'organisations',
+    label: 'Organisations',
+    icon: '\u{1F3DB}\u{FE0F}',
+    description: 'Add your memberships or volunteering with organisations including your role.',
+    kind: 'entries',
+  },
+  {
+    type: 'publications',
+    label: 'Publications',
+    icon: '\u{1F4D6}',
+    description: 'Add publications, articles, or books you wrote or contributed to.',
+    kind: 'entries',
+  },
+  {
+    type: 'references',
+    label: 'References',
+    icon: '\u{2702}\u{FE0F}',
+    description: 'Add your references from managers or coworkers, including their contact details.',
+    kind: 'entries',
+  },
+  {
+    type: 'declaration',
+    label: 'Declaration',
+    icon: '\u{1F58A}\u{FE0F}',
+    description: 'Add your declaration by creating or uploading your personal signature.',
+    kind: 'text',
+  },
+  {
+    type: 'custom',
+    label: 'Custom',
+    icon: '\u{1F9E9}',
+    description: 'Add a custom section for anything else, or combine sections cleanly.',
+    kind: 'text',
+    repeatable: true,
+  },
+];
+
+export function getSectionMeta(type) {
+  return SECTION_TYPES.find((s) => s.type === type);
+}
