@@ -146,6 +146,48 @@ export function IconDownload(props) {
   );
 }
 
+export function IconArrowLeft(props) {
+  return (
+    <Svg {...props}>
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12,19 5,12 12,5" />
+    </Svg>
+  );
+}
+
+export function IconEdit(props) {
+  return (
+    <Svg {...props}>
+      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+    </Svg>
+  );
+}
+
+export function IconBulb(props) {
+  return (
+    <Svg {...props}>
+      <path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.55 1 1.36 1 2.19V15h6v-.31c0-.83.4-1.64 1-2.19A6 6 0 0 0 12 2z" />
+    </Svg>
+  );
+}
+
+export function IconCheck(props) {
+  return (
+    <Svg {...props}>
+      <polyline points="20,6 9,17 4,12" />
+    </Svg>
+  );
+}
+
+export function IconChevronsUpDown(props) {
+  return (
+    <Svg {...props}>
+      <polyline points="7,9 12,4 17,9" />
+      <polyline points="7,15 12,20 17,15" />
+    </Svg>
+  );
+}
+
 export function IconUpload(props) {
   return (
     <Svg {...props}>

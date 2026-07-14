@@ -14,6 +14,7 @@
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 15px/145% var(--sans);
@@ -46,6 +47,20 @@ p {
   margin: 0;
 }
 
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
 button {
   font-family: inherit;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-h);
+  transition: background-color 9999s ease-in-out 0s;
 }

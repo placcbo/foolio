@@ -1,7 +1,9 @@
 import { getSectionMeta } from '../data/sectionTypes';
 
 export const initialResumeState = {
-  basics: { name: '', email: '', phone: '', address: '', photo: null },
+  templateId: 'onecolumn',
+  accentColor: '#17151c',
+  basics: { name: '', title: '', email: '', phone: '', address: '', photo: null },
   sections: [],
 };
 
@@ -31,6 +33,9 @@ function makeSection(type) {
 
 export function resumeReducer(state, action) {
   switch (action.type) {
+    case 'SET_TEMPLATE':
+      return { ...state, templateId: action.templateId, accentColor: action.accentColor };
+
     case 'UPDATE_BASICS':
       return { ...state, basics: { ...state.basics, [action.field]: action.value } };
 

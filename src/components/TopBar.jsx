@@ -6,6 +6,7 @@ import {
   IconChevronDown,
   IconDownload,
   IconMoreVertical,
+  IconArrowLeft,
 } from './icons';
 
 const TABS = [
@@ -15,9 +16,15 @@ const TABS = [
   { id: 'ai', label: 'AI Tools', icon: IconSparkle },
 ];
 
-export default function TopBar({ activeTab, onTabChange }) {
+export default function TopBar({ activeTab, onTabChange, onBack }) {
   return (
     <header className="topbar">
+      {onBack && (
+        <button type="button" className="back-btn" onClick={onBack}>
+          <IconArrowLeft size={16} />
+          Templates
+        </button>
+      )}
       <nav className="tabs">
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
