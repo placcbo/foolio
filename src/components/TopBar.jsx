@@ -4,10 +4,11 @@ import {
   IconWand,
   IconSparkle,
   IconChevronDown,
-  IconDownload,
   IconMoreVertical,
   IconArrowLeft,
+  IconCheck,
 } from './icons';
+import DownloadMenu from './DownloadMenu';
 
 const TABS = [
   { id: 'overview', label: 'Overview', icon: IconGrid },
@@ -16,7 +17,7 @@ const TABS = [
   { id: 'ai', label: 'AI Tools', icon: IconSparkle },
 ];
 
-export default function TopBar({ activeTab, onTabChange, onBack }) {
+export default function TopBar({ activeTab, onTabChange, onBack, resume, savedAt, paperRef }) {
   return (
     <header className="topbar">
       {onBack && (
@@ -40,14 +41,17 @@ export default function TopBar({ activeTab, onTabChange, onBack }) {
       </nav>
 
       <div className="topbar-right">
+        {savedAt && (
+          <span className="save-indicator">
+            <IconCheck size={13} />
+            Saved
+          </span>
+        )}
         <button type="button" className="resume-select">
           Resume 1
           <IconChevronDown size={14} />
         </button>
-        <button type="button" className="btn-download">
-          Download
-          <IconDownload size={16} />
-        </button>
+        <DownloadMenu resume={resume} paperRef={paperRef} />
         <button type="button" className="icon-btn" aria-label="More options">
           <IconMoreVertical size={18} />
         </button>

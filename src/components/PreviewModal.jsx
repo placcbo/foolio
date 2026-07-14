@@ -1,0 +1,59 @@
+import { useEffect, useRef } from 'react';
+import { IconX } from './icons';
+import DownloadMenu from './DownloadMenu';
+
+const TEMPLATE_FEATURES = [
+  'A4 / US-Letter size',
+  'Editable text',
+  'Fully customizable',
+  'Print ready format',
+];
+
+export default function PreviewModal({ mode, Template, resume, name, onClose, onUseTemplate }) {
+  const modalPaperRef = useRef(null);
+
+  useEffect(() => {
+    document.body.classList.add('has-open-preview-modal');
+    return () => document.body.classList.remove('has-open-preview-modal');
+  }, []);
+
+  return (
+    <div className="preview-modal-overlay" onClick={onClose}>
+      <div
+        className={`preview-modal ${mode === 'template' ? 'preview-modal-template' : 'preview-modal-live'}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
+          <IconX size={20} />
+        </button>
+
+        <div className="preview-modal-paper-col" ref={modalPaperRef}>
+          <Template resume={resume} accentColor={resume.accentColor} />
+        </div>
+
+        {mode === 'template' ? (
+          <div className="preview-modal-info">
+            <h2>{name}</h2>
+            <div className="preview-modal-rule" />
+            <p>
+              Each template has been crafted with care to make designing your resume an absolute
+              breeze for you.
+            </p>
+            <ul className="preview-modal-features">
+              {TEMPLATE_FEATURES.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+            <button type="button" className="preview-modal-use-btn" onClick={onUseTemplate}>
+              Use this template
+            </button>
+          </div>
+        ) : (
+          <div className="preview-modal-live-actions">
+            <DownloadMenu resume={resume} paperRef={modalPaperRef} className="preview-modal-use-btn" />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

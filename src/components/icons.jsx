@@ -16,29 +16,44 @@ function Svg({ children, size = 18, ...rest }) {
   );
 }
 
+function SvgSolid({ children, size = 18, ...rest }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="currentColor" {...rest}>
+      {children}
+    </svg>
+  );
+}
+
 export function IconMail(props) {
   return (
-    <Svg {...props}>
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <polyline points="3,6 12,13 21,6" />
-    </Svg>
+    <SvgSolid {...props}>
+      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+    </SvgSolid>
   );
 }
 
 export function IconPhone(props) {
   return (
-    <Svg {...props}>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
-    </Svg>
+    <SvgSolid {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+      />
+    </SvgSolid>
   );
 }
 
 export function IconPin(props) {
   return (
-    <Svg {...props}>
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </Svg>
+    <SvgSolid {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+      />
+    </SvgSolid>
   );
 }
 

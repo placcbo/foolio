@@ -1,0 +1,160 @@
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
+
+// PDF: renders the actual .paper DOM node to a canvas, then drops that
+// image into a PDF and saves it immediately — no print dialog, no extra
+// click. Handles multi-page overflow if the resume runs long.
+export async function downloadResumeAsPdf(paperEl, filename = 'resume') {
+  if (!paperEl) throw new Error('Could not find the resume to export.');
+
+  const canvas = await html2canvas(paperEl, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+  });
+
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jsPDF({ unit: 'pt', format: 'letter' });
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const imgWidth = pageWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  let heightLeft = imgHeight;
+  let position = 0;
+
+  pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  while (heightLeft > 0) {
+    position -= pageHeight;
+    pdf.addPage();
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+  }
+
+  pdf.save(`${filename}.pdf`);
+}
+
+function buildContactLine(basics) {
+  const parts = [basics.email, basics.phone, basics.address];
+  (basics.visibleExtra || []).forEach((key) => {
+    if (basics[key]) parts.push(basics[key]);
+  });
+  return parts.filter(Boolean).join('   |   ');
+}
+
+function entryParagraphs(entry) {
+  const paras = [];
+  const dateRange = [entry.start, entry.end].filter(Boolean).join(' – ');
+
+  paras.push(
+    new Paragraph({
+      spacing: { before: 160, after: 20 },
+      children: [
+        new TextRun({ text: entry.heading || '', bold: true }),
+        dateRange ? new TextRun({ text: `    ${dateRange}`, italics: true }) : new TextRun(''),
+      ],
+    })
+  );
+
+  const subLine = [entry.subheading, entry.location].filter(Boolean).join(' · ');
+  if (subLine) {
+    paras.push(
+      new Paragraph({
+        spacing: { after: 60 },
+        children: [new TextRun({ text: subLine, italics: true })],
+      })
+    );
+  }
+
+  (entry.description || '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .forEach((line) => {
+      paras.push(
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [new TextRun({ text: `•  ${line}` })],
+        })
+      );
+    });
+
+  return paras;
+}
+
+function sectionParagraphs(section) {
+  const paras = [
+    new Paragraph({
+      heading: HeadingLevel.HEADING_2,
+      spacing: { before: 280, after: 100 },
+      children: [new TextRun({ text: (section.title || '').toUpperCase(), bold: true })],
+    }),
+  ];
+
+  if (section.kind === 'text') {
+    if (section.content) {
+      paras.push(new Paragraph({ children: [new TextRun(section.content)] }));
+    }
+  } else if (section.kind === 'tags') {
+    if (section.tags?.length) {
+      paras.push(new Paragraph({ children: [new TextRun(section.tags.join('   •   '))] }));
+    }
+  } else if (section.kind === 'entries') {
+    (section.entries || [])
+      .filter((e) => e.heading || e.subheading || e.description || e.location || e.start || e.end)
+      .forEach((entry) => paras.push(...entryParagraphs(entry)));
+  }
+
+  return paras;
+}
+
+export async function exportResumeAsDocx(resume) {
+  const { basics, sections } = resume;
+
+  const children = [
+    new Paragraph({
+      heading: HeadingLevel.HEADING_1,
+      spacing: { after: 40 },
+      children: [new TextRun({ text: basics.name || 'Your name', bold: true })],
+    }),
+  ];
+
+  if (basics.title) {
+    children.push(
+      new Paragraph({
+        spacing: { after: 120 },
+        children: [new TextRun({ text: basics.title, italics: true })],
+      })
+    );
+  }
+
+  const contactLine = buildContactLine(basics);
+  if (contactLine) {
+    children.push(
+      new Paragraph({
+        spacing: { after: 200 },
+        children: [new TextRun({ text: contactLine, size: 20, color: '555555' })],
+      })
+    );
+  }
+
+  sections.forEach((section) => children.push(...sectionParagraphs(section)));
+
+  const doc = new Document({
+    sections: [{ properties: {}, children }],
+  });
+
+  const blob = await Packer.toBlob(doc);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${(basics.name || 'resume').trim().replace(/\s+/g, '_')}.docx`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
