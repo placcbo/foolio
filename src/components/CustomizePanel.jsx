@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { IconChevronDown, IconChevronUp, IconRefresh, IconUndo, IconRedo } from './icons';
+import { IconChevronDown, IconChevronUp, IconRefresh, IconUndo, IconRedo, IconMinus, IconPlus } from './icons';
 import { DATE_FORMATS } from '../utils/dateFormat';
 import { TEMPLATES } from '../data/templates';
 import { TEMPLATE_COMPONENTS } from './templates';
-import { DEFAULT_LAYOUT } from '../state/resumeReducer';
+import { DEFAULT_LAYOUT, DEFAULT_FONT_SIZE } from '../state/resumeReducer';
 import ApplyTemplateModal from './ApplyTemplateModal';
 
 const NAV_ITEMS = [
@@ -298,6 +298,77 @@ function LayoutSection({ resume, dispatch }) {
   );
 }
 
+const FONT_SIZE_FIELDS = [
+  { field: 'base', label: 'Base Font Size', min: 8, max: 16, step: 0.5, format: (v) => `${v}pt` },
+  { field: 'fullName', label: 'Full Name', min: 0, max: 20, step: 1, format: (v) => `+${v}pt` },
+  { field: 'sectionHeadings', label: 'Section Headings', min: 0, max: 10, step: 1, format: (v) => `+${v}pt` },
+  { field: 'entryHeader', label: 'Entry Header', min: 0, max: 6, step: 1, format: (v) => `+${v}pt` },
+];
+
+function FontSizeSlider({ label, value, min, max, step, format, onChange }) {
+  const clamp = (v) => Math.min(max, Math.max(min, +v.toFixed(2)));
+
+  return (
+    <div className="fontsize-field">
+      <div className="fontsize-field-top">
+        <span className="fontsize-field-label">{label}</span>
+        <span className="fontsize-field-value">{format(value)}</span>
+      </div>
+      <div className="fontsize-slider-row">
+        <div className="fontsize-slider-track">
+          <div className="fontsize-slider-ticks" aria-hidden="true">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <span className="fontsize-tick" key={i} />
+            ))}
+          </div>
+          <input
+            type="range"
+            className="fontsize-range"
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={(e) => onChange(clamp(Number(e.target.value)))}
+            aria-label={label}
+          />
+        </div>
+        <button type="button" onClick={() => onChange(clamp(value - step))} aria-label={`Decrease ${label}`}>
+          <IconMinus size={14} />
+        </button>
+        <button type="button" onClick={() => onChange(clamp(value + step))} aria-label={`Increase ${label}`}>
+          <IconPlus size={14} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function FontSizeSection({ resume, dispatch }) {
+  const fontSize = resume.settings.fontSize ?? DEFAULT_FONT_SIZE;
+
+  function updateFontSize(field, value) {
+    dispatch({ type: 'UPDATE_FONT_SIZE', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Font Size</h2>
+      {FONT_SIZE_FIELDS.map((f) => (
+        <FontSizeSlider
+          key={f.field}
+          label={f.label}
+          value={fontSize[f.field]}
+          min={f.min}
+          max={f.max}
+          step={f.step}
+          format={f.format}
+          onChange={(v) => updateFontSize(f.field, v)}
+        />
+      ))}
+    </div>
+  );
+}
+
 function CustomizeUndoPill() {
   return (
     <div className="customize-undo-pill-wrap">
@@ -349,6 +420,8 @@ export default function CustomizePanel({ resume, dispatch }) {
           <DesignTemplates resume={resume} dispatch={dispatch} />
         ) : activeSection === 'layout' ? (
           <LayoutSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'fontSize' ? (
+          <FontSizeSection resume={resume} dispatch={dispatch} />
         ) : (
           <ComingSoonCard label={activeLabel} />
         )}

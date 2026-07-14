@@ -75,6 +75,14 @@ export function IconPlus(props) {
   );
 }
 
+export function IconMinus(props) {
+  return (
+    <Svg {...props}>
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </Svg>
+  );
+}
+
 export function IconX(props) {
   return (
     <Svg {...props}>

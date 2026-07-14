@@ -1,5 +1,19 @@
 import { IconMail, IconPhone, IconPin, IconLink, IconGlobe, IconFlag, IconCalendar, IconFileText, IconCheck, IconUser } from '../icons';
 import { formatEntryDateRange } from '../../utils/dateFormat';
+import { DEFAULT_FONT_SIZE } from '../../state/resumeReducer';
+
+// Full Name / Section Headings / Entry Header are each an offset added on
+// top of the base size (see Font Size panel); everything else scales with
+// the base via em units in App.css.
+export function getFontSizes(settings) {
+  const fs = settings?.fontSize ?? DEFAULT_FONT_SIZE;
+  return {
+    basePt: fs.base,
+    nameFontSize: `${fs.base + fs.fullName}pt`,
+    headingFontSize: `${fs.base + fs.sectionHeadings}pt`,
+    entryHeaderFontSize: `${fs.base + fs.entryHeader}pt`,
+  };
+}
 
 const EXTRA_FIELD_ICONS = {
   linkedin: IconLink,
@@ -68,7 +82,7 @@ export function splitSections(sections) {
 // Identity block (photo/name/title/contact) shared by every template's
 // two-column and mix layouts, so Layout > Header Position has one thing to
 // move around regardless of which design is active.
-export function HeaderBlock({ basics, contactItems, colored, accentColor, avatarShape = 'circle' }) {
+export function HeaderBlock({ basics, contactItems, colored, accentColor, avatarShape = 'circle', nameFontSize }) {
   return (
     <div
       className={`tpl-header-block${colored ? ' tpl-header-block-colored' : ''}`}
@@ -78,7 +92,7 @@ export function HeaderBlock({ basics, contactItems, colored, accentColor, avatar
         <Avatar photo={basics.photo} name={basics.name} shape={avatarShape} size={72} />
       )}
       <div>
-        <h1>{basics.name || 'Your name'}</h1>
+        <h1 style={{ fontSize: nameFontSize }}>{basics.name || 'Your name'}</h1>
         {basics.title && <p className="tpl-header-block-title">{basics.title}</p>}
         {contactItems.length > 0 && (
           <div className="tpl-header-block-contact">
@@ -106,6 +120,8 @@ export function SplitLayout({
   dateFormat,
   asideColored,
   accentColor,
+  headingFontSize,
+  entryHeaderFontSize,
 }) {
   const leftWidth = columnWidth;
   const rightWidth = 100 - columnWidth;
@@ -121,8 +137,8 @@ export function SplitLayout({
           {headerPosition === 'left' && headerContent}
           {sidebarSections.map((s) => (
             <div className="tpl-sidebar-block" key={s.id}>
-              <h4 className="tpl-heading">{s.title}</h4>
-              <SectionBody section={s} dateFormat={dateFormat} />
+              <h4 className="tpl-heading" style={{ fontSize: headingFontSize }}>{s.title}</h4>
+              <SectionBody section={s} dateFormat={dateFormat} entryHeaderFontSize={entryHeaderFontSize} />
             </div>
           ))}
         </aside>
@@ -130,8 +146,8 @@ export function SplitLayout({
           {headerPosition === 'right' && headerContent}
           {mainSections.map((s) => (
             <section className="tpl-main-section" key={s.id}>
-              <h4 className="tpl-heading">{s.title}</h4>
-              <SectionBody section={s} dateFormat={dateFormat} />
+              <h4 className="tpl-heading" style={{ fontSize: headingFontSize }}>{s.title}</h4>
+              <SectionBody section={s} dateFormat={dateFormat} entryHeaderFontSize={entryHeaderFontSize} />
             </section>
           ))}
         </div>
@@ -140,7 +156,7 @@ export function SplitLayout({
   );
 }
 
-export function SectionBody({ section, dateFormat }) {
+export function SectionBody({ section, dateFormat, entryHeaderFontSize }) {
   if (section.kind === 'text') {
     return section.content ? <p className="tpl-text">{section.content}</p> : null;
   }
@@ -167,7 +183,7 @@ export function SectionBody({ section, dateFormat }) {
           const { start, end } = formatEntryDateRange(entry, dateFormat);
           return (
           <div className="tpl-entry" key={entry.id}>
-            <div className="tpl-entry-heading">
+            <div className="tpl-entry-heading" style={{ fontSize: entryHeaderFontSize }}>
               {[entry.heading, entry.subheading, entry.location].filter(Boolean).join(', ')}
             </div>
             {(start || end) && (

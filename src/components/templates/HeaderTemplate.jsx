@@ -1,11 +1,11 @@
-import { getContactItems, splitSections, HeaderBlock, SplitLayout } from './shared';
+import { getContactItems, splitSections, HeaderBlock, SplitLayout, getFontSizes } from './shared';
 import { formatEntryDateRange } from '../../utils/dateFormat';
 import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
-function PreviewText({ section }) {
+function PreviewText({ section, headingFontSize }) {
   return (
     <section className="preview-section">
-      <h3>{section.title}</h3>
+      <h3 style={{ fontSize: headingFontSize }}>{section.title}</h3>
       <p className={section.content ? '' : 'placeholder'}>
         {section.content || `Add your ${section.title.toLowerCase()}...`}
       </p>
@@ -13,10 +13,10 @@ function PreviewText({ section }) {
   );
 }
 
-function PreviewTags({ section }) {
+function PreviewTags({ section, headingFontSize }) {
   return (
     <section className="preview-section">
-      <h3>{section.title}</h3>
+      <h3 style={{ fontSize: headingFontSize }}>{section.title}</h3>
       {section.tags.length > 0 ? (
         <p className="preview-tags">{section.tags.join('  •  ')}</p>
       ) : (
@@ -26,14 +26,14 @@ function PreviewTags({ section }) {
   );
 }
 
-function PreviewEntries({ section, dateFormat }) {
+function PreviewEntries({ section, dateFormat, headingFontSize, entryHeaderFontSize }) {
   const entries = section.entries.filter(
     (e) => e.heading || e.subheading || e.description || e.location || e.start || e.end
   );
 
   return (
     <section className="preview-section">
-      <h3>{section.title}</h3>
+      <h3 style={{ fontSize: headingFontSize }}>{section.title}</h3>
       {entries.length === 0 && (
         <p className="placeholder">Add your {section.title.toLowerCase()}...</p>
       )}
@@ -42,7 +42,9 @@ function PreviewEntries({ section, dateFormat }) {
         return (
         <div className="preview-entry" key={entry.id}>
           <div className="preview-entry-top">
-            <span className="preview-entry-heading">{entry.heading}</span>
+            <span className="preview-entry-heading" style={{ fontSize: entryHeaderFontSize }}>
+              {entry.heading}
+            </span>
             <span className="preview-entry-date">
               {[start, end].filter(Boolean).join(' – ')}
             </span>
@@ -72,12 +74,13 @@ export default function OneColumnTemplate({ resume }) {
   const { basics, sections, settings, accentColor } = resume;
   const dateFormat = settings?.dateFormat;
   const layout = settings?.layout ?? DEFAULT_LAYOUT;
+  const { basePt, nameFontSize, headingFontSize, entryHeaderFontSize } = getFontSizes(settings);
   const contactItems = getContactItems(basics);
 
   if (layout.columns !== 'one') {
     const { sidebarSections, mainSections } = splitSections(sections);
     return (
-      <div className="paper onecolumn-paper">
+      <div className="paper onecolumn-paper" style={{ fontSize: `${basePt}pt` }}>
         <SplitLayout
           headerContent={
             <HeaderBlock
@@ -85,6 +88,7 @@ export default function OneColumnTemplate({ resume }) {
               contactItems={contactItems}
               colored={layout.columns === 'mix'}
               accentColor={accentColor}
+              nameFontSize={nameFontSize}
             />
           }
           headerPosition={layout.headerPosition}
@@ -92,6 +96,8 @@ export default function OneColumnTemplate({ resume }) {
           sidebarSections={sidebarSections}
           mainSections={mainSections}
           dateFormat={dateFormat}
+          headingFontSize={headingFontSize}
+          entryHeaderFontSize={entryHeaderFontSize}
         />
         {sections.length === 0 && (
           <p className="preview-empty">
@@ -103,12 +109,12 @@ export default function OneColumnTemplate({ resume }) {
   }
 
   return (
-    <div className="paper onecolumn-paper">
+    <div className="paper onecolumn-paper" style={{ fontSize: `${basePt}pt` }}>
       <header className="preview-header">
         {basics.photo && (
           <img className="preview-photo" src={basics.photo} alt={basics.name || 'Profile'} />
         )}
-        <h1>{basics.name || 'Your name'}</h1>
+        <h1 style={{ fontSize: nameFontSize }}>{basics.name || 'Your name'}</h1>
         {basics.title && <p className="preview-title">{basics.title}</p>}
         {contactItems.length > 0 && (
           <div className="preview-contact">
@@ -122,10 +128,20 @@ export default function OneColumnTemplate({ resume }) {
       </header>
 
       {sections.map((section) => {
-        if (section.kind === 'text') return <PreviewText key={section.id} section={section} />;
-        if (section.kind === 'tags') return <PreviewTags key={section.id} section={section} />;
+        if (section.kind === 'text')
+          return <PreviewText key={section.id} section={section} headingFontSize={headingFontSize} />;
+        if (section.kind === 'tags')
+          return <PreviewTags key={section.id} section={section} headingFontSize={headingFontSize} />;
         if (section.kind === 'entries')
-          return <PreviewEntries key={section.id} section={section} dateFormat={dateFormat} />;
+          return (
+            <PreviewEntries
+              key={section.id}
+              section={section}
+              dateFormat={dateFormat}
+              headingFontSize={headingFontSize}
+              entryHeaderFontSize={entryHeaderFontSize}
+            />
+          );
         return null;
       })}
 

@@ -25,6 +25,7 @@ function loadInitialResume(fallback) {
         ...fallback.settings,
         ...parsed.settings,
         layout: { ...fallback.settings.layout, ...parsed.settings?.layout },
+        fontSize: { ...fallback.settings.fontSize, ...parsed.settings?.fontSize },
       },
     };
   } catch (e) {

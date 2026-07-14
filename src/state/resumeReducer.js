@@ -13,12 +13,22 @@ export const TEMPLATE_DEFAULT_LAYOUT = {
   banner: { columns: 'mix', headerPosition: 'top', columnWidth: 32 },
 };
 
+// Offsets are added on top of the base size, matching how the Font Size
+// panel displays them ("+11pt" etc).
+export const DEFAULT_FONT_SIZE = { base: 10.5, fullName: 11, sectionHeadings: 3, entryHeader: 0 };
+
 export const initialResumeState = {
   templateId: 'onecolumn',
   accentColor: '#17151c',
   basics: { name: '', title: '', email: '', phone: '', address: '', photo: null, visibleExtra: [] },
   sections: [],
-  settings: { language: 'English (UK)', dateFormat: 'DD/MM/YYYY', pageFormat: 'A4', layout: DEFAULT_LAYOUT },
+  settings: {
+    language: 'English (UK)',
+    dateFormat: 'DD/MM/YYYY',
+    pageFormat: 'A4',
+    layout: DEFAULT_LAYOUT,
+    fontSize: DEFAULT_FONT_SIZE,
+  },
 };
 
 let uid = 0;
@@ -68,6 +78,15 @@ export function resumeReducer(state, action) {
       return {
         ...state,
         settings: { ...state.settings, layout: { ...state.settings.layout, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_FONT_SIZE':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          fontSize: { ...state.settings.fontSize, [action.field]: action.value },
+        },
       };
 
     case 'MOVE_SECTION': {
