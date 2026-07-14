@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { IconX } from './icons';
-import DownloadMenu from './DownloadMenu';
 
 const TEMPLATE_FEATURES = [
   'A4 / US-Letter size',
@@ -17,21 +16,31 @@ export default function PreviewModal({ mode, Template, resume, name, onClose, on
     return () => document.body.classList.remove('has-open-preview-modal');
   }, []);
 
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
     <div className="preview-modal-overlay" onClick={onClose}>
       <div
         className={`preview-modal ${mode === 'template' ? 'preview-modal-template' : 'preview-modal-live'}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
-          <IconX size={20} />
-        </button>
+        {mode === 'template' && (
+          <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
+            <IconX size={20} />
+          </button>
+        )}
 
         <div className="preview-modal-paper-col" ref={modalPaperRef}>
           <Template resume={resume} accentColor={resume.accentColor} />
         </div>
 
-        {mode === 'template' ? (
+        {mode === 'template' && (
           <div className="preview-modal-info">
             <h2>{name}</h2>
             <div className="preview-modal-rule" />
@@ -47,10 +56,6 @@ export default function PreviewModal({ mode, Template, resume, name, onClose, on
             <button type="button" className="preview-modal-use-btn" onClick={onUseTemplate}>
               Use this template
             </button>
-          </div>
-        ) : (
-          <div className="preview-modal-live-actions">
-            <DownloadMenu resume={resume} paperRef={modalPaperRef} className="preview-modal-use-btn" />
           </div>
         )}
       </div>
