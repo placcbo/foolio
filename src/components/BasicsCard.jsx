@@ -8,14 +8,25 @@ import {
   IconBulb,
   IconCheck,
   IconChevronsUpDown,
+  IconPlus,
+  IconX,
 } from './icons';
+import { EXTRA_FIELDS, EXTRA_FIELDS_MORE, getExtraFieldMeta } from '../data/extraFields';
 
-export default function BasicsCard({ basics, dispatch }) {
+export default function BasicsCard({ basics, dispatch, expanded, onExpandedChange }) {
   const fileInputRef = useRef(null);
-  const [expanded, setExpanded] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   function updateField(field, value) {
     dispatch({ type: 'UPDATE_BASICS', field, value });
+  }
+
+  function addExtraField(field) {
+    dispatch({ type: 'ADD_EXTRA_FIELD', field });
+  }
+
+  function removeExtraField(field) {
+    dispatch({ type: 'REMOVE_EXTRA_FIELD', field });
   }
 
   function handlePhotoChange(e) {
@@ -121,8 +132,70 @@ export default function BasicsCard({ basics, dispatch }) {
           </div>
         </div>
 
+        {basics.visibleExtra.map((key) => {
+          const meta = getExtraFieldMeta(key);
+          if (!meta) return null;
+          return (
+            <div className="basics-edit-field" key={key}>
+              <label>{meta.label}</label>
+              <div className="basics-edit-input-row">
+                <input
+                  type="text"
+                  placeholder={meta.placeholder}
+                  value={basics[key] || ''}
+                  onChange={(e) => updateField(key, e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="reorder-handle extra-field-remove"
+                  onClick={() => removeExtraField(key)}
+                  aria-label={`Remove ${meta.label}`}
+                >
+                  <IconX size={16} />
+                </button>
+              </div>
+            </div>
+          );
+        })}
+
+        <div className="add-details-block">
+          <label className="add-details-label">Add details</label>
+          <div className="extra-field-pills">
+            {EXTRA_FIELDS.filter((f) => !basics.visibleExtra.includes(f.key)).map((f) => (
+              <button
+                type="button"
+                key={f.key}
+                className="extra-field-pill"
+                onClick={() => addExtraField(f.key)}
+              >
+                <IconPlus size={14} />
+                {f.label}
+              </button>
+            ))}
+            {showMore &&
+              EXTRA_FIELDS_MORE.filter((f) => !basics.visibleExtra.includes(f.key)).map((f) => (
+                <button
+                  type="button"
+                  key={f.key}
+                  className="extra-field-pill"
+                  onClick={() => addExtraField(f.key)}
+                >
+                  <IconPlus size={14} />
+                  {f.label}
+                </button>
+              ))}
+            <button
+              type="button"
+              className="show-more-btn"
+              onClick={() => setShowMore((v) => !v)}
+            >
+              {showMore ? 'Show Less' : 'Show More'}
+            </button>
+          </div>
+        </div>
+
         <div className="basics-edit-footer">
-          <button type="button" className="done-btn" onClick={() => setExpanded(false)}>
+          <button type="button" className="done-btn" onClick={() => onExpandedChange(false)}>
             <IconCheck size={18} />
             Done
           </button>
@@ -138,7 +211,7 @@ export default function BasicsCard({ basics, dispatch }) {
       <button
         type="button"
         className="basics-edit-trigger"
-        onClick={() => setExpanded(true)}
+        onClick={() => onExpandedChange(true)}
         aria-label="Edit personal details"
       >
         <IconEdit size={15} />

@@ -1,9 +1,9 @@
-import { IconMail, IconPhone, IconPin } from '../icons';
-import { Avatar, SectionBody, splitSections } from './shared';
+import { Avatar, SectionBody, splitSections, getContactItems } from './shared';
 
 export default function BannerTemplate({ resume, accentColor }) {
   const { basics, sections } = resume;
   const { sidebarSections, mainSections } = splitSections(sections);
+  const contactItems = getContactItems(basics);
 
   return (
     <div className="paper banner-paper">
@@ -19,21 +19,11 @@ export default function BannerTemplate({ resume, accentColor }) {
         <aside className="tpl-banner-sidebar">
           <div className="tpl-sidebar-block">
             <h4 className="tpl-heading">Details</h4>
-            {basics.email && (
-              <p className="tpl-contact-line">
-                <IconMail size={12} /> {basics.email}
+            {contactItems.map(({ key, Icon, text }) => (
+              <p className="tpl-contact-line" key={key}>
+                <Icon size={12} /> {text}
               </p>
-            )}
-            {basics.address && (
-              <p className="tpl-contact-line">
-                <IconPin size={12} /> {basics.address}
-              </p>
-            )}
-            {basics.phone && (
-              <p className="tpl-contact-line">
-                <IconPhone size={12} /> {basics.phone}
-              </p>
-            )}
+            ))}
           </div>
           {sidebarSections.map((s) => (
             <div className="tpl-sidebar-block" key={s.id}>

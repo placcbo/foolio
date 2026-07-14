@@ -6,15 +6,22 @@ import { IconPlus } from './icons';
 
 export default function ContentPanel({ resume, dispatch }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [basicsExpanded, setBasicsExpanded] = useState(true);
 
   function handleAdd(sectionType) {
     dispatch({ type: 'ADD_SECTION', sectionType });
     setModalOpen(false);
+    setBasicsExpanded(false);
   }
 
   return (
     <div className="content-panel">
-      <BasicsCard basics={resume.basics} dispatch={dispatch} />
+      <BasicsCard
+        basics={resume.basics}
+        dispatch={dispatch}
+        expanded={basicsExpanded}
+        onExpandedChange={setBasicsExpanded}
+      />
 
       {resume.sections.map((section) => (
         <SectionCard key={section.id} section={section} dispatch={dispatch} />

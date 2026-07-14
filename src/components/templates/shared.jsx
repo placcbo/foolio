@@ -1,3 +1,34 @@
+import { IconMail, IconPhone, IconPin, IconLink, IconGlobe, IconFlag, IconCalendar, IconFileText, IconCheck, IconUser } from '../icons';
+
+const EXTRA_FIELD_ICONS = {
+  linkedin: IconLink,
+  website: IconGlobe,
+  nationality: IconFlag,
+  dob: IconCalendar,
+  visa: IconFileText,
+  passportId: IconFileText,
+  availability: IconCheck,
+  drivingLicense: IconFileText,
+  maritalStatus: IconUser,
+  gender: IconUser,
+  militaryStatus: IconFileText,
+};
+
+// Single source of truth for "what shows in the contact line" across every template.
+// Anything added via the Add Details chips shows up here automatically.
+export function getContactItems(basics) {
+  const items = [];
+  if (basics.email) items.push({ key: 'email', Icon: IconMail, text: basics.email });
+  if (basics.phone) items.push({ key: 'phone', Icon: IconPhone, text: basics.phone });
+  if (basics.address) items.push({ key: 'address', Icon: IconPin, text: basics.address });
+  (basics.visibleExtra || []).forEach((key) => {
+    const value = basics[key];
+    if (!value) return;
+    items.push({ key, Icon: EXTRA_FIELD_ICONS[key] || IconFileText, text: value });
+  });
+  return items;
+}
+
 export function Avatar({ photo, name, shape = 'circle', size = 96, className = '' }) {
   const radius = shape === 'circle' ? '50%' : shape === 'rounded' ? '14px' : '0';
   if (photo) {

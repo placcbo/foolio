@@ -51,8 +51,27 @@
 }
 
 .template-grid-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
   color: var(--text);
   font-size: 14px;
+}
+
+.skip-templates-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1.5px solid var(--text-h);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.skip-templates-btn:hover {
+  background: var(--page-bg);
 }
 
 .template-card {
@@ -418,7 +437,7 @@
 .basics-edit-card {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 24px;
   padding: 40px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
@@ -432,7 +451,7 @@
 
 .basics-edit-header h3 {
   margin: 0;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--text-h);
 }
@@ -466,7 +485,7 @@
 
 .basics-edit-photo-col {
   flex-shrink: 0;
-  width: 120px;
+  width: 175px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -529,8 +548,69 @@
 }
 
 .basics-photo-lg {
-  width: 120px;
-  height: 120px;
+  width: 175px;
+  height: 175px;
+}
+
+/* ---------- add details tray ---------- */
+
+.add-details-block {
+  margin-top: 4px;
+}
+
+.add-details-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.extra-field-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.extra-field-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--page-bg);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.extra-field-pill:hover {
+  border-color: var(--accent-border);
+  color: var(--accent-2);
+}
+
+.show-more-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--text-h);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.show-more-btn:hover {
+  background: var(--page-bg);
+}
+
+.extra-field-remove {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .basics-edit-footer {
@@ -548,12 +628,12 @@
   padding: 16px;
   border-radius: 999px;
   border: none;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background: linear-gradient(90deg, #ee0f86, #fa5c6b);
   color: #fff;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.28);
+  box-shadow: 0 8px 20px rgba(238, 15, 134, 0.28);
 }
 
 /* section cards */

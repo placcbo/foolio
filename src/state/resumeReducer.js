@@ -3,7 +3,7 @@ import { getSectionMeta } from '../data/sectionTypes';
 export const initialResumeState = {
   templateId: 'onecolumn',
   accentColor: '#17151c',
-  basics: { name: '', title: '', email: '', phone: '', address: '', photo: null },
+  basics: { name: '', title: '', email: '', phone: '', address: '', photo: null, visibleExtra: [] },
   sections: [],
 };
 
@@ -38,6 +38,26 @@ export function resumeReducer(state, action) {
 
     case 'UPDATE_BASICS':
       return { ...state, basics: { ...state.basics, [action.field]: action.value } };
+
+    case 'ADD_EXTRA_FIELD':
+      if (state.basics.visibleExtra.includes(action.field)) return state;
+      return {
+        ...state,
+        basics: {
+          ...state.basics,
+          visibleExtra: [...state.basics.visibleExtra, action.field],
+          [action.field]: state.basics[action.field] ?? '',
+        },
+      };
+
+    case 'REMOVE_EXTRA_FIELD':
+      return {
+        ...state,
+        basics: {
+          ...state.basics,
+          visibleExtra: state.basics.visibleExtra.filter((f) => f !== action.field),
+        },
+      };
 
     case 'SET_PHOTO':
       return { ...state, basics: { ...state.basics, photo: action.dataUrl } };

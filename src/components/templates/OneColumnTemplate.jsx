@@ -1,4 +1,4 @@
-import { IconMail, IconPhone, IconPin } from '../icons';
+import { getContactItems } from './shared';
 
 function PreviewText({ section }) {
   return (
@@ -65,7 +65,7 @@ function PreviewEntries({ section }) {
 
 export default function OneColumnTemplate({ resume }) {
   const { basics, sections } = resume;
-  const hasContact = basics.email || basics.phone || basics.address;
+  const contactItems = getContactItems(basics);
 
   return (
     <div className="paper onecolumn-paper">
@@ -75,23 +75,13 @@ export default function OneColumnTemplate({ resume }) {
         )}
         <h1>{basics.name || 'Your name'}</h1>
         {basics.title && <p className="preview-title">{basics.title}</p>}
-        {hasContact && (
+        {contactItems.length > 0 && (
           <div className="preview-contact">
-            {basics.email && (
-              <span>
-                <IconMail size={13} /> {basics.email}
+            {contactItems.map(({ key, Icon, text }) => (
+              <span key={key}>
+                <Icon size={13} /> {text}
               </span>
-            )}
-            {basics.phone && (
-              <span>
-                <IconPhone size={13} /> {basics.phone}
-              </span>
-            )}
-            {basics.address && (
-              <span>
-                <IconPin size={13} /> {basics.address}
-              </span>
-            )}
+            ))}
           </div>
         )}
       </header>

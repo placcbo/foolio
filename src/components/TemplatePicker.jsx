@@ -35,7 +35,16 @@ export default function TemplatePicker({ onSelectTemplate }) {
           ))}
         </div>
       ) : (
-        <p className="template-grid-empty">No templates in this category yet.</p>
+        <div className="template-grid-empty">
+          <p>No templates in this category yet.</p>
+          <button
+            type="button"
+            className="skip-templates-btn"
+            onClick={() => onSelectTemplate('onecolumn', '#17151c')}
+          >
+            Skip for now — go to editor
+          </button>
+        </div>
       )}
     </div>
   );
