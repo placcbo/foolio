@@ -1,53 +1,63 @@
-import { Avatar, SectionBody, splitSections, getContactItems } from './shared';
+import { SectionBody, splitSections, getContactItems, HeaderBlock, SplitLayout } from './shared';
+import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
 export default function SidebarTemplate({ resume, accentColor }) {
-  const { basics, sections } = resume;
+  const { basics, sections, settings } = resume;
+  const dateFormat = settings?.dateFormat;
+  const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const { sidebarSections, mainSections } = splitSections(sections);
   const contactItems = getContactItems(basics);
 
-  return (
-    <div className="paper sidebar-paper">
-      <aside className="tpl-sidebar" style={{ background: accentColor }}>
-        <Avatar
-          photo={basics.photo}
-          name={basics.name}
-          shape="square"
-          size={140}
-          className="tpl-sidebar-photo"
+  if (layout.columns === 'one') {
+    return (
+      <div className="paper">
+        <HeaderBlock
+          basics={basics}
+          contactItems={contactItems}
+          colored={false}
+          accentColor={accentColor}
+          avatarShape="square"
         />
-        <div className="tpl-sidebar-block">
-          <h4 className="tpl-heading">Details</h4>
-          {contactItems.map(({ key, Icon, text }) => (
-            <p className="tpl-contact-line" key={key}>
-              <Icon size={12} /> {text}
-            </p>
-          ))}
-        </div>
-        {sidebarSections.map((s) => (
-          <div className="tpl-sidebar-block" key={s.id}>
-            <h4 className="tpl-heading">{s.title}</h4>
-            <SectionBody section={s} />
-          </div>
-        ))}
-      </aside>
-
-      <main className="tpl-main">
-        <h1>{basics.name || 'Your name'}</h1>
-        {basics.title && <p className="tpl-role">{basics.title}</p>}
-
-        {mainSections.map((s) => (
+        {[...sidebarSections, ...mainSections].map((s) => (
           <section className="tpl-main-section" key={s.id}>
             <h4 className="tpl-heading">{s.title}</h4>
-            <SectionBody section={s} />
+            <SectionBody section={s} dateFormat={dateFormat} />
           </section>
         ))}
-
         {sections.length === 0 && (
           <p className="preview-empty">
             Click <strong>Add Content</strong> on the left to start building your resume.
           </p>
         )}
-      </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="paper sidebar-paper tpl-split-paper">
+      <SplitLayout
+        headerContent={
+          <HeaderBlock
+            basics={basics}
+            contactItems={contactItems}
+            colored={layout.columns === 'mix'}
+            accentColor={accentColor}
+            avatarShape="square"
+          />
+        }
+        headerPosition={layout.headerPosition}
+        columnWidth={layout.columnWidth}
+        sidebarSections={sidebarSections}
+        mainSections={mainSections}
+        dateFormat={dateFormat}
+        asideColored
+        accentColor={accentColor}
+      />
+      {sections.length === 0 && (
+        <p className="preview-empty">
+          Click <strong>Add Content</strong> on the left to start building your resume.
+        </p>
+      )}
     </div>
   );
 }

@@ -1,4 +1,6 @@
-import { getContactItems } from './shared';
+import { getContactItems, splitSections, HeaderBlock, SplitLayout } from './shared';
+import { formatEntryDateRange } from '../../utils/dateFormat';
+import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
 function CleanHeading({ children }) {
   return <h4 className="clean-heading">{children}</h4>;
@@ -32,7 +34,7 @@ function CleanTagsGrid({ section }) {
   );
 }
 
-function CleanEntries({ section }) {
+function CleanEntries({ section, dateFormat }) {
   const entries = section.entries.filter(
     (e) => e.heading || e.subheading || e.description || e.location || e.start || e.end
   );
@@ -43,12 +45,14 @@ function CleanEntries({ section }) {
       {entries.length === 0 && (
         <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>
       )}
-      {entries.map((entry) => (
+      {entries.map((entry) => {
+        const { start, end } = formatEntryDateRange(entry, dateFormat);
+        return (
         <div className="clean-entry" key={entry.id}>
           <div className="clean-entry-top">
             <span className="clean-entry-heading">{entry.heading}</span>
             <span className="clean-entry-date">
-              {[entry.start, entry.end].filter(Boolean).join(' – ')}
+              {[start, end].filter(Boolean).join(' – ')}
             </span>
           </div>
           <div className="clean-entry-sub">
@@ -67,14 +71,45 @@ function CleanEntries({ section }) {
             </ul>
           )}
         </div>
-      ))}
+        );
+      })}
     </section>
   );
 }
 
 export default function CleanTemplate({ resume }) {
-  const { basics, sections } = resume;
+  const { basics, sections, settings, accentColor } = resume;
+  const dateFormat = settings?.dateFormat;
+  const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const contactItems = getContactItems(basics);
+
+  if (layout.columns !== 'one') {
+    const { sidebarSections, mainSections } = splitSections(sections);
+    return (
+      <div className="paper clean-paper">
+        <SplitLayout
+          headerContent={
+            <HeaderBlock
+              basics={basics}
+              contactItems={contactItems}
+              colored={layout.columns === 'mix'}
+              accentColor={accentColor}
+            />
+          }
+          headerPosition={layout.headerPosition}
+          columnWidth={layout.columnWidth}
+          sidebarSections={sidebarSections}
+          mainSections={mainSections}
+          dateFormat={dateFormat}
+        />
+        {sections.length === 0 && (
+          <p className="preview-empty">
+            Click <strong>Add Content</strong> on the left to start building your resume.
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="paper clean-paper">
@@ -95,7 +130,8 @@ export default function CleanTemplate({ resume }) {
       {sections.map((section) => {
         if (section.kind === 'text') return <CleanText key={section.id} section={section} />;
         if (section.kind === 'tags') return <CleanTagsGrid key={section.id} section={section} />;
-        if (section.kind === 'entries') return <CleanEntries key={section.id} section={section} />;
+        if (section.kind === 'entries')
+          return <CleanEntries key={section.id} section={section} dateFormat={dateFormat} />;
         return null;
       })}
 

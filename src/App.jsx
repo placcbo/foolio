@@ -1,6 +1,7 @@
 import { useReducer, useState, useEffect, useRef } from 'react';
 import TopBar from './components/TopBar';
 import ContentPanel from './components/ContentPanel';
+import CustomizePanel from './components/CustomizePanel';
 import ResumePreview from './components/ResumePreview';
 import TemplatePicker from './components/TemplatePicker';
 import { resumeReducer, initialResumeState } from './state/resumeReducer';
@@ -20,6 +21,11 @@ function loadInitialResume(fallback) {
       ...fallback,
       ...parsed,
       basics: { ...fallback.basics, ...parsed.basics },
+      settings: {
+        ...fallback.settings,
+        ...parsed.settings,
+        layout: { ...fallback.settings.layout, ...parsed.settings?.layout },
+      },
     };
   } catch (e) {
     console.warn('Could not load saved resume, starting fresh.', e);
@@ -98,12 +104,13 @@ function App() {
           <ContentPanel resume={resume} dispatch={dispatch} />
           <ResumePreview resume={resume} paperRef={paperRef} />
         </div>
+      ) : activeTab === 'customize' ? (
+        <div className="editor-body">
+          <CustomizePanel resume={resume} dispatch={dispatch} />
+          <ResumePreview resume={resume} paperRef={paperRef} />
+        </div>
       ) : (
-        <ComingSoon
-          label={
-            activeTab === 'overview' ? 'Overview' : activeTab === 'customize' ? 'Customize' : 'AI Tools'
-          }
-        />
+        <ComingSoon label={activeTab === 'overview' ? 'Overview' : 'AI Tools'} />
       )}
     </div>
   );

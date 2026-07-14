@@ -27,7 +27,7 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
       const paperEl = container?.classList?.contains('paper')
         ? container
         : container?.querySelector?.('.paper');
-      await downloadResumeAsPdf(paperEl, fileBaseName());
+      await downloadResumeAsPdf(paperEl, fileBaseName(), resume.settings?.pageFormat);
     } catch (e) {
       console.error(e);
       alert("Couldn't generate the PDF. Please try again.");

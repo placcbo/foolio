@@ -141,6 +141,14 @@ export function IconChevronDown(props) {
   );
 }
 
+export function IconChevronUp(props) {
+  return (
+    <Svg {...props}>
+      <polyline points="18,15 12,9 6,15" />
+    </Svg>
+  );
+}
+
 export function IconMoreVertical(props) {
   return (
     <Svg {...props}>
@@ -257,6 +265,72 @@ export function IconUser(props) {
     <Svg {...props}>
       <circle cx="12" cy="8" r="4" />
       <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
+    </Svg>
+  );
+}
+
+export function IconRefresh(props) {
+  return (
+    <Svg {...props}>
+      <polyline points="23,4 23,10 17,10" />
+      <polyline points="1,20 1,14 7,14" />
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </Svg>
+  );
+}
+
+export function IconUndo(props) {
+  return (
+    <Svg {...props}>
+      <path d="M3 7v6h6" />
+      <path d="M3 13a9 9 0 1 0 3-6.7L3 9" />
+    </Svg>
+  );
+}
+
+export function IconRedo(props) {
+  return (
+    <Svg {...props}>
+      <path d="M21 7v6h-6" />
+      <path d="M21 13a9 9 0 1 1-3-6.7L21 9" />
+    </Svg>
+  );
+}
+
+export function IconStar(props) {
+  return (
+    <Svg {...props}>
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+    </Svg>
+  );
+}
+
+export function IconBox(props) {
+  return (
+    <Svg {...props}>
+      <path d="M21 8l-9-5-9 5 9 5 9-5z" />
+      <path d="M3 8v8l9 5 9-5V8" />
+      <path d="M12 13v8" />
+    </Svg>
+  );
+}
+
+export function IconHexagon(props) {
+  return (
+    <Svg {...props}>
+      <path d="M21 8v8l-9 5-9-5V8l9-5 9 5z" />
+    </Svg>
+  );
+}
+
+export function IconPalette(props) {
+  return (
+    <Svg {...props}>
+      <path d="M12 2a10 10 0 1 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4 0-1.1.9-2 2-2h2.2A4.3 4.3 0 0 0 21 10.7C21 6 17 2 12 2z" />
+      <circle cx="6.5" cy="11.5" r="1.2" fill="currentColor" stroke="none" />
+      <circle cx="9.5" cy="7.5" r="1.2" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="7.5" r="1.2" fill="currentColor" stroke="none" />
+      <circle cx="17.5" cy="11.5" r="1.2" fill="currentColor" stroke="none" />
     </Svg>
   );
 }

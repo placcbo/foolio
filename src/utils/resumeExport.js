@@ -1,11 +1,17 @@
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
+import { formatEntryDateRange } from './dateFormat';
+
+const DOCX_PAGE_SIZES = {
+  A4: { width: 11906, height: 16838 },
+  'US Letter': { width: 12240, height: 15840 },
+};
 
 // PDF: renders the actual .paper DOM node to a canvas, then drops that
 // image into a PDF and saves it immediately — no print dialog, no extra
 // click. Handles multi-page overflow if the resume runs long.
-export async function downloadResumeAsPdf(paperEl, filename = 'resume') {
+export async function downloadResumeAsPdf(paperEl, filename = 'resume', pageFormat = 'A4') {
   if (!paperEl) throw new Error('Could not find the resume to export.');
 
   const canvas = await html2canvas(paperEl, {
@@ -15,7 +21,7 @@ export async function downloadResumeAsPdf(paperEl, filename = 'resume') {
   });
 
   const imgData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF({ unit: 'pt', format: 'letter' });
+  const pdf = new jsPDF({ unit: 'pt', format: pageFormat === 'US Letter' ? 'letter' : 'a4' });
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
@@ -46,9 +52,10 @@ function buildContactLine(basics) {
   return parts.filter(Boolean).join('   |   ');
 }
 
-function entryParagraphs(entry) {
+function entryParagraphs(entry, dateFormat) {
   const paras = [];
-  const dateRange = [entry.start, entry.end].filter(Boolean).join(' – ');
+  const { start, end } = formatEntryDateRange(entry, dateFormat);
+  const dateRange = [start, end].filter(Boolean).join(' – ');
 
   paras.push(
     new Paragraph({
@@ -86,7 +93,7 @@ function entryParagraphs(entry) {
   return paras;
 }
 
-function sectionParagraphs(section) {
+function sectionParagraphs(section, dateFormat) {
   const paras = [
     new Paragraph({
       heading: HeadingLevel.HEADING_2,
@@ -106,14 +113,16 @@ function sectionParagraphs(section) {
   } else if (section.kind === 'entries') {
     (section.entries || [])
       .filter((e) => e.heading || e.subheading || e.description || e.location || e.start || e.end)
-      .forEach((entry) => paras.push(...entryParagraphs(entry)));
+      .forEach((entry) => paras.push(...entryParagraphs(entry, dateFormat)));
   }
 
   return paras;
 }
 
 export async function exportResumeAsDocx(resume) {
-  const { basics, sections } = resume;
+  const { basics, sections, settings } = resume;
+  const dateFormat = settings?.dateFormat;
+  const pageSize = DOCX_PAGE_SIZES[settings?.pageFormat] || DOCX_PAGE_SIZES.A4;
 
   const children = [
     new Paragraph({
@@ -142,10 +151,10 @@ export async function exportResumeAsDocx(resume) {
     );
   }
 
-  sections.forEach((section) => children.push(...sectionParagraphs(section)));
+  sections.forEach((section) => children.push(...sectionParagraphs(section, dateFormat)));
 
   const doc = new Document({
-    sections: [{ properties: {}, children }],
+    sections: [{ properties: { page: { size: pageSize } }, children }],
   });
 
   const blob = await Packer.toBlob(doc);

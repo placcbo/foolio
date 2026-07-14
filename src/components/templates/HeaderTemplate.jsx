@@ -1,4 +1,6 @@
-import { getContactItems } from './shared';
+import { getContactItems, splitSections, HeaderBlock, SplitLayout } from './shared';
+import { formatEntryDateRange } from '../../utils/dateFormat';
+import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
 function PreviewText({ section }) {
   return (
@@ -24,7 +26,7 @@ function PreviewTags({ section }) {
   );
 }
 
-function PreviewEntries({ section }) {
+function PreviewEntries({ section, dateFormat }) {
   const entries = section.entries.filter(
     (e) => e.heading || e.subheading || e.description || e.location || e.start || e.end
   );
@@ -35,12 +37,14 @@ function PreviewEntries({ section }) {
       {entries.length === 0 && (
         <p className="placeholder">Add your {section.title.toLowerCase()}...</p>
       )}
-      {entries.map((entry) => (
+      {entries.map((entry) => {
+        const { start, end } = formatEntryDateRange(entry, dateFormat);
+        return (
         <div className="preview-entry" key={entry.id}>
           <div className="preview-entry-top">
             <span className="preview-entry-heading">{entry.heading}</span>
             <span className="preview-entry-date">
-              {[entry.start, entry.end].filter(Boolean).join(' – ')}
+              {[start, end].filter(Boolean).join(' – ')}
             </span>
           </div>
           <div className="preview-entry-sub">
@@ -58,14 +62,45 @@ function PreviewEntries({ section }) {
             </ul>
           )}
         </div>
-      ))}
+        );
+      })}
     </section>
   );
 }
 
 export default function OneColumnTemplate({ resume }) {
-  const { basics, sections } = resume;
+  const { basics, sections, settings, accentColor } = resume;
+  const dateFormat = settings?.dateFormat;
+  const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const contactItems = getContactItems(basics);
+
+  if (layout.columns !== 'one') {
+    const { sidebarSections, mainSections } = splitSections(sections);
+    return (
+      <div className="paper onecolumn-paper">
+        <SplitLayout
+          headerContent={
+            <HeaderBlock
+              basics={basics}
+              contactItems={contactItems}
+              colored={layout.columns === 'mix'}
+              accentColor={accentColor}
+            />
+          }
+          headerPosition={layout.headerPosition}
+          columnWidth={layout.columnWidth}
+          sidebarSections={sidebarSections}
+          mainSections={mainSections}
+          dateFormat={dateFormat}
+        />
+        {sections.length === 0 && (
+          <p className="preview-empty">
+            Click <strong>Add Content</strong> on the left to start building your resume.
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="paper onecolumn-paper">
@@ -90,7 +125,7 @@ export default function OneColumnTemplate({ resume }) {
         if (section.kind === 'text') return <PreviewText key={section.id} section={section} />;
         if (section.kind === 'tags') return <PreviewTags key={section.id} section={section} />;
         if (section.kind === 'entries')
-          return <PreviewEntries key={section.id} section={section} />;
+          return <PreviewEntries key={section.id} section={section} dateFormat={dateFormat} />;
         return null;
       })}
 
