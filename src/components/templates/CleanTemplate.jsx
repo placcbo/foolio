@@ -1,5 +1,4 @@
-import { getContactItems, splitSections, HeaderBlock, SplitLayout, getFontSizes } from './shared';
-import { formatEntryDateRange } from '../../utils/dateFormat';
+import { getContactItems, splitSections, HeaderBlock, SplitLayout, getFontSizes, getSpacing, ContactItem, EntryBlock } from './shared';
 import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
 function CleanHeading({ children, fontSize }) {
@@ -34,7 +33,7 @@ function CleanTagsGrid({ section, headingFontSize }) {
   );
 }
 
-function CleanEntries({ section, dateFormat, headingFontSize, entryHeaderFontSize }) {
+function CleanEntries({ section, dateFormat, headingFontSize, entryHeaderFontSize, entryLayout }) {
   const entries = section.entries.filter(
     (e) => e.heading || e.subheading || e.description || e.location || e.start || e.end
   );
@@ -45,36 +44,16 @@ function CleanEntries({ section, dateFormat, headingFontSize, entryHeaderFontSiz
       {entries.length === 0 && (
         <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>
       )}
-      {entries.map((entry) => {
-        const { start, end } = formatEntryDateRange(entry, dateFormat);
-        return (
-        <div className="clean-entry" key={entry.id}>
-          <div className="clean-entry-top">
-            <span className="clean-entry-heading" style={{ fontSize: entryHeaderFontSize }}>
-              {entry.heading}
-            </span>
-            <span className="clean-entry-date">
-              {[start, end].filter(Boolean).join(' – ')}
-            </span>
-          </div>
-          <div className="clean-entry-sub">
-            <span>{entry.subheading}</span>
-            <span>{entry.location}</span>
-          </div>
-          {entry.description && (
-            <ul className="clean-entry-bullets">
-              {entry.description
-                .split('\n')
-                .map((line) => line.trim())
-                .filter(Boolean)
-                .map((line, i) => (
-                  <li key={i}>{line}</li>
-                ))}
-            </ul>
-          )}
-        </div>
-        );
-      })}
+      {entries.map((entry) => (
+        <EntryBlock
+          key={entry.id}
+          entry={entry}
+          dateFormat={dateFormat}
+          entryLayout={entryLayout}
+          entryHeaderFontSize={entryHeaderFontSize}
+          variant="clean"
+        />
+      ))}
     </section>
   );
 }
@@ -84,12 +63,15 @@ export default function CleanTemplate({ resume }) {
   const dateFormat = settings?.dateFormat;
   const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const { basePt, nameFontSize, headingFontSize, entryHeaderFontSize } = getFontSizes(settings);
+  const { lineHeight, spaceOffsetPx, marginLRpx, marginTBpx } = getSpacing(settings);
+  const entryLayout = settings?.entryLayout;
   const contactItems = getContactItems(basics);
+  const paperVars = { fontSize: `${basePt}pt`, lineHeight, '--space-offset': `${spaceOffsetPx}px` };
 
   if (layout.columns !== 'one') {
     const { sidebarSections, mainSections } = splitSections(sections);
     return (
-      <div className="paper clean-paper" style={{ fontSize: `${basePt}pt` }}>
+      <div className="paper clean-paper tpl-split-paper" style={paperVars}>
         <SplitLayout
           headerContent={
             <HeaderBlock
@@ -98,6 +80,8 @@ export default function CleanTemplate({ resume }) {
               colored={layout.columns === 'mix'}
               accentColor={accentColor}
               nameFontSize={nameFontSize}
+              marginLRpx={marginLRpx}
+              marginTBpx={marginTBpx}
             />
           }
           headerPosition={layout.headerPosition}
@@ -107,6 +91,9 @@ export default function CleanTemplate({ resume }) {
           dateFormat={dateFormat}
           headingFontSize={headingFontSize}
           entryHeaderFontSize={entryHeaderFontSize}
+          entryLayout={entryLayout}
+          marginLRpx={marginLRpx}
+          marginTBpx={marginTBpx}
         />
         {sections.length === 0 && (
           <p className="preview-empty">
@@ -118,16 +105,14 @@ export default function CleanTemplate({ resume }) {
   }
 
   return (
-    <div className="paper clean-paper" style={{ fontSize: `${basePt}pt` }}>
+    <div className="paper clean-paper" style={{ ...paperVars, padding: `${marginTBpx}px ${marginLRpx}px` }}>
       <header className="clean-header">
         <h1 className="clean-name" style={{ fontSize: nameFontSize }}>{basics.name || 'Your name'}</h1>
         {basics.title && <p className="clean-role">{basics.title}</p>}
         {contactItems.length > 0 && (
           <div className="clean-contact">
-            {contactItems.map(({ key, Icon, text }) => (
-              <span key={key}>
-                <Icon size={13} /> {text}
-              </span>
+            {contactItems.map((item) => (
+              <ContactItem key={item.key} item={item} iconSize={13} />
             ))}
           </div>
         )}
@@ -146,6 +131,7 @@ export default function CleanTemplate({ resume }) {
               dateFormat={dateFormat}
               headingFontSize={headingFontSize}
               entryHeaderFontSize={entryHeaderFontSize}
+              entryLayout={entryLayout}
             />
           );
         return null;

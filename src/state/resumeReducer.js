@@ -17,6 +17,31 @@ export const TEMPLATE_DEFAULT_LAYOUT = {
 // panel displays them ("+11pt" etc).
 export const DEFAULT_FONT_SIZE = { base: 10.5, fullName: 11, sectionHeadings: 3, entryHeader: 0 };
 
+// spaceBetween is an extra offset (mm) added on top of the gaps between
+// sections/entries, 0 = no adjustment; marginLR/marginTB are the page
+// margins in mm.
+export const DEFAULT_SPACING = { lineHeight: 1.1, spaceBetween: 0, marginLR: 16, marginTB: 10 };
+
+// Governs how each entry (job, degree, etc.) inside an "entries" section
+// renders. "Title & Subtitle" vs "Date & Location" are the two clusters an
+// entry splits into; headerSplit/titleWidth controls their relative width
+// whenever they sit side by side (structure "columns", or "full" width with
+// dateLocationPosition "right").
+export const DEFAULT_ENTRY_LAYOUT = {
+  structure: 'full', // 'full' | 'columns'
+  dateLocationPosition: 'right', // 'right' | 'below'
+  headerSplit: 'manual', // 'auto' | 'manual'
+  titleWidth: 55, // percent, used when headerSplit === 'manual'
+  subtitlePlacement: 'belowTitle', // 'sameLine' | 'belowTitle'
+  locationPlacement: 'sameLine', // 'sameLine' | 'belowDate'
+  subtitleStyle: 'italic', // 'regular' | 'bold' | 'italic'
+  dateStyle: 'regular',
+  locationStyle: 'regular',
+  indentBody: false,
+  listStyle: 'bullet', // 'bullet' | 'hyphen'
+  dateLocationOrder: 'date-location', // 'date-location' | 'location-date'
+};
+
 export const initialResumeState = {
   templateId: 'onecolumn',
   accentColor: '#17151c',
@@ -28,6 +53,8 @@ export const initialResumeState = {
     pageFormat: 'A4',
     layout: DEFAULT_LAYOUT,
     fontSize: DEFAULT_FONT_SIZE,
+    spacing: DEFAULT_SPACING,
+    entryLayout: DEFAULT_ENTRY_LAYOUT,
   },
 };
 
@@ -86,6 +113,24 @@ export function resumeReducer(state, action) {
         settings: {
           ...state.settings,
           fontSize: { ...state.settings.fontSize, [action.field]: action.value },
+        },
+      };
+
+    case 'UPDATE_SPACING':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          spacing: { ...state.settings.spacing, [action.field]: action.value },
+        },
+      };
+
+    case 'UPDATE_ENTRY_LAYOUT':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          entryLayout: { ...state.settings.entryLayout, [action.field]: action.value },
         },
       };
 

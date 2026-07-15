@@ -1,9 +1,23 @@
 import { useState } from 'react';
-import { IconChevronDown, IconChevronUp, IconRefresh, IconUndo, IconRedo, IconMinus, IconPlus } from './icons';
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconRefresh,
+  IconUndo,
+  IconRedo,
+  IconMinus,
+  IconPlus,
+  IconInfo,
+} from './icons';
 import { DATE_FORMATS } from '../utils/dateFormat';
 import { TEMPLATES } from '../data/templates';
 import { TEMPLATE_COMPONENTS } from './templates';
-import { DEFAULT_LAYOUT, DEFAULT_FONT_SIZE } from '../state/resumeReducer';
+import {
+  DEFAULT_LAYOUT,
+  DEFAULT_FONT_SIZE,
+  DEFAULT_SPACING,
+  DEFAULT_ENTRY_LAYOUT,
+} from '../state/resumeReducer';
 import ApplyTemplateModal from './ApplyTemplateModal';
 
 const NAV_ITEMS = [
@@ -305,7 +319,7 @@ const FONT_SIZE_FIELDS = [
   { field: 'entryHeader', label: 'Entry Header', min: 0, max: 6, step: 1, format: (v) => `+${v}pt` },
 ];
 
-function FontSizeSlider({ label, value, min, max, step, format, onChange }) {
+function TickSlider({ label, value, min, max, step, format, onChange }) {
   const clamp = (v) => Math.min(max, Math.max(min, +v.toFixed(2)));
 
   return (
@@ -354,7 +368,7 @@ function FontSizeSection({ resume, dispatch }) {
     <div className="customize-card">
       <h2>Font Size</h2>
       {FONT_SIZE_FIELDS.map((f) => (
-        <FontSizeSlider
+        <TickSlider
           key={f.field}
           label={f.label}
           value={fontSize[f.field]}
@@ -365,6 +379,272 @@ function FontSizeSection({ resume, dispatch }) {
           onChange={(v) => updateFontSize(f.field, v)}
         />
       ))}
+    </div>
+  );
+}
+
+const trimDecimal = (v) => Number(v.toFixed(2)).toString();
+
+const SPACING_FIELDS = [
+  { field: 'lineHeight', label: 'Line Height', min: 1, max: 2, step: 0.05, format: trimDecimal },
+  {
+    field: 'spaceBetween',
+    label: 'Space Between Elements',
+    min: 0,
+    max: 10,
+    step: 1,
+    format: (v) => (v === 0 ? '[-]' : `+${v}mm`),
+  },
+  { field: 'marginLR', label: 'Left & Right Margin', min: 8, max: 40, step: 1, format: (v) => `${v}mm` },
+  { field: 'marginTB', label: 'Top & Bottom Margin', min: 4, max: 30, step: 1, format: (v) => `${v}mm` },
+];
+
+function SpacingSection({ resume, dispatch }) {
+  const spacing = resume.settings.spacing ?? DEFAULT_SPACING;
+
+  function updateSpacing(field, value) {
+    dispatch({ type: 'UPDATE_SPACING', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Spacing</h2>
+      {SPACING_FIELDS.map((f) => (
+        <TickSlider
+          key={f.field}
+          label={f.label}
+          value={spacing[f.field]}
+          min={f.min}
+          max={f.max}
+          step={f.step}
+          format={f.format}
+          onChange={(v) => updateSpacing(f.field, v)}
+        />
+      ))}
+    </div>
+  );
+}
+
+function PillOption({ label, active, onClick, children }) {
+  return (
+    <button type="button" className={`pill-option${active ? ' active' : ''}`} onClick={onClick}>
+      {children}
+      {label}
+    </button>
+  );
+}
+
+const AA_STYLES = ['regular', 'bold', 'italic'];
+
+function StyleAaPicker({ value, onChange, label }) {
+  return (
+    <div className="aa-style-row">
+      {AA_STYLES.map((s) => (
+        <button
+          type="button"
+          key={s}
+          className={`aa-style-btn aa-style-${s}${value === s ? ' active' : ''}`}
+          onClick={() => onChange(s)}
+          aria-label={`${label}: ${s}`}
+        >
+          Aa
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function EntriesSection({ resume, dispatch, onNavigate }) {
+  const el = resume.settings.entryLayout ?? DEFAULT_ENTRY_LAYOUT;
+  const [advancedOpen, setAdvancedOpen] = useState(true);
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_ENTRY_LAYOUT', field, value });
+  }
+
+  const showSplitWidths =
+    el.headerSplit === 'manual' && (el.structure === 'columns' || el.dateLocationPosition === 'right');
+
+  return (
+    <div className="customize-card">
+      <h2>Entry Layout</h2>
+
+      <div className="customize-field">
+        <label>Structure</label>
+        <div className="layout-option-row">
+          <LayoutOption label="Full Width" active={el.structure === 'full'} onClick={() => update('structure', 'full')}>
+            <ColumnsPreview variant="one" />
+          </LayoutOption>
+          <LayoutOption label="Columns" active={el.structure === 'columns'} onClick={() => update('structure', 'columns')}>
+            <ColumnsPreview variant="two" />
+          </LayoutOption>
+        </div>
+      </div>
+
+      {el.structure === 'full' && (
+        <div className="customize-field">
+          <label>Date & Location Position</label>
+          <div className="pill-option-row">
+            <PillOption
+              label="Right"
+              active={el.dateLocationPosition === 'right'}
+              onClick={() => update('dateLocationPosition', 'right')}
+            />
+            <PillOption
+              label="Below Title"
+              active={el.dateLocationPosition === 'below'}
+              onClick={() => update('dateLocationPosition', 'below')}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="entries-hint-box">
+        <IconInfo size={16} />
+        <p>
+          In narrow columns, Date &amp; Location move below the title to keep entries readable. Set{' '}
+          <button type="button" className="entries-hint-link" onClick={onNavigate}>
+            column width
+          </button>{' '}
+          to at least 60% to keep them on the right.
+        </p>
+      </div>
+
+      <div className="customize-field">
+        <label>Entry Header Split</label>
+        <div className="pill-option-row">
+          <PillOption label="Auto" active={el.headerSplit === 'auto'} onClick={() => update('headerSplit', 'auto')} />
+          <PillOption
+            label="Manual"
+            active={el.headerSplit === 'manual'}
+            onClick={() => update('headerSplit', 'manual')}
+          />
+        </div>
+      </div>
+
+      {showSplitWidths && (
+        <div className="customize-field">
+          <div className="column-width-row">
+            <div className="column-width-box">
+              <span className="column-width-label">Title & Subtitle {el.titleWidth}%</span>
+              <input
+                type="range"
+                min="30"
+                max="80"
+                value={el.titleWidth}
+                onChange={(e) => update('titleWidth', Number(e.target.value))}
+              />
+            </div>
+            <div className="column-width-box">
+              <span className="column-width-label">Date & Location {100 - el.titleWidth}%</span>
+              <input
+                type="range"
+                min="20"
+                max="70"
+                value={100 - el.titleWidth}
+                onChange={(e) => update('titleWidth', 100 - Number(e.target.value))}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="customize-field">
+        <label>Subtitle Placement</label>
+        <div className="pill-option-row">
+          <PillOption
+            label="Try Same Line"
+            active={el.subtitlePlacement === 'sameLine'}
+            onClick={() => update('subtitlePlacement', 'sameLine')}
+          />
+          <PillOption
+            label="Below Title"
+            active={el.subtitlePlacement === 'belowTitle'}
+            onClick={() => update('subtitlePlacement', 'belowTitle')}
+          />
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label className="customize-field-label-icon">
+          Location Placement
+          <IconInfo size={13} />
+        </label>
+        <div className="pill-option-row">
+          <PillOption
+            label="Try Same Line"
+            active={el.locationPlacement === 'sameLine'}
+            onClick={() => update('locationPlacement', 'sameLine')}
+          />
+          <PillOption
+            label="Below Date"
+            active={el.locationPlacement === 'belowDate'}
+            onClick={() => update('locationPlacement', 'belowDate')}
+          />
+        </div>
+      </div>
+
+      <button type="button" className="advanced-settings-toggle" onClick={() => setAdvancedOpen((v) => !v)}>
+        Advanced settings
+        {advancedOpen ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
+      </button>
+
+      {advancedOpen && (
+        <div className="advanced-settings-body">
+          <div className="customize-field">
+            <label>Subtitle</label>
+            <StyleAaPicker label="Subtitle" value={el.subtitleStyle} onChange={(v) => update('subtitleStyle', v)} />
+          </div>
+          <div className="customize-field">
+            <label>Date</label>
+            <StyleAaPicker label="Date" value={el.dateStyle} onChange={(v) => update('dateStyle', v)} />
+          </div>
+          <div className="customize-field">
+            <label>Location</label>
+            <StyleAaPicker label="Location" value={el.locationStyle} onChange={(v) => update('locationStyle', v)} />
+          </div>
+
+          <div className="customize-field">
+            <label>Description Indentation</label>
+            <label className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={el.indentBody}
+                onChange={(e) => update('indentBody', e.target.checked)}
+              />
+              Indent body
+            </label>
+          </div>
+
+          <div className="customize-field">
+            <label>List Style</label>
+            <div className="pill-option-row">
+              <PillOption label="Bullet" active={el.listStyle === 'bullet'} onClick={() => update('listStyle', 'bullet')}>
+                <span className="pill-bullet-dot" />
+              </PillOption>
+              <PillOption label="Hyphen" active={el.listStyle === 'hyphen'} onClick={() => update('listStyle', 'hyphen')}>
+                <IconMinus size={12} />
+              </PillOption>
+            </div>
+          </div>
+
+          <div className="customize-field">
+            <label>Date & Location Order</label>
+            <div className="pill-option-row">
+              <PillOption
+                label="Date - Location"
+                active={el.dateLocationOrder === 'date-location'}
+                onClick={() => update('dateLocationOrder', 'date-location')}
+              />
+              <PillOption
+                label="Location - Date"
+                active={el.dateLocationOrder === 'location-date'}
+                onClick={() => update('dateLocationOrder', 'location-date')}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -422,6 +702,10 @@ export default function CustomizePanel({ resume, dispatch }) {
           <LayoutSection resume={resume} dispatch={dispatch} />
         ) : activeSection === 'fontSize' ? (
           <FontSizeSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'spacing' ? (
+          <SpacingSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'entries' ? (
+          <EntriesSection resume={resume} dispatch={dispatch} onNavigate={() => setActiveSection('layout')} />
         ) : (
           <ComingSoonCard label={activeLabel} />
         )}

@@ -342,3 +342,13 @@ export function IconPalette(props) {
     </Svg>
   );
 }
+
+export function IconInfo(props) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="11" x2="12" y2="16" />
+      <line x1="12" y1="8" x2="12.01" y2="8" />
+    </Svg>
+  );
+}

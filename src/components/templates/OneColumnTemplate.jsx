@@ -1,5 +1,4 @@
-import { getContactItems, splitSections, HeaderBlock, SplitLayout, getFontSizes } from './shared';
-import { formatEntryDateRange } from '../../utils/dateFormat';
+import { getContactItems, splitSections, HeaderBlock, SplitLayout, getFontSizes, getSpacing, ContactItem, EntryBlock } from './shared';
 import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
 function PreviewText({ section, headingFontSize }) {
@@ -26,7 +25,7 @@ function PreviewTags({ section, headingFontSize }) {
   );
 }
 
-function PreviewEntries({ section, dateFormat, headingFontSize, entryHeaderFontSize }) {
+function PreviewEntries({ section, dateFormat, headingFontSize, entryHeaderFontSize, entryLayout }) {
   const entries = section.entries.filter(
     (e) => e.heading || e.subheading || e.description || e.location || e.start || e.end
   );
@@ -37,35 +36,16 @@ function PreviewEntries({ section, dateFormat, headingFontSize, entryHeaderFontS
       {entries.length === 0 && (
         <p className="placeholder">Add your {section.title.toLowerCase()}...</p>
       )}
-      {entries.map((entry) => {
-        const { start, end } = formatEntryDateRange(entry, dateFormat);
-        return (
-        <div className="preview-entry" key={entry.id}>
-          <div className="preview-entry-top">
-            <span className="preview-entry-heading" style={{ fontSize: entryHeaderFontSize }}>
-              {entry.heading}
-            </span>
-            <span className="preview-entry-date">
-              {[start, end].filter(Boolean).join(' – ')}
-            </span>
-          </div>
-          <div className="preview-entry-sub">
-            {[entry.subheading, entry.location].filter(Boolean).join(' · ')}
-          </div>
-          {entry.description && (
-            <ul className="preview-entry-bullets">
-              {entry.description
-                .split('\n')
-                .map((line) => line.trim())
-                .filter(Boolean)
-                .map((line, i) => (
-                  <li key={i}>{line}</li>
-                ))}
-            </ul>
-          )}
-        </div>
-        );
-      })}
+      {entries.map((entry) => (
+        <EntryBlock
+          key={entry.id}
+          entry={entry}
+          dateFormat={dateFormat}
+          entryLayout={entryLayout}
+          entryHeaderFontSize={entryHeaderFontSize}
+          variant="preview"
+        />
+      ))}
     </section>
   );
 }
@@ -75,12 +55,15 @@ export default function OneColumnTemplate({ resume }) {
   const dateFormat = settings?.dateFormat;
   const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const { basePt, nameFontSize, headingFontSize, entryHeaderFontSize } = getFontSizes(settings);
+  const { lineHeight, spaceOffsetPx, marginLRpx, marginTBpx } = getSpacing(settings);
+  const entryLayout = settings?.entryLayout;
   const contactItems = getContactItems(basics);
+  const paperVars = { fontSize: `${basePt}pt`, lineHeight, '--space-offset': `${spaceOffsetPx}px` };
 
   if (layout.columns !== 'one') {
     const { sidebarSections, mainSections } = splitSections(sections);
     return (
-      <div className="paper onecolumn-paper" style={{ fontSize: `${basePt}pt` }}>
+      <div className="paper onecolumn-paper tpl-split-paper" style={paperVars}>
         <SplitLayout
           headerContent={
             <HeaderBlock
@@ -89,6 +72,8 @@ export default function OneColumnTemplate({ resume }) {
               colored={layout.columns === 'mix'}
               accentColor={accentColor}
               nameFontSize={nameFontSize}
+              marginLRpx={marginLRpx}
+              marginTBpx={marginTBpx}
             />
           }
           headerPosition={layout.headerPosition}
@@ -98,6 +83,9 @@ export default function OneColumnTemplate({ resume }) {
           dateFormat={dateFormat}
           headingFontSize={headingFontSize}
           entryHeaderFontSize={entryHeaderFontSize}
+          entryLayout={entryLayout}
+          marginLRpx={marginLRpx}
+          marginTBpx={marginTBpx}
         />
         {sections.length === 0 && (
           <p className="preview-empty">
@@ -109,7 +97,10 @@ export default function OneColumnTemplate({ resume }) {
   }
 
   return (
-    <div className="paper onecolumn-paper" style={{ fontSize: `${basePt}pt` }}>
+    <div
+      className="paper onecolumn-paper"
+      style={{ ...paperVars, padding: `${marginTBpx}px ${marginLRpx}px` }}
+    >
       <header className="preview-header">
         {basics.photo && (
           <img className="preview-photo" src={basics.photo} alt={basics.name || 'Profile'} />
@@ -118,10 +109,8 @@ export default function OneColumnTemplate({ resume }) {
         {basics.title && <p className="preview-title">{basics.title}</p>}
         {contactItems.length > 0 && (
           <div className="preview-contact">
-            {contactItems.map(({ key, Icon, text }) => (
-              <span key={key}>
-                <Icon size={13} /> {text}
-              </span>
+            {contactItems.map((item) => (
+              <ContactItem key={item.key} item={item} iconSize={13} />
             ))}
           </div>
         )}
@@ -140,6 +129,7 @@ export default function OneColumnTemplate({ resume }) {
               dateFormat={dateFormat}
               headingFontSize={headingFontSize}
               entryHeaderFontSize={entryHeaderFontSize}
+              entryLayout={entryLayout}
             />
           );
         return null;

@@ -1,4 +1,4 @@
-import { SectionBody, splitSections, getContactItems, HeaderBlock, SplitLayout, getFontSizes } from './shared';
+import { SectionBody, splitSections, getContactItems, HeaderBlock, SplitLayout, getFontSizes, getSpacing } from './shared';
 import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
 
 export default function BannerTemplate({ resume, accentColor }) {
@@ -6,12 +6,15 @@ export default function BannerTemplate({ resume, accentColor }) {
   const dateFormat = settings?.dateFormat;
   const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const { basePt, nameFontSize, headingFontSize, entryHeaderFontSize } = getFontSizes(settings);
+  const { lineHeight, spaceOffsetPx, marginLRpx, marginTBpx } = getSpacing(settings);
+  const entryLayout = settings?.entryLayout;
   const { sidebarSections, mainSections } = splitSections(sections);
   const contactItems = getContactItems(basics);
+  const paperVars = { fontSize: `${basePt}pt`, lineHeight, '--space-offset': `${spaceOffsetPx}px` };
 
   if (layout.columns === 'one') {
     return (
-      <div className="paper" style={{ fontSize: `${basePt}pt` }}>
+      <div className="paper" style={{ ...paperVars, padding: `${marginTBpx}px ${marginLRpx}px` }}>
         <HeaderBlock
           basics={basics}
           contactItems={contactItems}
@@ -23,7 +26,12 @@ export default function BannerTemplate({ resume, accentColor }) {
         {[...sidebarSections, ...mainSections].map((s) => (
           <section className="tpl-main-section" key={s.id}>
             <h4 className="tpl-heading" style={{ fontSize: headingFontSize }}>{s.title}</h4>
-            <SectionBody section={s} dateFormat={dateFormat} entryHeaderFontSize={entryHeaderFontSize} />
+            <SectionBody
+              section={s}
+              dateFormat={dateFormat}
+              entryHeaderFontSize={entryHeaderFontSize}
+              entryLayout={entryLayout}
+            />
           </section>
         ))}
         {sections.length === 0 && (
@@ -36,7 +44,7 @@ export default function BannerTemplate({ resume, accentColor }) {
   }
 
   return (
-    <div className="paper banner-paper tpl-split-paper" style={{ fontSize: `${basePt}pt` }}>
+    <div className="paper banner-paper tpl-split-paper" style={paperVars}>
       <SplitLayout
         headerContent={
           <HeaderBlock
@@ -46,6 +54,8 @@ export default function BannerTemplate({ resume, accentColor }) {
             accentColor={accentColor}
             avatarShape="rounded"
             nameFontSize={nameFontSize}
+            marginLRpx={marginLRpx}
+            marginTBpx={marginTBpx}
           />
         }
         headerPosition={layout.headerPosition}
@@ -56,6 +66,9 @@ export default function BannerTemplate({ resume, accentColor }) {
         accentColor={accentColor}
         headingFontSize={headingFontSize}
         entryHeaderFontSize={entryHeaderFontSize}
+        entryLayout={entryLayout}
+        marginLRpx={marginLRpx}
+        marginTBpx={marginTBpx}
       />
       {sections.length === 0 && (
         <p className="preview-empty">
