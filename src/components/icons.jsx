@@ -352,3 +352,130 @@ export function IconInfo(props) {
     </Svg>
   );
 }
+
+export function IconBold(props) {
+  return (
+    <Svg {...props}>
+      <path d="M6 4h6a3.5 3.5 0 0 1 0 7H6z" />
+      <path d="M6 11h7a3.5 3.5 0 0 1 0 7H6z" />
+    </Svg>
+  );
+}
+
+export function IconItalic(props) {
+  return (
+    <Svg {...props}>
+      <line x1="19" y1="4" x2="10" y2="4" />
+      <line x1="14" y1="20" x2="5" y2="20" />
+      <line x1="15" y1="4" x2="9" y2="20" />
+    </Svg>
+  );
+}
+
+export function IconUnderline(props) {
+  return (
+    <Svg {...props}>
+      <path d="M6 3v8a6 6 0 0 0 12 0V3" />
+      <line x1="4" y1="21" x2="20" y2="21" />
+    </Svg>
+  );
+}
+
+export function IconList(props) {
+  return (
+    <Svg {...props}>
+      <line x1="9" y1="6" x2="20" y2="6" />
+      <line x1="9" y1="12" x2="20" y2="12" />
+      <line x1="9" y1="18" x2="20" y2="18" />
+      <circle cx="4.5" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4.5" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4.5" cy="18" r="1" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+export function IconAlignLeft(props) {
+  return (
+    <Svg {...props}>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="4" y1="12" x2="14" y2="12" />
+      <line x1="4" y1="18" x2="17" y2="18" />
+    </Svg>
+  );
+}
+
+export function IconAlignCenter(props) {
+  return (
+    <Svg {...props}>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="7" y1="12" x2="17" y2="12" />
+      <line x1="5.5" y1="18" x2="18.5" y2="18" />
+    </Svg>
+  );
+}
+
+export function IconAlignRight(props) {
+  return (
+    <Svg {...props}>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="7" y1="18" x2="20" y2="18" />
+    </Svg>
+  );
+}
+
+export function IconAlignJustify(props) {
+  return (
+    <Svg {...props}>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" y1="18" x2="20" y2="18" />
+    </Svg>
+  );
+}
+
+export function IconEye(props) {
+  return (
+    <Svg {...props}>
+      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" />
+      <circle cx="12" cy="12" r="3" />
+    </Svg>
+  );
+}
+
+export function IconEyeOff(props) {
+  return (
+    <Svg {...props}>
+      <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.3 20.3 0 0 1 4.22-5.19M9.9 4.24A10.94 10.94 0 0 1 12 5c7 0 11 7 11 7a20.3 20.3 0 0 1-2.27 3.33" />
+      <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </Svg>
+  );
+}
+
+export function IconGripVertical(props) {
+  return (
+    <Svg {...props}>
+      <circle cx="9" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="18" r="1" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="18" r="1" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
+export function IconRobot(props) {
+  return (
+    <Svg {...props}>
+      <rect x="4" y="8" width="16" height="12" rx="3" />
+      <circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none" />
+      <line x1="12" y1="8" x2="12" y2="4" />
+      <circle cx="12" cy="3" r="1" fill="currentColor" stroke="none" />
+      <line x1="1" y1="13" x2="4" y2="13" />
+      <line x1="20" y1="13" x2="23" y2="13" />
+    </Svg>
+  );
+}

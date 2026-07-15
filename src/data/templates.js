@@ -4,7 +4,7 @@ export const TEMPLATES = [
     name: 'Clean',
     layout: 'clean',
     categories: ['simple', 'one-column', 'ats', 'professional'],
-    swatches: ['#17151c', '#334155', '#0f766e', '#7c2d12'],
+    swatches: ['#000000', '#334155', '#0f766e', '#7c2d12'],
   },
   // more templates get added back one at a time after testing.
   // Keep the same shape when re-adding:

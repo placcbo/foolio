@@ -42,9 +42,55 @@ export const DEFAULT_ENTRY_LAYOUT = {
   dateLocationOrder: 'date-location', // 'date-location' | 'location-date'
 };
 
+// Heading "style" controls the decoration drawn around/under the section
+// title text; capitalization/icons are independent toggles layered on top.
+export const DEFAULT_HEADINGS = {
+  style: 'accentBar',
+  capitalization: 'uppercase', // 'capitalize' | 'uppercase'
+  icons: 'outline', // 'none' | 'outline' | 'filled'
+};
+
+// 'inherit' for name means "Same as body font".
+export const DEFAULT_FONT = { body: 'alegreya', name: 'inherit' };
+
+export const DEFAULT_COLORS = {
+  backgroundScope: 'fullPage', // 'fullPage' | 'header' | 'border'
+  fillType: 'single', // 'single' | 'multi' | 'image'
+  applyTo: {
+    name: true,
+    jobTitle: true,
+    headings: true,
+    headingsLine: true,
+    headerIcons: false,
+    dotsBarsBubbles: false,
+    dates: false,
+    entrySubtitle: false,
+    linkIcons: false,
+  },
+};
+
+export const DEFAULT_HEADER = {
+  textAlign: 'center', // 'left' | 'center'
+  detailsArrangement: 'stacked', // 'stacked' | 'inline'
+  separatorStyle: 'icon', // 'icon' | 'bullet' | 'bar'
+  iconStyle: 'filled', // one of ICON_STYLE_OPTIONS ids
+};
+
+export const DEFAULT_PHOTO = {
+  show: true,
+  grayscale: false,
+  position: 'below', // 'below' | 'above' (relative to name & title)
+  size: 'm', // 'xs' | 's' | 'm' | 'l' | 'xl'
+  shape: 'circle', // 'circle' | 'roundedSquare' | 'square' | 'rectPortrait' | 'rectTall'
+};
+
+export const DEFAULT_FOOTER = { pageNumbers: false, email: false, name: false };
+
+export const DEFAULT_LINKS = { showIcons: true, showAsText: true, underline: false };
+
 export const initialResumeState = {
   templateId: 'onecolumn',
-  accentColor: '#17151c',
+  accentColor: '#000000',
   basics: { name: '', title: '', email: '', phone: '', address: '', photo: null, visibleExtra: [] },
   sections: [],
   settings: {
@@ -55,6 +101,13 @@ export const initialResumeState = {
     fontSize: DEFAULT_FONT_SIZE,
     spacing: DEFAULT_SPACING,
     entryLayout: DEFAULT_ENTRY_LAYOUT,
+    headings: DEFAULT_HEADINGS,
+    font: DEFAULT_FONT,
+    colors: DEFAULT_COLORS,
+    header: DEFAULT_HEADER,
+    photo: DEFAULT_PHOTO,
+    footer: DEFAULT_FOOTER,
+    links: DEFAULT_LINKS,
   },
 };
 
@@ -66,16 +119,18 @@ function makeEntry() {
     id: nextId('entry'),
     heading: '',
     subheading: '',
+    link: '',
     location: '',
     start: '',
     end: '',
     description: '',
+    hidden: false,
   };
 }
 
 function makeSection(type) {
   const meta = getSectionMeta(type);
-  const base = { id: nextId(type), type, title: meta.label, kind: meta.kind };
+  const base = { id: nextId(type), type, title: meta.label, kind: meta.kind, hidden: false };
   if (meta.kind === 'text') return { ...base, content: '' };
   if (meta.kind === 'tags') return { ...base, tags: [] };
   if (meta.kind === 'entries') return { ...base, entries: [makeEntry()] };
@@ -94,6 +149,9 @@ export function resumeReducer(state, action) {
           layout: TEMPLATE_DEFAULT_LAYOUT[action.templateId] || state.settings.layout,
         },
       };
+
+    case 'SET_ACCENT_COLOR':
+      return { ...state, accentColor: action.accentColor };
 
     case 'UPDATE_BASICS':
       return { ...state, basics: { ...state.basics, [action.field]: action.value } };
@@ -134,6 +192,60 @@ export function resumeReducer(state, action) {
         },
       };
 
+    case 'UPDATE_HEADINGS':
+      return {
+        ...state,
+        settings: { ...state.settings, headings: { ...state.settings.headings, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_FONT':
+      return {
+        ...state,
+        settings: { ...state.settings, font: { ...state.settings.font, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_COLORS':
+      return {
+        ...state,
+        settings: { ...state.settings, colors: { ...state.settings.colors, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_COLORS_APPLY_TO':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          colors: {
+            ...state.settings.colors,
+            applyTo: { ...state.settings.colors.applyTo, [action.field]: action.value },
+          },
+        },
+      };
+
+    case 'UPDATE_HEADER':
+      return {
+        ...state,
+        settings: { ...state.settings, header: { ...state.settings.header, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_PHOTO':
+      return {
+        ...state,
+        settings: { ...state.settings, photo: { ...state.settings.photo, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_FOOTER':
+      return {
+        ...state,
+        settings: { ...state.settings, footer: { ...state.settings.footer, [action.field]: action.value } },
+      };
+
+    case 'UPDATE_LINKS':
+      return {
+        ...state,
+        settings: { ...state.settings, links: { ...state.settings.links, [action.field]: action.value } },
+      };
+
     case 'MOVE_SECTION': {
       const index = state.sections.findIndex((s) => s.id === action.id);
       const swapWith = action.direction === 'up' ? index - 1 : index + 1;
@@ -171,6 +283,12 @@ export function resumeReducer(state, action) {
 
     case 'REMOVE_SECTION':
       return { ...state, sections: state.sections.filter((s) => s.id !== action.id) };
+
+    case 'TOGGLE_SECTION_HIDDEN':
+      return {
+        ...state,
+        sections: state.sections.map((s) => (s.id === action.id ? { ...s, hidden: !s.hidden } : s)),
+      };
 
     case 'UPDATE_SECTION_TITLE':
       return {
@@ -238,6 +356,34 @@ export function resumeReducer(state, action) {
             : s
         ),
       };
+
+    case 'TOGGLE_ENTRY_HIDDEN':
+      return {
+        ...state,
+        sections: state.sections.map((s) =>
+          s.id === action.id
+            ? {
+                ...s,
+                entries: s.entries.map((e) => (e.id === action.entryId ? { ...e, hidden: !e.hidden } : e)),
+              }
+            : s
+        ),
+      };
+
+    case 'REORDER_ENTRY': {
+      return {
+        ...state,
+        sections: state.sections.map((s) => {
+          if (s.id !== action.id) return s;
+          const entries = [...s.entries];
+          const fromIndex = entries.findIndex((e) => e.id === action.entryId);
+          if (fromIndex === -1 || fromIndex === action.toIndex) return s;
+          const [moved] = entries.splice(fromIndex, 1);
+          entries.splice(action.toIndex, 0, moved);
+          return { ...s, entries };
+        }),
+      };
+    }
 
     default:
       return state;

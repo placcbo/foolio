@@ -34,7 +34,10 @@ export function getColorDecoration(colors, accentColor) {
   let headerFill = null;
 
   if (scope === 'fullPage') {
-    paperStyle.background = fillType === 'single' ? `${accentColor}12` : fill;
+    // Single fill on the full page means "no wash" — the page stays pure
+    // white, matching the reference design's default. Multi/Image are
+    // visibly decorative fills, so those still paint the page.
+    if (fillType !== 'single') paperStyle.background = fill;
   } else if (scope === 'border') {
     if (fillType === 'single') {
       paperStyle.border = `6px solid ${accentColor}`;

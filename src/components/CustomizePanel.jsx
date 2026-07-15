@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   IconChevronDown,
   IconChevronUp,
@@ -8,15 +8,26 @@ import {
   IconMinus,
   IconPlus,
   IconInfo,
+  IconCheck,
+  IconLink,
 } from './icons';
 import { DATE_FORMATS } from '../utils/dateFormat';
 import { TEMPLATES } from '../data/templates';
 import { TEMPLATE_COMPONENTS } from './templates';
+import { FONT_OPTIONS } from '../data/fonts';
+import { PRESET_COLORS } from '../data/colors';
 import {
   DEFAULT_LAYOUT,
   DEFAULT_FONT_SIZE,
   DEFAULT_SPACING,
   DEFAULT_ENTRY_LAYOUT,
+  DEFAULT_HEADINGS,
+  DEFAULT_FONT,
+  DEFAULT_COLORS,
+  DEFAULT_HEADER,
+  DEFAULT_PHOTO,
+  DEFAULT_FOOTER,
+  DEFAULT_LINKS,
 } from '../state/resumeReducer';
 import ApplyTemplateModal from './ApplyTemplateModal';
 
@@ -649,6 +660,591 @@ function EntriesSection({ resume, dispatch, onNavigate }) {
   );
 }
 
+const HEADING_STYLE_OPTIONS = [
+  'accentBar',
+  'boxed',
+  'plain',
+  'lineBelow',
+  'compact',
+  'boldOnly',
+  'underlineShort',
+  'underlineDotted',
+];
+
+function HeadingStylePreview({ variant }) {
+  return (
+    <span className={`heading-style-preview heading-style-preview-${variant}`}>
+      <span className="heading-style-preview-bar" />
+    </span>
+  );
+}
+
+function HeadingsSection({ resume, dispatch }) {
+  const headings = resume.settings.headings ?? DEFAULT_HEADINGS;
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_HEADINGS', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Section Headings</h2>
+
+      <div className="customize-field">
+        <label>Style</label>
+        <div className="heading-style-grid">
+          {HEADING_STYLE_OPTIONS.map((variant) => (
+            <LayoutOption key={variant} active={headings.style === variant} onClick={() => update('style', variant)}>
+              <HeadingStylePreview variant={variant} />
+            </LayoutOption>
+          ))}
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Capitalization</label>
+        <div className="pill-option-row">
+          <PillOption
+            label="Capitalize"
+            active={headings.capitalization === 'capitalize'}
+            onClick={() => update('capitalization', 'capitalize')}
+          />
+          <PillOption
+            label="Uppercase"
+            active={headings.capitalization === 'uppercase'}
+            onClick={() => update('capitalization', 'uppercase')}
+          />
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Icons</label>
+        <div className="pill-option-row">
+          <PillOption label="None" active={headings.icons === 'none'} onClick={() => update('icons', 'none')} />
+          <PillOption label="Outline" active={headings.icons === 'outline'} onClick={() => update('icons', 'outline')} />
+          <PillOption label="Filled" active={headings.icons === 'filled'} onClick={() => update('icons', 'filled')} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FontSelect({ value, options, onChange, onPreview, placeholder }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+        onPreview?.(null);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [onPreview]);
+
+  const selected = options.find((o) => o.id === value);
+
+  return (
+    <div className="font-select" ref={ref}>
+      <button type="button" className="font-select-trigger" onClick={() => setOpen((v) => !v)}>
+        <span style={selected?.family ? { fontFamily: selected.family } : undefined}>
+          {selected?.label ?? placeholder}
+        </span>
+        <IconChevronDown size={16} />
+      </button>
+      {open && (
+        <div className="font-select-menu">
+          {options.map((opt) => (
+            <button
+              type="button"
+              key={opt.id}
+              className={`font-select-option${value === opt.id ? ' active' : ''}`}
+              style={opt.family ? { fontFamily: opt.family } : undefined}
+              onMouseEnter={() => onPreview?.(opt.id)}
+              onMouseLeave={() => onPreview?.(null)}
+              onClick={() => {
+                onChange(opt.id);
+                onPreview?.(null);
+                setOpen(false);
+              }}
+            >
+              {opt.label}
+              {value === opt.id && <IconCheck size={14} />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const NAME_FONT_OPTIONS = [{ id: 'inherit', label: 'Same as body font', family: undefined }, ...FONT_OPTIONS];
+
+function FontSection({ resume, dispatch, onFontPreview }) {
+  const font = resume.settings.font ?? DEFAULT_FONT;
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_FONT', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Font</h2>
+
+      <div className="customize-field">
+        <label>Body Font</label>
+        <FontSelect
+          value={font.body}
+          options={FONT_OPTIONS}
+          onChange={(v) => update('body', v)}
+          onPreview={(id) => onFontPreview?.('body', id)}
+        />
+      </div>
+
+      <div className="customize-field">
+        <label>Name Font</label>
+        <FontSelect
+          value={font.name}
+          options={NAME_FONT_OPTIONS}
+          onChange={(v) => update('name', v)}
+          onPreview={(id) => onFontPreview?.('name', id)}
+        />
+      </div>
+    </div>
+  );
+}
+
+const SCOPE_OPTIONS = [
+  { id: 'fullPage', label: 'Full Page' },
+  { id: 'header', label: 'Header' },
+  { id: 'border', label: 'Border' },
+];
+const FILL_OPTIONS = [
+  { id: 'single', label: 'Single' },
+  { id: 'multi', label: 'Multi' },
+  { id: 'image', label: 'Image' },
+];
+
+function ScopePreview({ variant }) {
+  return <span className={`scope-preview scope-preview-${variant}`} />;
+}
+function FillPreview({ variant }) {
+  return <span className={`fill-preview fill-preview-${variant}`} />;
+}
+
+const APPLY_TO_LEFT = [
+  { field: 'name', label: 'Name' },
+  { field: 'jobTitle', label: 'Job Title' },
+  { field: 'headings', label: 'Headings' },
+  { field: 'headingsLine', label: 'Headings Line' },
+  { field: 'headerIcons', label: 'Header Icons' },
+];
+const APPLY_TO_RIGHT = [
+  { field: 'dotsBarsBubbles', label: 'Dots, Bars & Bubbles' },
+  { field: 'dates', label: 'Dates' },
+  { field: 'entrySubtitle', label: 'Entry Subtitle' },
+  { field: 'linkIcons', label: 'Link Icons' },
+];
+
+function ApplyToCheckbox({ label, checked, onChange }) {
+  return (
+    <label className="apply-to-checkbox">
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <span className={`apply-to-box${checked ? ' checked' : ''}`}>{checked && <IconCheck size={12} />}</span>
+      {label}
+    </label>
+  );
+}
+
+function ColorsSection({ resume, dispatch }) {
+  const colors = resume.settings.colors ?? DEFAULT_COLORS;
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_COLORS', field, value });
+  }
+  function updateApplyTo(field, value) {
+    dispatch({ type: 'UPDATE_COLORS_APPLY_TO', field, value });
+  }
+  function setAccent(hex) {
+    dispatch({ type: 'SET_ACCENT_COLOR', accentColor: hex });
+  }
+
+  const isCustom = !PRESET_COLORS.includes(resume.accentColor);
+
+  return (
+    <div className="customize-card">
+      <h2>Colors</h2>
+
+      <div className="customize-field">
+        <label>Background Scope</label>
+        <div className="layout-option-row">
+          {SCOPE_OPTIONS.map((opt) => (
+            <LayoutOption
+              key={opt.id}
+              label={opt.label}
+              active={colors.backgroundScope === opt.id}
+              onClick={() => update('backgroundScope', opt.id)}
+            >
+              <ScopePreview variant={opt.id} />
+            </LayoutOption>
+          ))}
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Fill Type</label>
+        <div className="layout-option-row">
+          {FILL_OPTIONS.map((opt) => (
+            <LayoutOption
+              key={opt.id}
+              label={opt.label}
+              active={colors.fillType === opt.id}
+              onClick={() => update('fillType', opt.id)}
+            >
+              <FillPreview variant={opt.id} />
+            </LayoutOption>
+          ))}
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Accent Color</label>
+        <div className="swatch-grid">
+          {PRESET_COLORS.map((hex) => (
+            <button
+              type="button"
+              key={hex}
+              className={`accent-swatch${resume.accentColor === hex ? ' active' : ''}`}
+              style={{ background: hex }}
+              onClick={() => setAccent(hex)}
+              aria-label={`Use ${hex}`}
+            />
+          ))}
+          <label
+            className={`accent-swatch custom${isCustom ? ' active' : ''}`}
+            style={isCustom ? { background: resume.accentColor } : undefined}
+          >
+            <input type="color" value={resume.accentColor} onChange={(e) => setAccent(e.target.value)} />
+          </label>
+        </div>
+      </div>
+
+      <div className="apply-accent-section">
+        <label>Apply Accent Color to</label>
+        <div className="apply-to-grid">
+          <div className="apply-to-col">
+            {APPLY_TO_LEFT.map((f) => (
+              <ApplyToCheckbox
+                key={f.field}
+                label={f.label}
+                checked={colors.applyTo[f.field]}
+                onChange={(v) => updateApplyTo(f.field, v)}
+              />
+            ))}
+          </div>
+          <div className="apply-to-col">
+            {APPLY_TO_RIGHT.map((f) => (
+              <ApplyToCheckbox
+                key={f.field}
+                label={f.label}
+                checked={colors.applyTo[f.field]}
+                onChange={(v) => updateApplyTo(f.field, v)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TextAlignPreview({ variant }) {
+  return (
+    <span className={`text-align-preview text-align-preview-${variant}`}>
+      <span />
+      <span />
+    </span>
+  );
+}
+
+function ArrangementPreview({ variant }) {
+  return (
+    <span className={`arrangement-preview arrangement-preview-${variant}`}>
+      <span />
+      <span />
+      <span />
+    </span>
+  );
+}
+
+const ICON_STYLE_OPTIONS = ['filled', 'muted', 'square', 'outlineSquare', 'outline', 'outlineSquareAlt', 'plain'];
+
+function HeaderSection({ resume, dispatch }) {
+  const header = resume.settings.header ?? DEFAULT_HEADER;
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_HEADER', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Header</h2>
+
+      <div className="customize-field">
+        <label>Text Alignment</label>
+        <div className="layout-option-row">
+          <LayoutOption label="Left" active={header.textAlign === 'left'} onClick={() => update('textAlign', 'left')}>
+            <TextAlignPreview variant="left" />
+          </LayoutOption>
+          <LayoutOption
+            label="Center"
+            active={header.textAlign === 'center'}
+            onClick={() => update('textAlign', 'center')}
+          >
+            <TextAlignPreview variant="center" />
+          </LayoutOption>
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Details Arrangement</label>
+        <div className="layout-option-row">
+          <LayoutOption
+            active={header.detailsArrangement === 'stacked'}
+            onClick={() => update('detailsArrangement', 'stacked')}
+          >
+            <ArrangementPreview variant="stacked" />
+          </LayoutOption>
+          <LayoutOption
+            active={header.detailsArrangement === 'inline'}
+            onClick={() => update('detailsArrangement', 'inline')}
+          >
+            <ArrangementPreview variant="inline" />
+          </LayoutOption>
+        </div>
+
+        <div className="pill-option-row">
+          <PillOption
+            label="Icon"
+            active={header.separatorStyle === 'icon'}
+            onClick={() => update('separatorStyle', 'icon')}
+          />
+          <PillOption
+            label="Bullet"
+            active={header.separatorStyle === 'bullet'}
+            onClick={() => update('separatorStyle', 'bullet')}
+          />
+          <PillOption
+            label="Bar"
+            active={header.separatorStyle === 'bar'}
+            onClick={() => update('separatorStyle', 'bar')}
+          />
+        </div>
+      </div>
+
+      {header.separatorStyle === 'icon' && (
+        <div className="customize-field">
+          <label>Icon Style</label>
+          <div className="icon-style-row">
+            {ICON_STYLE_OPTIONS.map((variant) => (
+              <button
+                key={variant}
+                type="button"
+                className={`icon-style-btn${header.iconStyle === variant ? ' active' : ''}`}
+                onClick={() => update('iconStyle', variant)}
+                aria-label={`Icon style: ${variant}`}
+              >
+                <span className={`contact-icon-wrap ${variant}`}>
+                  <IconLink size={13} />
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <button type="button" className="advanced-settings-toggle" onClick={() => setAdvancedOpen((v) => !v)}>
+        Advanced Settings
+        {advancedOpen ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
+      </button>
+      {advancedOpen && (
+        <div className="advanced-settings-body">
+          <p className="customize-card-sub">More header settings are coming soon.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const PHOTO_SIZE_OPTIONS = ['xs', 's', 'm', 'l', 'xl'];
+const PHOTO_SHAPE_OPTIONS = ['circle', 'roundedSquare', 'square', 'rectPortrait', 'rectTall'];
+
+function PhotoShapeSwatch({ variant }) {
+  return <span className={`photo-shape-swatch photo-shape-${variant}`} />;
+}
+
+function PhotoSection({ resume, dispatch }) {
+  const photo = resume.settings.photo ?? DEFAULT_PHOTO;
+  const hasPhoto = Boolean(resume.basics.photo);
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_PHOTO', field, value });
+  }
+
+  if (!hasPhoto) {
+    return (
+      <div className="customize-card customize-card-empty">
+        <h2>Photo</h2>
+        <p className="customize-card-sub">Photo design options will appear here once you add a photo 📷</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Photo</h2>
+
+      <label className="checkbox-row">
+        <input type="checkbox" checked={photo.show} onChange={(e) => update('show', e.target.checked)} />
+        Show
+      </label>
+      <label className="checkbox-row">
+        <input type="checkbox" checked={photo.grayscale} onChange={(e) => update('grayscale', e.target.checked)} />
+        Grayscale
+      </label>
+
+      <div className="customize-field">
+        <label>Photo Position</label>
+        <div className="layout-option-row">
+          <LayoutOption
+            label="Below name & title"
+            active={photo.position === 'below'}
+            onClick={() => update('position', 'below')}
+          >
+            <span className="photo-position-preview">
+              <span className="bar" />
+              <span className="dot" />
+            </span>
+          </LayoutOption>
+          <LayoutOption
+            label="Above name & title"
+            active={photo.position === 'above'}
+            onClick={() => update('position', 'above')}
+          >
+            <span className="photo-position-preview">
+              <span className="dot" />
+              <span className="bar" />
+            </span>
+          </LayoutOption>
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Size</label>
+        <div className="pill-option-row">
+          {PHOTO_SIZE_OPTIONS.map((s) => (
+            <PillOption key={s} label={s.toUpperCase()} active={photo.size === s} onClick={() => update('size', s)} />
+          ))}
+        </div>
+      </div>
+
+      <div className="customize-field">
+        <label>Shape</label>
+        <div className="photo-shape-row">
+          {PHOTO_SHAPE_OPTIONS.map((s) => (
+            <button
+              key={s}
+              type="button"
+              className={`photo-shape-btn${photo.shape === s ? ' active' : ''}`}
+              onClick={() => update('shape', s)}
+              aria-label={`Shape: ${s}`}
+            >
+              <PhotoShapeSwatch variant={s} />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LinksSection({ resume, dispatch }) {
+  const links = resume.settings.links ?? DEFAULT_LINKS;
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_LINKS', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Links</h2>
+      <p className="customize-card-sub">Controls how LinkedIn, website, and other links appear in your header.</p>
+
+      <label className="checkbox-row">
+        <input type="checkbox" checked={links.showIcons} onChange={(e) => update('showIcons', e.target.checked)} />
+        Show icons
+      </label>
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={links.showAsText}
+          onChange={(e) => update('showAsText', e.target.checked)}
+        />
+        Show link text
+      </label>
+      <label className="checkbox-row">
+        <input type="checkbox" checked={links.underline} onChange={(e) => update('underline', e.target.checked)} />
+        Underline links
+      </label>
+    </div>
+  );
+}
+
+function FooterSection({ resume, dispatch }) {
+  const footer = resume.settings.footer ?? DEFAULT_FOOTER;
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+
+  function update(field, value) {
+    dispatch({ type: 'UPDATE_FOOTER', field, value });
+  }
+
+  return (
+    <div className="customize-card">
+      <h2>Footer</h2>
+
+      <label className="checkbox-row">
+        <input
+          type="checkbox"
+          checked={footer.pageNumbers}
+          onChange={(e) => update('pageNumbers', e.target.checked)}
+        />
+        Page numbers
+      </label>
+      <label className="checkbox-row">
+        <input type="checkbox" checked={footer.email} onChange={(e) => update('email', e.target.checked)} />
+        Email
+      </label>
+      <label className="checkbox-row">
+        <input type="checkbox" checked={footer.name} onChange={(e) => update('name', e.target.checked)} />
+        Name
+      </label>
+
+      <button type="button" className="advanced-settings-toggle" onClick={() => setAdvancedOpen((v) => !v)}>
+        Advanced Settings
+        {advancedOpen ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
+      </button>
+      {advancedOpen && (
+        <div className="advanced-settings-body">
+          <p className="customize-card-sub">More footer settings are coming soon.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CustomizeUndoPill() {
   return (
     <div className="customize-undo-pill-wrap">
@@ -674,7 +1270,7 @@ function ComingSoonCard({ label }) {
   );
 }
 
-export default function CustomizePanel({ resume, dispatch }) {
+export default function CustomizePanel({ resume, dispatch, onFontPreview }) {
   const [activeSection, setActiveSection] = useState('document');
   const activeLabel = NAV_ITEMS.find((n) => n.id === activeSection)?.label ?? '';
 
@@ -706,6 +1302,20 @@ export default function CustomizePanel({ resume, dispatch }) {
           <SpacingSection resume={resume} dispatch={dispatch} />
         ) : activeSection === 'entries' ? (
           <EntriesSection resume={resume} dispatch={dispatch} onNavigate={() => setActiveSection('layout')} />
+        ) : activeSection === 'headings' ? (
+          <HeadingsSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'font' ? (
+          <FontSection resume={resume} dispatch={dispatch} onFontPreview={onFontPreview} />
+        ) : activeSection === 'colors' ? (
+          <ColorsSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'header' ? (
+          <HeaderSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'photo' ? (
+          <PhotoSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'links' ? (
+          <LinksSection resume={resume} dispatch={dispatch} />
+        ) : activeSection === 'footer' ? (
+          <FooterSection resume={resume} dispatch={dispatch} />
         ) : (
           <ComingSoonCard label={activeLabel} />
         )}

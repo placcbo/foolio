@@ -10,11 +10,19 @@ import './App.css';
 const RESUME_STORAGE_KEY = 'candidly:resume';
 const PAGE_STORAGE_KEY = 'candidly:page';
 
+// Bump this whenever a default value or settings shape changes in a way that
+// should NOT be silently inherited from an old save — otherwise stale
+// localStorage from before the change keeps overriding the new default
+// forever (merge-over-fallback can't tell "old save" from "user's choice").
+const RESUME_SCHEMA_VERSION = 2;
+
 function loadInitialResume(fallback) {
   try {
     const raw = localStorage.getItem(RESUME_STORAGE_KEY);
     if (!raw) return fallback;
     const parsed = JSON.parse(raw);
+    if (parsed.__schemaVersion !== RESUME_SCHEMA_VERSION) return fallback;
+    delete parsed.__schemaVersion;
     // Merge over the current default shape so older saves missing newer
     // fields (like visibleExtra) don't crash the app after an update.
     return {
@@ -28,6 +36,17 @@ function loadInitialResume(fallback) {
         fontSize: { ...fallback.settings.fontSize, ...parsed.settings?.fontSize },
         spacing: { ...fallback.settings.spacing, ...parsed.settings?.spacing },
         entryLayout: { ...fallback.settings.entryLayout, ...parsed.settings?.entryLayout },
+        headings: { ...fallback.settings.headings, ...parsed.settings?.headings },
+        font: { ...fallback.settings.font, ...parsed.settings?.font },
+        colors: {
+          ...fallback.settings.colors,
+          ...parsed.settings?.colors,
+          applyTo: { ...fallback.settings.colors.applyTo, ...parsed.settings?.colors?.applyTo },
+        },
+        header: { ...fallback.settings.header, ...parsed.settings?.header },
+        photo: { ...fallback.settings.photo, ...parsed.settings?.photo },
+        footer: { ...fallback.settings.footer, ...parsed.settings?.footer },
+        links: { ...fallback.settings.links, ...parsed.settings?.links },
       },
     };
   } catch (e) {
@@ -59,13 +78,33 @@ function App() {
   const [activeTab, setActiveTab] = useState('content');
   const [savedAt, setSavedAt] = useState(null);
   const paperRef = useRef(null);
+  // Hovering a Font dropdown option should live-preview it on the resume
+  // without touching saved state — only the Customize tab's preview reads this.
+  const [fontPreview, setFontPreview] = useState(null); // { field: 'body' | 'name', id } | null
+
+  function handleFontPreview(field, id) {
+    setFontPreview(id ? { field, id } : null);
+  }
+
+  const previewResume = fontPreview
+    ? {
+        ...resume,
+        settings: {
+          ...resume.settings,
+          font: { ...resume.settings.font, [fontPreview.field]: fontPreview.id },
+        },
+      }
+    : resume;
 
   // Debounced autosave — waits for a pause in typing so we're not hitting
   // localStorage on every keystroke.
   useEffect(() => {
     const id = setTimeout(() => {
       try {
-        localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify(resume));
+        localStorage.setItem(
+          RESUME_STORAGE_KEY,
+          JSON.stringify({ ...resume, __schemaVersion: RESUME_SCHEMA_VERSION })
+        );
         setSavedAt(Date.now());
       } catch (e) {
         console.warn('Could not save resume.', e);
@@ -109,8 +148,8 @@ function App() {
         </div>
       ) : activeTab === 'customize' ? (
         <div className="editor-body">
-          <CustomizePanel resume={resume} dispatch={dispatch} />
-          <ResumePreview resume={resume} paperRef={paperRef} />
+          <CustomizePanel resume={resume} dispatch={dispatch} onFontPreview={handleFontPreview} />
+          <ResumePreview resume={previewResume} paperRef={paperRef} />
         </div>
       ) : (
         <ComingSoon label={activeTab === 'overview' ? 'Overview' : 'AI Tools'} />

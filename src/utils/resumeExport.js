@@ -80,20 +80,60 @@ function entryParagraphs(entry, dateFormat, sizes) {
     );
   }
 
-  (entry.description || '')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .forEach((line) => {
-      paras.push(
-        new Paragraph({
-          spacing: { after: 40 },
-          children: [new TextRun({ text: `•  ${line}`, size: sizes.base })],
-        })
-      );
-    });
+  paras.push(...htmlToDocxParagraphs(entry.description, sizes.base));
 
   return paras;
+}
+
+function isHtmlEmpty(html) {
+  if (!html) return true;
+  return html.replace(/<[^>]*>/g, '').trim().length === 0;
+}
+
+// Summary/text sections are edited as rich text (contentEditable) and stored
+// as HTML. docx has no HTML importer, so walk the parsed DOM ourselves:
+// block elements (p/div/li) each become a Paragraph, inline b/i/u become
+// TextRun formatting, and <li> gets a bullet prefix.
+function inlineRuns(node, size, style, runs) {
+  node.childNodes.forEach((child) => {
+    if (child.nodeType === Node.TEXT_NODE) {
+      if (child.textContent) runs.push(new TextRun({ text: child.textContent, size, ...style }));
+      return;
+    }
+    if (child.nodeType !== Node.ELEMENT_NODE) return;
+    const tag = child.tagName.toLowerCase();
+    if (tag === 'br') {
+      runs.push(new TextRun({ text: '', break: 1, size }));
+      return;
+    }
+    const nextStyle = { ...style };
+    if (tag === 'b' || tag === 'strong') nextStyle.bold = true;
+    if (tag === 'i' || tag === 'em') nextStyle.italics = true;
+    if (tag === 'u') nextStyle.underline = {};
+    inlineRuns(child, size, nextStyle, runs);
+  });
+}
+
+function htmlToDocxParagraphs(html, size) {
+  if (isHtmlEmpty(html)) return [];
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const blocks = doc.body.querySelectorAll('p, div, li');
+  const paragraphs = [];
+  const nodes = blocks.length ? Array.from(blocks) : [doc.body];
+
+  nodes.forEach((node) => {
+    // Skip container divs/ps that only wrap other block elements, so text
+    // doesn't get duplicated once for the wrapper and once for its children.
+    if (node !== doc.body && node.querySelector('p, div, li')) return;
+    const runs = [];
+    inlineRuns(node, size, {}, runs);
+    if (!runs.length) return;
+    const bullet = node.tagName?.toLowerCase() === 'li';
+    if (bullet) runs.unshift(new TextRun({ text: '•  ', size }));
+    paragraphs.push(new Paragraph({ spacing: { after: 40 }, children: runs }));
+  });
+
+  return paragraphs;
 }
 
 function sectionParagraphs(section, dateFormat, sizes) {
@@ -108,9 +148,7 @@ function sectionParagraphs(section, dateFormat, sizes) {
   ];
 
   if (section.kind === 'text') {
-    if (section.content) {
-      paras.push(new Paragraph({ children: [new TextRun({ text: section.content, size: sizes.base })] }));
-    }
+    paras.push(...htmlToDocxParagraphs(section.content, sizes.base));
   } else if (section.kind === 'tags') {
     if (section.tags?.length) {
       paras.push(
@@ -119,7 +157,7 @@ function sectionParagraphs(section, dateFormat, sizes) {
     }
   } else if (section.kind === 'entries') {
     (section.entries || [])
-      .filter((e) => e.heading || e.subheading || e.description || e.location || e.start || e.end)
+      .filter((e) => !e.hidden && (e.heading || e.subheading || e.description || e.location || e.start || e.end))
       .forEach((entry) => paras.push(...entryParagraphs(entry, dateFormat, sizes)));
   }
 
@@ -166,7 +204,9 @@ export async function exportResumeAsDocx(resume) {
     );
   }
 
-  sections.forEach((section) => children.push(...sectionParagraphs(section, dateFormat, sizes)));
+  sections
+    .filter((section) => !section.hidden)
+    .forEach((section) => children.push(...sectionParagraphs(section, dateFormat, sizes)));
 
   const doc = new Document({
     sections: [{ properties: { page: { size: pageSize } }, children }],

@@ -1,62 +1,18 @@
-import { getContactItems, splitSections, HeaderBlock, SplitLayout, getFontSizes, getSpacing, ContactItem, EntryBlock } from './shared';
+import {
+  getContactItems,
+  splitSections,
+  HeaderBlock,
+  SplitLayout,
+  SectionBody,
+  SectionHeading,
+  ResumeFooter,
+  isHtmlEmpty,
+  getFontSizes,
+  getSpacing,
+  getFontFamilies,
+} from './shared';
+import { getColorDecoration } from '../../utils/colorUtils';
 import { DEFAULT_LAYOUT } from '../../state/resumeReducer';
-
-function CleanHeading({ children, fontSize }) {
-  return <h4 className="clean-heading" style={{ fontSize }}>{children}</h4>;
-}
-
-function CleanText({ section, headingFontSize }) {
-  return (
-    <section className="clean-section">
-      <CleanHeading fontSize={headingFontSize}>{section.title}</CleanHeading>
-      <p className={section.content ? 'clean-text' : 'clean-text placeholder'}>
-        {section.content || `Add your ${section.title.toLowerCase()}...`}
-      </p>
-    </section>
-  );
-}
-
-function CleanTagsGrid({ section, headingFontSize }) {
-  return (
-    <section className="clean-section">
-      <CleanHeading fontSize={headingFontSize}>{section.title}</CleanHeading>
-      {section.tags.length > 0 ? (
-        <ul className="clean-tags-grid">
-          {section.tags.map((tag, i) => (
-            <li key={i}>{tag}</li>
-          ))}
-        </ul>
-      ) : (
-        <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>
-      )}
-    </section>
-  );
-}
-
-function CleanEntries({ section, dateFormat, headingFontSize, entryHeaderFontSize, entryLayout }) {
-  const entries = section.entries.filter(
-    (e) => e.heading || e.subheading || e.description || e.location || e.start || e.end
-  );
-
-  return (
-    <section className="clean-section">
-      <CleanHeading fontSize={headingFontSize}>{section.title}</CleanHeading>
-      {entries.length === 0 && (
-        <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>
-      )}
-      {entries.map((entry) => (
-        <EntryBlock
-          key={entry.id}
-          entry={entry}
-          dateFormat={dateFormat}
-          entryLayout={entryLayout}
-          entryHeaderFontSize={entryHeaderFontSize}
-          variant="clean"
-        />
-      ))}
-    </section>
-  );
-}
 
 export default function CleanTemplate({ resume }) {
   const { basics, sections, settings, accentColor } = resume;
@@ -64,26 +20,48 @@ export default function CleanTemplate({ resume }) {
   const layout = settings?.layout ?? DEFAULT_LAYOUT;
   const { basePt, nameFontSize, headingFontSize, entryHeaderFontSize } = getFontSizes(settings);
   const { lineHeight, spaceOffsetPx, marginLRpx, marginTBpx } = getSpacing(settings);
+  const { bodyFontFamily, nameFontFamily } = getFontFamilies(settings);
   const entryLayout = settings?.entryLayout;
+  const headings = settings?.headings;
+  const header = settings?.header;
+  const photo = settings?.photo;
+  const colors = settings?.colors;
+  const links = settings?.links;
   const contactItems = getContactItems(basics);
-  const paperVars = { fontSize: `${basePt}pt`, lineHeight, '--space-offset': `${spaceOffsetPx}px` };
+  const visibleSections = sections.filter((s) => !s.hidden);
+  const { paperStyle, headerColored, headerFill } = getColorDecoration(colors, accentColor);
+  const paperVars = {
+    fontSize: `${basePt}pt`,
+    lineHeight,
+    fontFamily: bodyFontFamily,
+    '--space-offset': `${spaceOffsetPx}px`,
+    ...paperStyle,
+  };
+
+  const headerBlock = (
+    <HeaderBlock
+      basics={basics}
+      contactItems={contactItems}
+      colored={layout.columns === 'mix' || headerColored}
+      accentColor={accentColor}
+      nameFontSize={nameFontSize}
+      nameFontFamily={nameFontFamily}
+      header={header}
+      photo={photo}
+      colors={colors}
+      links={links}
+      headerFill={headerFill}
+      marginLRpx={layout.columns !== 'one' ? marginLRpx : undefined}
+      marginTBpx={layout.columns !== 'one' ? marginTBpx : undefined}
+    />
+  );
 
   if (layout.columns !== 'one') {
-    const { sidebarSections, mainSections } = splitSections(sections);
+    const { sidebarSections, mainSections } = splitSections(visibleSections);
     return (
       <div className="paper clean-paper tpl-split-paper" style={paperVars}>
         <SplitLayout
-          headerContent={
-            <HeaderBlock
-              basics={basics}
-              contactItems={contactItems}
-              colored={layout.columns === 'mix'}
-              accentColor={accentColor}
-              nameFontSize={nameFontSize}
-              marginLRpx={marginLRpx}
-              marginTBpx={marginTBpx}
-            />
-          }
+          headerContent={headerBlock}
           headerPosition={layout.headerPosition}
           columnWidth={layout.columnWidth}
           sidebarSections={sidebarSections}
@@ -92,6 +70,9 @@ export default function CleanTemplate({ resume }) {
           headingFontSize={headingFontSize}
           entryHeaderFontSize={entryHeaderFontSize}
           entryLayout={entryLayout}
+          headings={headings}
+          colors={colors}
+          accentColor={accentColor}
           marginLRpx={marginLRpx}
           marginTBpx={marginTBpx}
         />
@@ -100,48 +81,56 @@ export default function CleanTemplate({ resume }) {
             Click <strong>Add Content</strong> on the left to start building your resume.
           </p>
         )}
+        <ResumeFooter footer={settings?.footer} basics={basics} />
       </div>
     );
   }
 
   return (
-    <div className="paper clean-paper" style={{ ...paperVars, padding: `${marginTBpx}px ${marginLRpx}px` }}>
-      <header className="clean-header">
-        <h1 className="clean-name" style={{ fontSize: nameFontSize }}>{basics.name || 'Your name'}</h1>
-        {basics.title && <p className="clean-role">{basics.title}</p>}
-        {contactItems.length > 0 && (
-          <div className="clean-contact">
-            {contactItems.map((item) => (
-              <ContactItem key={item.key} item={item} iconSize={13} />
-            ))}
-          </div>
-        )}
-      </header>
+    <div
+      className={`paper clean-paper${headerColored ? ' tpl-flat-header-colored' : ''}`}
+      style={{ ...paperVars, padding: `${marginTBpx}px ${marginLRpx}px` }}
+    >
+      {headerBlock}
 
-      {sections.map((section) => {
-        if (section.kind === 'text')
-          return <CleanText key={section.id} section={section} headingFontSize={headingFontSize} />;
-        if (section.kind === 'tags')
-          return <CleanTagsGrid key={section.id} section={section} headingFontSize={headingFontSize} />;
-        if (section.kind === 'entries')
-          return (
-            <CleanEntries
-              key={section.id}
-              section={section}
-              dateFormat={dateFormat}
-              headingFontSize={headingFontSize}
-              entryHeaderFontSize={entryHeaderFontSize}
-              entryLayout={entryLayout}
-            />
-          );
-        return null;
-      })}
+      {visibleSections.map((section) => (
+        <section className="clean-section" key={section.id}>
+          <SectionHeading
+            title={section.title}
+            sectionType={section.type}
+            fontSize={headingFontSize}
+            headings={headings}
+            colors={colors}
+            accentColor={accentColor}
+          />
+          <SectionBody
+            section={section}
+            dateFormat={dateFormat}
+            entryHeaderFontSize={entryHeaderFontSize}
+            entryLayout={entryLayout}
+            variant="clean"
+            colors={colors}
+            accentColor={accentColor}
+          />
+          {section.kind === 'text' && isHtmlEmpty(section.content) && (
+            <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>
+          )}
+          {section.kind === 'tags' && section.tags.length === 0 && (
+            <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>
+          )}
+          {section.kind === 'entries' &&
+            section.entries.filter(
+              (e) => !e.hidden && (e.heading || e.subheading || e.description || e.location || e.start || e.end)
+            ).length === 0 && <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>}
+        </section>
+      ))}
 
       {sections.length === 0 && (
         <p className="preview-empty">
           Click <strong>Add Content</strong> on the left to start building your resume.
         </p>
       )}
+      <ResumeFooter footer={settings?.footer} basics={basics} />
     </div>
   );
 }
