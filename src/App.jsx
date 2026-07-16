@@ -14,7 +14,7 @@ const PAGE_STORAGE_KEY = 'candidly:page';
 // should NOT be silently inherited from an old save — otherwise stale
 // localStorage from before the change keeps overriding the new default
 // forever (merge-over-fallback can't tell "old save" from "user's choice").
-const RESUME_SCHEMA_VERSION = 2;
+const RESUME_SCHEMA_VERSION = 3;
 
 function loadInitialResume(fallback) {
   try {
