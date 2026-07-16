@@ -34,7 +34,7 @@ export const TEMPLATES = [
     id: 'classic',
     name: 'Classic',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive'],
     swatches: ['#1c4966', '#000000', '#3d2a6b', '#5c2340'],
     preset: {
       font: { body: 'lora' },
@@ -58,7 +58,7 @@ export const TEMPLATES = [
     id: 'scholar',
     name: 'Scholar',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive'],
     swatches: ['#3d2a6b', '#000000', '#5c2340', '#1c4966'],
     preset: {
       font: { body: 'playfair' },
@@ -70,7 +70,7 @@ export const TEMPLATES = [
     id: 'clarity',
     name: 'Clarity',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'modern'],
+    categories: ['simple', 'one-column', 'ats', 'modern', 'popular'],
     swatches: ['#2a8fbd', '#000000', '#3f6f6b', '#4fa3e0'],
     preset: {
       font: { body: 'inter' },
@@ -98,7 +98,7 @@ export const TEMPLATES = [
     id: 'foundation',
     name: 'Foundation',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats'],
+    categories: ['simple', 'one-column', 'ats', 'executive'],
     swatches: ['#3f6f6b', '#000000', '#2a8fbd', '#5c2340'],
     preset: {
       font: { body: 'opensans' },
@@ -122,7 +122,7 @@ export const TEMPLATES = [
     id: 'meridian',
     name: 'Meridian',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive', 'popular'],
     swatches: ['#1c4966', '#3d2a6b', '#000000', '#c23b83'],
     preset: {
       font: { body: 'lora' },
@@ -135,7 +135,7 @@ export const TEMPLATES = [
     id: 'ledger',
     name: 'Ledger',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats'],
+    categories: ['simple', 'one-column', 'ats', 'executive'],
     swatches: ['#000000', '#3f4b54', '#5c2340', '#7fa5c9'],
     preset: {
       font: { body: 'alegreya' },
@@ -147,7 +147,7 @@ export const TEMPLATES = [
     id: 'compass',
     name: 'Compass',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive'],
     swatches: ['#2f6fb0', '#000000', '#1c4966', '#3f6f6b'],
     preset: {
       font: { body: 'merriweather' },
@@ -159,7 +159,7 @@ export const TEMPLATES = [
     id: 'summit',
     name: 'Summit',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'creative'],
     swatches: ['#000000', '#5c2340', '#3d2a6b', '#b97a8b'],
     preset: {
       font: { body: 'playfair' },
@@ -171,7 +171,7 @@ export const TEMPLATES = [
     id: 'anchor',
     name: 'Anchor',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats'],
+    categories: ['simple', 'one-column', 'ats', 'executive'],
     swatches: ['#1c4966', '#000000', '#3f4b54', '#2a8fbd'],
     preset: {
       font: { body: 'roboto' },
@@ -183,7 +183,7 @@ export const TEMPLATES = [
     id: 'bloom',
     name: 'Bloom',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats', 'modern'],
+    categories: ['simple', 'one-column', 'ats', 'modern', 'creative'],
     swatches: ['#c23b83', '#000000', '#b97a8b', '#e8615f'],
     preset: {
       font: { body: 'opensans' },
@@ -209,7 +209,7 @@ export const TEMPLATES = [
     id: 'aster',
     name: 'Aster',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats'],
+    categories: ['simple', 'one-column', 'ats', 'creative'],
     swatches: ['#3d2a6b', '#000000', '#c23b83', '#5c2340'],
     preset: {
       font: { body: 'montserrat' },
@@ -222,7 +222,7 @@ export const TEMPLATES = [
     id: 'birch',
     name: 'Birch',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive'],
     swatches: ['#3f6f6b', '#000000', '#1c4966', '#93b0bb'],
     preset: {
       font: { body: 'lora' },
@@ -234,7 +234,7 @@ export const TEMPLATES = [
     id: 'cedar',
     name: 'Cedar',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive'],
     swatches: ['#5c2340', '#000000', '#3f4b54', '#1c4966'],
     preset: {
       font: { body: 'merriweather' },
@@ -248,7 +248,7 @@ export const TEMPLATES = [
     id: 'slate',
     name: 'Slate',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats'],
+    categories: ['simple', 'one-column', 'ats', 'popular'],
     swatches: ['#3f4b54', '#000000', '#2f6fb0', '#7fa5c9'],
     preset: {
       font: { body: 'alegreya' },
@@ -261,7 +261,7 @@ export const TEMPLATES = [
     id: 'ivy',
     name: 'Ivy',
     layout: 'clean',
-    categories: ['simple', 'one-column', 'ats', 'modern'],
+    categories: ['simple', 'one-column', 'ats', 'modern', 'popular'],
     swatches: ['#3f6f6b', '#000000', '#2a8fbd', '#3d2a6b'],
     preset: {
       font: { body: 'roboto' },
@@ -277,7 +277,7 @@ export const TEMPLATES = [
     id: 'presence',
     name: 'Presence',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'modern', 'popular'],
+    categories: ['simple', 'one-column', 'ats', 'modern', 'popular', 'creative'],
     swatches: ['#1c4966', '#000000', '#3f6f6b', '#5c2340'],
     preset: {
       font: { body: 'inter' },
@@ -305,7 +305,7 @@ export const TEMPLATES = [
     id: 'vantage',
     name: 'Vantage',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'modern'],
+    categories: ['simple', 'one-column', 'ats', 'modern', 'creative'],
     swatches: ['#3f6f6b', '#000000', '#2a8fbd', '#c23b83'],
     preset: {
       font: { body: 'opensans' },
@@ -319,7 +319,7 @@ export const TEMPLATES = [
     id: 'element',
     name: 'Element',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'modern'],
+    categories: ['simple', 'one-column', 'ats', 'modern', 'creative'],
     swatches: ['#3d2a6b', '#000000', '#c23b83', '#5c2340'],
     preset: {
       font: { body: 'montserrat' },
@@ -333,7 +333,7 @@ export const TEMPLATES = [
     id: 'keystone',
     name: 'Keystone',
     layout: 'onecolumn',
-    categories: ['simple', 'one-column', 'ats', 'professional'],
+    categories: ['simple', 'one-column', 'ats', 'professional', 'executive'],
     swatches: ['#5c2340', '#000000', '#1c4966', '#3f4b54'],
     preset: {
       font: { body: 'lora' },
@@ -341,6 +341,299 @@ export const TEMPLATES = [
       photo: { show: true, shape: 'circle', size: 'l' },
       headings: { style: 'shadedBar', capitalization: 'uppercase', icons: 'filled' },
       header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+
+  // Sidebar layout: a solid-colored aside column (contact/skills/languages)
+  // next to a white main column — bolder and more graphic than the "simple"
+  // family above, so these anchor the Creative/Modern/Popular categories.
+  {
+    id: 'atelier',
+    name: 'Atelier',
+    layout: 'sidebar',
+    categories: ['modern', 'creative', 'popular'],
+    swatches: ['#2f6fb0', '#3d2a6b', '#c23b83', '#0f766e'],
+    preset: {
+      font: { body: 'montserrat' },
+      headings: { style: 'boldOnly', capitalization: 'uppercase', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'quartz',
+    name: 'Quartz',
+    layout: 'sidebar',
+    categories: ['modern', 'creative', 'professional'],
+    swatches: ['#1c4966', '#3f6f6b', '#5c2340', '#000000'],
+    preset: {
+      font: { body: 'inter' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'lineBelow', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'lumen',
+    name: 'Lumen',
+    layout: 'sidebar',
+    categories: ['modern', 'creative', 'popular'],
+    swatches: ['#c23b83', '#3d2a6b', '#e8615f', '#5c2340'],
+    preset: {
+      font: { body: 'opensans' },
+      headings: { style: 'boxed', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'granite',
+    name: 'Granite',
+    layout: 'sidebar',
+    categories: ['modern', 'professional', 'executive'],
+    swatches: ['#3f4b54', '#000000', '#1c4966', '#2f6fb0'],
+    preset: {
+      font: { body: 'roboto' },
+      photo: { show: true, shape: 'roundedSquare', size: 'm' },
+      headings: { style: 'compact', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'orchid',
+    name: 'Orchid',
+    layout: 'sidebar',
+    categories: ['creative', 'modern', 'popular'],
+    swatches: ['#b97a8b', '#c23b83', '#3d2a6b', '#e8615f'],
+    preset: {
+      font: { body: 'playfair' },
+      headings: { style: 'underlineDotted', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'basalt',
+    name: 'Basalt',
+    layout: 'sidebar',
+    categories: ['professional', 'executive', 'modern'],
+    swatches: ['#000000', '#3f4b54', '#1c4966', '#5c2340'],
+    preset: {
+      font: { body: 'merriweather' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'accentBar', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'cobalt',
+    name: 'Cobalt',
+    layout: 'sidebar',
+    categories: ['modern', 'creative', 'executive'],
+    swatches: ['#2a8fbd', '#1c4966', '#4fa3e0', '#000000'],
+    preset: {
+      font: { body: 'inter' },
+      headings: { style: 'boldOnly', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'saffron',
+    name: 'Saffron',
+    layout: 'sidebar',
+    categories: ['creative', 'popular', 'modern'],
+    swatches: ['#e8615f', '#c23b83', '#5c2340', '#3d2a6b'],
+    preset: {
+      font: { body: 'montserrat' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'boxed', capitalization: 'uppercase', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'sequoia',
+    name: 'Sequoia',
+    layout: 'sidebar',
+    categories: ['professional', 'executive', 'popular'],
+    swatches: ['#3f6f6b', '#1c4966', '#000000', '#3f4b54'],
+    preset: {
+      font: { body: 'lora' },
+      headings: { style: 'lineBelow', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'marlow',
+    name: 'Marlow',
+    layout: 'sidebar',
+    categories: ['modern', 'creative', 'professional'],
+    swatches: ['#3d2a6b', '#5c2340', '#c23b83', '#1c4966'],
+    preset: {
+      font: { body: 'roboto' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'compact', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'onyx',
+    name: 'Onyx',
+    layout: 'sidebar',
+    categories: ['executive', 'professional', 'modern'],
+    swatches: ['#000000', '#3f4b54', '#1c4966', '#5c2340'],
+    preset: {
+      font: { body: 'merriweather' },
+      headings: { style: 'underlineShort', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'flint',
+    name: 'Flint',
+    layout: 'sidebar',
+    categories: ['modern', 'popular', 'creative'],
+    swatches: ['#2f6fb0', '#0f766e', '#7fa5c9', '#000000'],
+    preset: {
+      font: { body: 'opensans' },
+      photo: { show: true, shape: 'roundedSquare', size: 'm' },
+      headings: { style: 'boldOnly', capitalization: 'uppercase', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+
+  // Banner layout: a full-width colored header band — the boldest, most
+  // graphic identity of the bunch, rounding out Creative/Modern/Executive.
+  {
+    id: 'skyline',
+    name: 'Skyline',
+    layout: 'banner',
+    categories: ['modern', 'creative', 'popular'],
+    swatches: ['#2f6fb0', '#1c4966', '#4fa3e0', '#000000'],
+    preset: {
+      font: { body: 'montserrat' },
+      headings: { style: 'boldOnly', capitalization: 'uppercase', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'harbor',
+    name: 'Harbor',
+    layout: 'banner',
+    categories: ['modern', 'professional', 'executive'],
+    swatches: ['#1c4966', '#3f4b54', '#000000', '#3f6f6b'],
+    preset: {
+      font: { body: 'inter' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'lineBelow', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'crescent',
+    name: 'Crescent',
+    layout: 'banner',
+    categories: ['creative', 'modern', 'popular'],
+    swatches: ['#c23b83', '#3d2a6b', '#e8615f', '#5c2340'],
+    preset: {
+      font: { body: 'playfair' },
+      headings: { style: 'underlineDotted', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'redwood',
+    name: 'Redwood',
+    layout: 'banner',
+    categories: ['professional', 'executive', 'modern'],
+    swatches: ['#5c2340', '#3f4b54', '#000000', '#1c4966'],
+    preset: {
+      font: { body: 'merriweather' },
+      headings: { style: 'accentBar', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'zephyr',
+    name: 'Zephyr',
+    layout: 'banner',
+    categories: ['creative', 'modern', 'popular'],
+    swatches: ['#0f766e', '#3f6f6b', '#2a8fbd', '#000000'],
+    preset: {
+      font: { body: 'opensans' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'boxed', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'vertex',
+    name: 'Vertex',
+    layout: 'banner',
+    categories: ['modern', 'executive', 'popular'],
+    swatches: ['#3d2a6b', '#1c4966', '#5c2340', '#000000'],
+    preset: {
+      font: { body: 'roboto' },
+      headings: { style: 'compact', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'ember',
+    name: 'Ember',
+    layout: 'banner',
+    categories: ['creative', 'popular', 'modern'],
+    swatches: ['#e8615f', '#c23b83', '#5c2340', '#3d2a6b'],
+    preset: {
+      font: { body: 'montserrat' },
+      headings: { style: 'boldOnly', capitalization: 'uppercase', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'monarch',
+    name: 'Monarch',
+    layout: 'banner',
+    categories: ['executive', 'professional', 'popular'],
+    swatches: ['#1c4966', '#000000', '#3f4b54', '#2f6fb0'],
+    preset: {
+      font: { body: 'lora' },
+      photo: { show: true, shape: 'circle', size: 'm' },
+      headings: { style: 'lineBelow', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'juniper',
+    name: 'Juniper',
+    layout: 'banner',
+    categories: ['creative', 'modern', 'professional'],
+    swatches: ['#3f6f6b', '#0f766e', '#2a8fbd', '#000000'],
+    preset: {
+      font: { body: 'inter' },
+      headings: { style: 'underlineShort', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'obsidian',
+    name: 'Obsidian',
+    layout: 'banner',
+    categories: ['executive', 'professional', 'modern'],
+    swatches: ['#000000', '#3f4b54', '#5c2340', '#1c4966'],
+    preset: {
+      font: { body: 'merriweather' },
+      photo: { show: true, shape: 'roundedSquare', size: 'm' },
+      headings: { style: 'boxed', capitalization: 'uppercase', icons: 'none' },
+      header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'canyon',
+    name: 'Canyon',
+    layout: 'banner',
+    categories: ['modern', 'popular', 'creative'],
+    swatches: ['#c23b83', '#e8615f', '#3d2a6b', '#5c2340'],
+    preset: {
+      font: { body: 'opensans' },
+      headings: { style: 'accentBar', capitalization: 'capitalize', icons: 'outline' },
+      header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
     },
   },
 ];
@@ -351,4 +644,6 @@ export const FILTERS = [
   { id: 'simple', label: 'Simple' },
   { id: 'modern', label: 'Modern' },
   { id: 'creative', label: 'Creative' },
+  { id: 'professional', label: 'Professional' },
+  { id: 'executive', label: 'Executive' },
 ];
