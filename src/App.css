@@ -1414,9 +1414,15 @@
   padding: 0;
   display: flex;
   flex-flow: row wrap;
-  gap: 4px 22px;
+  gap: 4px 14px;
   font-size: 0.893em;
   color: #3a3742;
+}
+
+.tpl-taglist li:not(:last-child)::after {
+  content: '|';
+  margin-left: 14px;
+  color: #c7c4cc;
 }
 
 .tpl-entry {
@@ -2922,6 +2928,10 @@
   height: 5px;
   border-radius: 50%;
   background: var(--dot-accent, #9c98a3);
+}
+
+.tpl-taglist-dotted li:not(:last-child)::after {
+  content: none;
 }
 
 .entry-bullets-accent-marker li::marker {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { IconX, IconStar, IconBox, IconHexagon, IconPalette } from './icons';
 import { TEMPLATES, FILTERS } from '../data/templates';
 import { TEMPLATE_COMPONENTS } from './templates';
+import { applyPresetToSettings } from '../utils/templatePreset';
 
 const FILTER_ICONS = {
   popular: IconStar,
@@ -68,7 +69,12 @@ export default function ApplyTemplateModal({ resume, dispatch, onClose }) {
             {visible.map((t) => {
               const Template = TEMPLATE_COMPONENTS[t.layout];
               const active = resume.templateId === t.layout;
-              const previewResume = { ...resume, templateId: t.layout, accentColor: t.swatches[0] };
+              const previewResume = {
+                ...resume,
+                templateId: t.layout,
+                accentColor: t.swatches[0],
+                settings: applyPresetToSettings(resume.settings, t.preset),
+              };
               return (
                 <button
                   type="button"

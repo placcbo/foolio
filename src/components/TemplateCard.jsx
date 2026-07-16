@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { TEMPLATE_COMPONENTS } from './templates';
 import { SAMPLE_RESUME } from '../data/sampleResume';
+import { TEMPLATE_SAMPLES } from '../data/templateSamples';
+import { initialResumeState } from '../state/resumeReducer';
+import { applyPresetToSettings } from '../utils/templatePreset';
 import PreviewModal from './PreviewModal';
 
 const SCALE = 0.34;
@@ -9,7 +12,9 @@ export default function TemplateCard({ template, onSelect }) {
   const [color, setColor] = useState(template.swatches[0]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const Template = TEMPLATE_COMPONENTS[template.layout];
-  const previewResume = { ...SAMPLE_RESUME, templateId: template.layout, accentColor: color };
+  const sample = TEMPLATE_SAMPLES[template.id] || SAMPLE_RESUME;
+  const settings = applyPresetToSettings(initialResumeState.settings, template.preset);
+  const previewResume = { ...sample, templateId: template.layout, accentColor: color, settings };
 
   return (
     <div className="template-card">

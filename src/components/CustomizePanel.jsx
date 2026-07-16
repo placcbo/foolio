@@ -16,6 +16,7 @@ import { TEMPLATES } from '../data/templates';
 import { TEMPLATE_COMPONENTS } from './templates';
 import { FONT_OPTIONS } from '../data/fonts';
 import { PRESET_COLORS } from '../data/colors';
+import { applyPresetToSettings } from '../utils/templatePreset';
 import {
   DEFAULT_LAYOUT,
   DEFAULT_FONT_SIZE,
@@ -95,7 +96,12 @@ function DesignTemplates({ resume, dispatch }) {
         {stripTemplates.map((t) => {
           const Template = TEMPLATE_COMPONENTS[t.layout];
           const active = resume.templateId === t.layout;
-          const thumbResume = { ...resume, templateId: t.layout, accentColor: t.swatches[0] };
+          const thumbResume = {
+            ...resume,
+            templateId: t.layout,
+            accentColor: t.swatches[0],
+            settings: applyPresetToSettings(resume.settings, t.preset),
+          };
           return (
             <button
               type="button"

@@ -27,6 +27,7 @@ export const TEMPLATES = [
       font: { body: 'alegreya' },
       headings: { style: 'lineBelow', capitalization: 'uppercase', icons: 'none' },
       header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'sameLine' },
     },
   },
   {
@@ -73,8 +74,10 @@ export const TEMPLATES = [
     swatches: ['#2a8fbd', '#000000', '#3f6f6b', '#4fa3e0'],
     preset: {
       font: { body: 'inter' },
-      headings: { style: 'plain', capitalization: 'capitalize', icons: 'none' },
+      headings: { style: 'underlineShort', capitalization: 'capitalize', icons: 'none' },
       header: { textAlign: 'left', detailsArrangement: 'inline', iconStyle: 'outline' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'belowDate' },
+      colors: { applyTo: { headings: true, headingsLine: true, name: true } },
     },
   },
   {
@@ -82,11 +85,13 @@ export const TEMPLATES = [
     name: 'Precision',
     layout: 'clean',
     categories: ['simple', 'one-column', 'ats', 'modern'],
-    swatches: ['#000000', '#3f4b54', '#2f6fb0', '#1c4966'],
+    swatches: ['#2f6fb0', '#000000', '#3f4b54', '#1c4966'],
     preset: {
       font: { body: 'roboto' },
       headings: { style: 'compact', capitalization: 'uppercase', icons: 'none' },
       header: { textAlign: 'left', detailsArrangement: 'inline', iconStyle: 'square' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'belowDate' },
+      colors: { applyTo: { headings: true, name: true } },
     },
   },
   {
@@ -123,6 +128,7 @@ export const TEMPLATES = [
       font: { body: 'lora' },
       headings: { style: 'underlineDotted', capitalization: 'capitalize', icons: 'none' },
       header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'plain' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'sameLine' },
     },
   },
   {
@@ -190,11 +196,13 @@ export const TEMPLATES = [
     name: 'Nordic',
     layout: 'onecolumn',
     categories: ['simple', 'one-column', 'ats', 'modern'],
-    swatches: ['#93b0bb', '#000000', '#3f4b54', '#2a8fbd'],
+    swatches: ['#2a8fbd', '#93b0bb', '#000000', '#3f4b54'],
     preset: {
       font: { body: 'inter' },
       headings: { style: 'compact', capitalization: 'uppercase', icons: 'none' },
       header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'belowDate' },
+      colors: { applyTo: { headings: true, name: true } },
     },
   },
   {
@@ -207,6 +215,7 @@ export const TEMPLATES = [
       font: { body: 'montserrat' },
       headings: { style: 'boxed', capitalization: 'capitalize', icons: 'none' },
       header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'muted' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'sameLine' },
     },
   },
   {
@@ -226,11 +235,13 @@ export const TEMPLATES = [
     name: 'Cedar',
     layout: 'clean',
     categories: ['simple', 'one-column', 'ats', 'professional'],
-    swatches: ['#000000', '#3f4b54', '#5c2340', '#1c4966'],
+    swatches: ['#5c2340', '#000000', '#3f4b54', '#1c4966'],
     preset: {
       font: { body: 'merriweather' },
       headings: { style: 'lineBelow', capitalization: 'uppercase', icons: 'none' },
       header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'outline' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'belowDate' },
+      colors: { applyTo: { headings: true, headingsLine: true, name: true } },
     },
   },
   {
@@ -243,6 +254,7 @@ export const TEMPLATES = [
       font: { body: 'alegreya' },
       headings: { style: 'underlineDotted', capitalization: 'uppercase', icons: 'none' },
       header: { textAlign: 'center', detailsArrangement: 'inline', iconStyle: 'square' },
+      entryLayout: { subtitlePlacement: 'sameLine', locationPlacement: 'sameLine' },
     },
   },
   {

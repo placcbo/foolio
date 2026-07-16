@@ -1,4 +1,5 @@
 import { getSectionMeta } from '../data/sectionTypes';
+import { applyPresetToSettings } from '../utils/templatePreset';
 
 export const DEFAULT_LAYOUT = { columns: 'one', headerPosition: 'top', columnWidth: 50 };
 
@@ -145,19 +146,14 @@ export function resumeReducer(state, action) {
       // each template is a curated bundle of color + font + heading style,
       // not just a layout. `preset` carries the non-layout parts; anything
       // it doesn't mention is left as the user already had it.
-      const preset = action.preset || {};
+      const withPreset = applyPresetToSettings(state.settings, action.preset);
       return {
         ...state,
         templateId: action.templateId,
         accentColor: action.accentColor ?? state.accentColor,
         settings: {
-          ...state.settings,
+          ...withPreset,
           layout: TEMPLATE_DEFAULT_LAYOUT[action.templateId] || state.settings.layout,
-          ...(preset.font && { font: { ...state.settings.font, ...preset.font } }),
-          ...(preset.headings && { headings: { ...state.settings.headings, ...preset.headings } }),
-          ...(preset.header && { header: { ...state.settings.header, ...preset.header } }),
-          ...(preset.spacing && { spacing: { ...state.settings.spacing, ...preset.spacing } }),
-          ...(preset.entryLayout && { entryLayout: { ...state.settings.entryLayout, ...preset.entryLayout } }),
         },
       };
     }
