@@ -249,6 +249,15 @@
   color: #0d9488;
 }
 
+.save-indicator-error {
+  color: #b91c1c;
+  cursor: help;
+}
+
+.save-indicator-error svg {
+  color: #b91c1c;
+}
+
 .resume-select {
   display: flex;
   align-items: center;

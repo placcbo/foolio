@@ -21,33 +21,40 @@ function loadInitialResume(fallback) {
     const raw = localStorage.getItem(RESUME_STORAGE_KEY);
     if (!raw) return fallback;
     const parsed = JSON.parse(raw);
-    if (parsed.__schemaVersion !== RESUME_SCHEMA_VERSION) return fallback;
+    // A schema mismatch means the SETTINGS shape/defaults changed underneath
+    // an old save, so those get reset to the fresh defaults below. It must
+    // NOT throw away the user's actual resume — name, sections, every entry
+    // they've written — that content merges in unconditionally either way.
+    const settingsMatch = parsed.__schemaVersion === RESUME_SCHEMA_VERSION;
     delete parsed.__schemaVersion;
+
     // Merge over the current default shape so older saves missing newer
     // fields (like visibleExtra) don't crash the app after an update.
     return {
       ...fallback,
       ...parsed,
       basics: { ...fallback.basics, ...parsed.basics },
-      settings: {
-        ...fallback.settings,
-        ...parsed.settings,
-        layout: { ...fallback.settings.layout, ...parsed.settings?.layout },
-        fontSize: { ...fallback.settings.fontSize, ...parsed.settings?.fontSize },
-        spacing: { ...fallback.settings.spacing, ...parsed.settings?.spacing },
-        entryLayout: { ...fallback.settings.entryLayout, ...parsed.settings?.entryLayout },
-        headings: { ...fallback.settings.headings, ...parsed.settings?.headings },
-        font: { ...fallback.settings.font, ...parsed.settings?.font },
-        colors: {
-          ...fallback.settings.colors,
-          ...parsed.settings?.colors,
-          applyTo: { ...fallback.settings.colors.applyTo, ...parsed.settings?.colors?.applyTo },
-        },
-        header: { ...fallback.settings.header, ...parsed.settings?.header },
-        photo: { ...fallback.settings.photo, ...parsed.settings?.photo },
-        footer: { ...fallback.settings.footer, ...parsed.settings?.footer },
-        links: { ...fallback.settings.links, ...parsed.settings?.links },
-      },
+      settings: settingsMatch
+        ? {
+            ...fallback.settings,
+            ...parsed.settings,
+            layout: { ...fallback.settings.layout, ...parsed.settings?.layout },
+            fontSize: { ...fallback.settings.fontSize, ...parsed.settings?.fontSize },
+            spacing: { ...fallback.settings.spacing, ...parsed.settings?.spacing },
+            entryLayout: { ...fallback.settings.entryLayout, ...parsed.settings?.entryLayout },
+            headings: { ...fallback.settings.headings, ...parsed.settings?.headings },
+            font: { ...fallback.settings.font, ...parsed.settings?.font },
+            colors: {
+              ...fallback.settings.colors,
+              ...parsed.settings?.colors,
+              applyTo: { ...fallback.settings.colors.applyTo, ...parsed.settings?.colors?.applyTo },
+            },
+            header: { ...fallback.settings.header, ...parsed.settings?.header },
+            photo: { ...fallback.settings.photo, ...parsed.settings?.photo },
+            footer: { ...fallback.settings.footer, ...parsed.settings?.footer },
+            links: { ...fallback.settings.links, ...parsed.settings?.links },
+          }
+        : fallback.settings,
     };
   } catch (e) {
     console.warn('Could not load saved resume, starting fresh.', e);
@@ -77,6 +84,7 @@ function App() {
   const [page, setPage] = useState(loadInitialPage);
   const [activeTab, setActiveTab] = useState('content');
   const [savedAt, setSavedAt] = useState(null);
+  const [saveError, setSaveError] = useState(null);
   const paperRef = useRef(null);
   // Hovering a Font dropdown option should live-preview it on the resume
   // without touching saved state — only the Customize tab's preview reads this.
@@ -106,8 +114,14 @@ function App() {
           JSON.stringify({ ...resume, __schemaVersion: RESUME_SCHEMA_VERSION })
         );
         setSavedAt(Date.now());
+        setSaveError(null);
       } catch (e) {
         console.warn('Could not save resume.', e);
+        // Surface this instead of failing silently — without it, the "Saved"
+        // indicator keeps showing its last successful timestamp forever,
+        // even while every edit since (e.g. after a large photo upload blew
+        // the localStorage quota) is silently not being persisted.
+        setSaveError(e.name === 'QuotaExceededError' ? 'storage-full' : 'unknown');
       }
     }, 500);
     return () => clearTimeout(id);
@@ -138,6 +152,7 @@ function App() {
         onBack={() => setPage('picker')}
         resume={resume}
         savedAt={savedAt}
+        saveError={saveError}
         paperRef={paperRef}
       />
 

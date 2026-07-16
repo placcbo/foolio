@@ -143,7 +143,11 @@ export function resumeReducer(state, action) {
       return {
         ...state,
         templateId: action.templateId,
-        accentColor: action.accentColor,
+        // Only overwrite the accent color when the caller actually passed
+        // one (picking a template for a brand-new resume). Switching designs
+        // later, from the Customize tab, omits it so it doesn't clobber a
+        // color the user already chose for themselves.
+        accentColor: action.accentColor ?? state.accentColor,
         settings: {
           ...state.settings,
           layout: TEMPLATE_DEFAULT_LAYOUT[action.templateId] || state.settings.layout,

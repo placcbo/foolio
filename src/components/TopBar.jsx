@@ -7,6 +7,7 @@ import {
   IconMoreVertical,
   IconArrowLeft,
   IconCheck,
+  IconInfo,
 } from './icons';
 import DownloadMenu from './DownloadMenu';
 
@@ -17,7 +18,12 @@ const TABS = [
   { id: 'ai', label: 'AI Tools', icon: IconSparkle },
 ];
 
-export default function TopBar({ activeTab, onTabChange, onBack, resume, savedAt, paperRef }) {
+const SAVE_ERROR_MESSAGE = {
+  'storage-full': "Your browser's storage is full (likely from an uploaded photo) — recent changes are NOT being saved. Try a smaller photo or free up storage.",
+  unknown: 'Your changes are not being saved right now. Keep this tab open, or copy your work elsewhere as a backup.',
+};
+
+export default function TopBar({ activeTab, onTabChange, onBack, resume, savedAt, saveError, paperRef }) {
   return (
     <header className="topbar">
       {onBack && (
@@ -41,11 +47,18 @@ export default function TopBar({ activeTab, onTabChange, onBack, resume, savedAt
       </nav>
 
       <div className="topbar-right">
-        {savedAt && (
-          <span className="save-indicator">
-            <IconCheck size={13} />
-            Saved
+        {saveError ? (
+          <span className="save-indicator save-indicator-error" title={SAVE_ERROR_MESSAGE[saveError]}>
+            <IconInfo size={13} />
+            Not saved
           </span>
+        ) : (
+          savedAt && (
+            <span className="save-indicator">
+              <IconCheck size={13} />
+              Saved
+            </span>
+          )
         )}
         <button type="button" className="resume-select">
           Resume 1

@@ -120,7 +120,9 @@ export default function CleanTemplate({ resume }) {
           )}
           {section.kind === 'entries' &&
             section.entries.filter(
-              (e) => !e.hidden && (e.heading || e.subheading || e.description || e.location || e.start || e.end)
+              (e) =>
+                !e.hidden &&
+                (e.heading || e.subheading || !isHtmlEmpty(e.description) || e.location || e.start || e.end)
             ).length === 0 && <p className="clean-text placeholder">Add your {section.title.toLowerCase()}...</p>}
         </section>
       ))}

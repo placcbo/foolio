@@ -157,7 +157,10 @@ function sectionParagraphs(section, dateFormat, sizes) {
     }
   } else if (section.kind === 'entries') {
     (section.entries || [])
-      .filter((e) => !e.hidden && (e.heading || e.subheading || e.description || e.location || e.start || e.end))
+      .filter(
+        (e) =>
+          !e.hidden && (e.heading || e.subheading || !isHtmlEmpty(e.description) || e.location || e.start || e.end)
+      )
       .forEach((entry) => paras.push(...entryParagraphs(entry, dateFormat, sizes)));
   }
 

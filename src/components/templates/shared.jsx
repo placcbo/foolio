@@ -589,7 +589,9 @@ export function SectionBody({
 
   if (section.kind === 'entries') {
     const entries = section.entries.filter(
-      (e) => !e.hidden && (e.heading || e.subheading || e.description || e.location || e.start || e.end)
+      (e) =>
+        !e.hidden &&
+        (e.heading || e.subheading || !isHtmlEmpty(e.description) || e.location || e.start || e.end)
     );
     if (!entries.length) return null;
     return (

@@ -266,7 +266,7 @@ function getEntryFieldMeta(type) {
 // Experience into list mode.
 const BULLETED_ENTRY_TYPES = new Set(['experience']);
 
-function EntryRow({ section, entry, index, dispatch, dragProps }) {
+function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTargetProps }) {
   const [open, setOpen] = useState(false);
   const [linkOpen, setLinkOpen] = useState(Boolean(entry.link));
   const meta = getEntryFieldMeta(section.type);
@@ -276,9 +276,9 @@ function EntryRow({ section, entry, index, dispatch, dragProps }) {
   }
 
   return (
-    <div className={`entry-row-card${entry.hidden ? ' is-hidden' : ''}`} {...dragProps}>
+    <div className={`entry-row-card${entry.hidden ? ' is-hidden' : ''}`} {...dropTargetProps}>
       <div className="entry-row-header">
-        <span className="entry-drag-handle" aria-hidden="true">
+        <span className="entry-drag-handle" aria-hidden="true" {...handleDragProps}>
           <IconGripVertical size={16} />
         </span>
         <button type="button" className="entry-row-title" onClick={() => setOpen((v) => !v)}>
@@ -414,15 +414,25 @@ function EntriesEditor({ section, dispatch }) {
           entry={entry}
           index={index}
           dispatch={dispatch}
-          dragProps={{
+          // Split deliberately: only the grip handle is `draggable`, so
+          // click-dragging inside an input or the rich-text editor to select
+          // text isn't hijacked as "start reordering the entry". The drop
+          // target still needs to be the whole card so you can drop anywhere
+          // on it, not just the exact handle pixel.
+          handleDragProps={{
             draggable: true,
-            onDragStart: () => setDraggedId(entry.id),
+            onDragStart: (e) => {
+              e.stopPropagation();
+              setDraggedId(entry.id);
+            },
+            onDragEnd: () => setDraggedId(null),
+          }}
+          dropTargetProps={{
             onDragOver: (e) => e.preventDefault(),
             onDrop: (e) => {
               e.preventDefault();
               handleDrop(index);
             },
-            onDragEnd: () => setDraggedId(null),
           }}
         />
       ))}
@@ -464,7 +474,19 @@ export default function SectionCard({ section, dispatch }) {
             {section.title}
           </button>
         )}
-        <button type="button" className="edit-heading-btn" onClick={() => setRenaming((v) => !v)}>
+        <button
+          type="button"
+          className="edit-heading-btn"
+          // Without this, clicking the button while the rename input is
+          // focused blurs it first (closing it), then this onClick's toggle
+          // reads that just-queued `false` and flips it straight back to
+          // `true` — so the first click to close it visually does nothing.
+          // Suppressing the mousedown-driven focus change means the input
+          // never blurs from this click, so the toggle only ever sees one
+          // state change per click.
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => setRenaming((v) => !v)}
+        >
           <IconEdit size={13} />
           Edit Heading
         </button>

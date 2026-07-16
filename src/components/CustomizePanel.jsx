@@ -94,7 +94,7 @@ function DesignTemplates({ resume, dispatch }) {
               type="button"
               key={t.id}
               className={`design-template-thumb${active ? ' active' : ''}`}
-              onClick={() => dispatch({ type: 'SET_TEMPLATE', templateId: t.layout, accentColor: t.swatches[0] })}
+              onClick={() => dispatch({ type: 'SET_TEMPLATE', templateId: t.layout })}
               aria-label={`Use ${t.name} template`}
             >
               <div className="design-template-thumb-scale" style={{ transform: `scale(${THUMB_SCALE})` }}>
