@@ -139,20 +139,28 @@ function makeSection(type) {
 
 export function resumeReducer(state, action) {
   switch (action.type) {
-    case 'SET_TEMPLATE':
+    case 'SET_TEMPLATE': {
+      // Picking a template (from the picker, the Customize thumbnails, or
+      // Browse templates) is a deliberate "give me this whole look" action —
+      // each template is a curated bundle of color + font + heading style,
+      // not just a layout. `preset` carries the non-layout parts; anything
+      // it doesn't mention is left as the user already had it.
+      const preset = action.preset || {};
       return {
         ...state,
         templateId: action.templateId,
-        // Only overwrite the accent color when the caller actually passed
-        // one (picking a template for a brand-new resume). Switching designs
-        // later, from the Customize tab, omits it so it doesn't clobber a
-        // color the user already chose for themselves.
         accentColor: action.accentColor ?? state.accentColor,
         settings: {
           ...state.settings,
           layout: TEMPLATE_DEFAULT_LAYOUT[action.templateId] || state.settings.layout,
+          ...(preset.font && { font: { ...state.settings.font, ...preset.font } }),
+          ...(preset.headings && { headings: { ...state.settings.headings, ...preset.headings } }),
+          ...(preset.header && { header: { ...state.settings.header, ...preset.header } }),
+          ...(preset.spacing && { spacing: { ...state.settings.spacing, ...preset.spacing } }),
+          ...(preset.entryLayout && { entryLayout: { ...state.settings.entryLayout, ...preset.entryLayout } }),
         },
       };
+    }
 
     case 'SET_ACCENT_COLOR':
       return { ...state, accentColor: action.accentColor };

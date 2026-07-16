@@ -28,7 +28,12 @@ export default function ApplyTemplateModal({ resume, dispatch, onClose }) {
   );
 
   function applyTemplate(template) {
-    dispatch({ type: 'SET_TEMPLATE', templateId: template.layout });
+    dispatch({
+      type: 'SET_TEMPLATE',
+      templateId: template.layout,
+      accentColor: template.swatches[0],
+      preset: template.preset,
+    });
     onClose();
   }
 

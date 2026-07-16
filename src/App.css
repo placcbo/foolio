@@ -2224,29 +2224,23 @@
   pointer-events: none;
 }
 
-.design-templates-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
 .design-templates-browse-btn {
-  pointer-events: auto;
+  display: block;
+  width: 100%;
+  margin-top: 12px;
   padding: 12px 24px;
-  border-radius: 999px;
-  border: none;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
   background: #fff;
   color: var(--text-h);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .design-templates-browse-btn:hover {
+  border-color: var(--accent-border);
+  color: var(--accent-2);
   background: var(--page-bg);
 }
 

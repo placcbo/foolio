@@ -71,8 +71,15 @@ function SelectField({ label, value, onChange, options }) {
   );
 }
 
+// The strip is a quick-pick row, not the full catalog — with 20+ templates
+// registered, cramming all of them into one non-wrapping flex row would
+// squeeze each thumbnail down to an unusable sliver. "Browse templates"
+// opens the full gallery for everything beyond these.
+const STRIP_TEMPLATE_COUNT = 5;
+
 function DesignTemplates({ resume, dispatch }) {
   const [browseOpen, setBrowseOpen] = useState(false);
+  const stripTemplates = TEMPLATES.slice(0, STRIP_TEMPLATE_COUNT);
 
   return (
     <div className="customize-card">
@@ -85,7 +92,7 @@ function DesignTemplates({ resume, dispatch }) {
       </p>
 
       <div className="design-templates-strip">
-        {TEMPLATES.map((t) => {
+        {stripTemplates.map((t) => {
           const Template = TEMPLATE_COMPONENTS[t.layout];
           const active = resume.templateId === t.layout;
           const thumbResume = { ...resume, templateId: t.layout, accentColor: t.swatches[0] };
@@ -94,7 +101,9 @@ function DesignTemplates({ resume, dispatch }) {
               type="button"
               key={t.id}
               className={`design-template-thumb${active ? ' active' : ''}`}
-              onClick={() => dispatch({ type: 'SET_TEMPLATE', templateId: t.layout })}
+              onClick={() =>
+                dispatch({ type: 'SET_TEMPLATE', templateId: t.layout, accentColor: t.swatches[0], preset: t.preset })
+              }
               aria-label={`Use ${t.name} template`}
             >
               <div className="design-template-thumb-scale" style={{ transform: `scale(${THUMB_SCALE})` }}>
@@ -103,13 +112,11 @@ function DesignTemplates({ resume, dispatch }) {
             </button>
           );
         })}
-
-        <div className="design-templates-overlay">
-          <button type="button" className="design-templates-browse-btn" onClick={() => setBrowseOpen(true)}>
-            Browse templates
-          </button>
-        </div>
       </div>
+
+      <button type="button" className="design-templates-browse-btn" onClick={() => setBrowseOpen(true)}>
+        Browse all {TEMPLATES.length} templates
+      </button>
 
       {browseOpen && (
         <ApplyTemplateModal resume={resume} dispatch={dispatch} onClose={() => setBrowseOpen(false)} />

@@ -58,7 +58,11 @@ export default function TemplateCard({ template, onSelect }) {
           onClose={() => setPreviewOpen(false)}
           onUseTemplate={() => {
             setPreviewOpen(false);
-            onSelect(template.id, color);
+            // `resume.templateId` drives which layout component renders the
+            // resume (see TEMPLATE_COMPONENTS), so it must be the layout id,
+            // not this card's own unique id — several template cards can
+            // legitimately share one layout with different presets.
+            onSelect(template.layout, color, template.preset);
           }}
         />
       )}

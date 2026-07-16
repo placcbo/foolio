@@ -135,8 +135,8 @@ function App() {
     }
   }, [page]);
 
-  function handleSelectTemplate(templateId, accentColor) {
-    dispatch({ type: 'SET_TEMPLATE', templateId, accentColor });
+  function handleSelectTemplate(templateId, accentColor, preset) {
+    dispatch({ type: 'SET_TEMPLATE', templateId, accentColor, preset });
     setPage('editor');
   }
 

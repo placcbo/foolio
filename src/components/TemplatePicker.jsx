@@ -40,7 +40,7 @@ export default function TemplatePicker({ onSelectTemplate }) {
           <button
             type="button"
             className="skip-templates-btn"
-            onClick={() => onSelectTemplate('onecolumn', '#17151c')}
+            onClick={() => onSelectTemplate('onecolumn', '#000000')}
           >
             Skip for now — go to editor
           </button>
