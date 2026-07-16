@@ -33,7 +33,7 @@ export const DEFAULT_ENTRY_LAYOUT = {
   headerSplit: 'manual', // 'auto' | 'manual'
   titleWidth: 55, // percent, used when headerSplit === 'manual'
   subtitlePlacement: 'belowTitle', // 'sameLine' | 'belowTitle'
-  locationPlacement: 'sameLine', // 'sameLine' | 'belowDate'
+  locationPlacement: 'belowDate', // 'sameLine' | 'belowDate'
   subtitleStyle: 'italic', // 'regular' | 'bold' | 'italic'
   dateStyle: 'regular',
   locationStyle: 'regular',
@@ -45,9 +45,9 @@ export const DEFAULT_ENTRY_LAYOUT = {
 // Heading "style" controls the decoration drawn around/under the section
 // title text; capitalization/icons are independent toggles layered on top.
 export const DEFAULT_HEADINGS = {
-  style: 'accentBar',
+  style: 'lineBelow',
   capitalization: 'uppercase', // 'capitalize' | 'uppercase'
-  icons: 'outline', // 'none' | 'outline' | 'filled'
+  icons: 'none', // 'none' | 'outline' | 'filled'
 };
 
 // 'inherit' for name means "Same as body font".
@@ -71,9 +71,9 @@ export const DEFAULT_COLORS = {
 
 export const DEFAULT_HEADER = {
   textAlign: 'center', // 'left' | 'center'
-  detailsArrangement: 'stacked', // 'stacked' | 'inline'
+  detailsArrangement: 'inline', // 'stacked' | 'inline'
   separatorStyle: 'icon', // 'icon' | 'bullet' | 'bar'
-  iconStyle: 'filled', // one of ICON_STYLE_OPTIONS ids
+  iconStyle: 'plain', // one of ICON_STYLE_OPTIONS ids
 };
 
 export const DEFAULT_PHOTO = {

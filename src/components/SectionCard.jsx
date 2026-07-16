@@ -101,7 +101,7 @@ function RichTextToolbar({ editableRef }) {
   );
 }
 
-function RichTextEditor({ value, onChange, placeholder }) {
+function RichTextEditor({ value, onChange, placeholder, startAsList }) {
   const editableRef = useRef(null);
   const [empty, setEmpty] = useState(isHtmlEmpty(value));
 
@@ -113,7 +113,11 @@ function RichTextEditor({ value, onChange, placeholder }) {
   // entirely means React never touches this node's children after mount;
   // the DOM itself is the source of truth while editing.
   useEffect(() => {
-    if (editableRef.current) editableRef.current.innerHTML = value || '';
+    if (!editableRef.current) return;
+    // Starting inside an (empty) bullet means pressing Enter keeps adding
+    // bullets naturally, matching how job-history descriptions are usually
+    // written — without forcing every rich-text field into list mode.
+    editableRef.current.innerHTML = value || (startAsList ? '<ul><li><br></li></ul>' : '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -257,6 +261,11 @@ function getEntryFieldMeta(type) {
   return ENTRY_FIELD_META[type] || DEFAULT_ENTRY_FIELD_META;
 }
 
+// Job history reads naturally as bullet points; degrees, certificates, and
+// the rest read better as a plain sentence or two, so only default
+// Experience into list mode.
+const BULLETED_ENTRY_TYPES = new Set(['experience']);
+
 function EntryRow({ section, entry, index, dispatch, dragProps }) {
   const [open, setOpen] = useState(false);
   const [linkOpen, setLinkOpen] = useState(Boolean(entry.link));
@@ -377,6 +386,7 @@ function EntryRow({ section, entry, index, dispatch, dragProps }) {
               value={entry.description}
               onChange={(html) => updateEntry('description', html)}
               placeholder={`Add a description of your ${section.title.toLowerCase()} entry...`}
+              startAsList={BULLETED_ENTRY_TYPES.has(section.type)}
             />
             <AiHelperRow suggestContent />
           </div>

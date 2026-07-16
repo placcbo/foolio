@@ -577,8 +577,9 @@ export function SectionBody({
 
   if (section.kind === 'tags') {
     if (!section.tags.length) return null;
+    const dotted = c.applyTo?.dotsBarsBubbles && !onColoredBg;
     return (
-      <ul className="tpl-taglist" style={markerStyle}>
+      <ul className={`tpl-taglist${dotted ? ' tpl-taglist-dotted' : ''}`} style={markerStyle}>
         {section.tags.map((t, i) => (
           <li key={i}>{t}</li>
         ))}
