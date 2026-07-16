@@ -299,9 +299,15 @@ export function HeaderBlock({
       </>
     );
 
+  // Full-width ("top") headers get the same generous padding as the rest of
+  // the page margin; embedded in a narrow aside/main column instead, that
+  // same fixed padding would eat most of the column's width, so it switches
+  // to a much smaller one and lets the column's own padding do the work.
+  const compact = marginLRpx == null;
+
   return (
     <div
-      className={`tpl-header-block tpl-header-align-${h.textAlign}${colored ? ' tpl-header-block-colored' : ''}`}
+      className={`tpl-header-block tpl-header-align-${h.textAlign}${colored ? ' tpl-header-block-colored' : ''}${compact ? ' tpl-header-block-compact' : ''}`}
       style={style}
     >
       <div className="tpl-header-block-identity">{identity}</div>

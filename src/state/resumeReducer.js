@@ -146,15 +146,12 @@ export function resumeReducer(state, action) {
       // each template is a curated bundle of color + font + heading style,
       // not just a layout. `preset` carries the non-layout parts; anything
       // it doesn't mention is left as the user already had it.
-      const withPreset = applyPresetToSettings(state.settings, action.preset);
+      const baseLayout = TEMPLATE_DEFAULT_LAYOUT[action.templateId] || state.settings.layout;
       return {
         ...state,
         templateId: action.templateId,
         accentColor: action.accentColor ?? state.accentColor,
-        settings: {
-          ...withPreset,
-          layout: TEMPLATE_DEFAULT_LAYOUT[action.templateId] || state.settings.layout,
-        },
+        settings: applyPresetToSettings(state.settings, action.preset, baseLayout),
       };
     }
 

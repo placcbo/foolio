@@ -3,6 +3,7 @@ import { IconX, IconStar, IconBox, IconHexagon, IconPalette } from './icons';
 import { TEMPLATES, FILTERS } from '../data/templates';
 import { TEMPLATE_COMPONENTS } from './templates';
 import { applyPresetToSettings } from '../utils/templatePreset';
+import { TEMPLATE_DEFAULT_LAYOUT } from '../state/resumeReducer';
 
 const FILTER_ICONS = {
   popular: IconStar,
@@ -73,7 +74,7 @@ export default function ApplyTemplateModal({ resume, dispatch, onClose }) {
                 ...resume,
                 templateId: t.layout,
                 accentColor: t.swatches[0],
-                settings: applyPresetToSettings(resume.settings, t.preset),
+                settings: applyPresetToSettings(resume.settings, t.preset, TEMPLATE_DEFAULT_LAYOUT[t.layout]),
               };
               return (
                 <button

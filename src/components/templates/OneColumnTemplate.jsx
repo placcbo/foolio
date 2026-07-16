@@ -51,8 +51,13 @@ export default function OneColumnTemplate({ resume }) {
       colors={colors}
       links={links}
       headerFill={headerFill}
-      marginLRpx={layout.columns !== 'one' ? marginLRpx : undefined}
-      marginTBpx={layout.columns !== 'one' ? marginTBpx : undefined}
+      // Only apply this padding when the header spans the top full-width —
+      // when it renders inside the aside/main column instead (headerPosition
+      // left/right), that column already applies the identical padding
+      // itself, and adding it again here would double it, badly squeezing
+      // the header's available width in a narrow aside.
+      marginLRpx={layout.columns !== 'one' && layout.headerPosition === 'top' ? marginLRpx : undefined}
+      marginTBpx={layout.columns !== 'one' && layout.headerPosition === 'top' ? marginTBpx : undefined}
     />
   );
 

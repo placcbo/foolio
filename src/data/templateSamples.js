@@ -7,6 +7,14 @@ function bullets(...points) {
   return `<ul>${points.map((p) => `<li>${p}</li>`).join('')}</ul>`;
 }
 
+// A generic silhouette avatar (not a real or fake photo of a person) for
+// templates whose layout features a photo — so the preview shows the photo
+// slot actually populated instead of skipping it.
+function placeholderAvatar(bg) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="${bg}"/><circle cx="50" cy="39" r="18" fill="#ffffff" fill-opacity="0.85"/><path d="M50 60c-22 0-38 14-38 32v8h76v-8c0-18-16-32-38-32z" fill="#ffffff" fill-opacity="0.85"/></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 export const TEMPLATE_SAMPLES = {
   clean: {
     basics: {
@@ -561,6 +569,136 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Business Communications', subheading: 'Fordham University', location: 'New York, NY', start: '2012', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Calendar Management', 'Travel Coordination', 'Board Support', 'Confidentiality', 'Event Planning'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+    ],
+  },
+
+  presence: {
+    basics: {
+      name: 'Valentina Souza',
+      title: 'Finance Manager',
+      email: 'valentina.souza@email.com',
+      phone: '+55 11 98765 4321',
+      address: 'São Paulo, Brazil',
+      linkedin: 'linkedin.com/in/valentina-souza',
+      photo: placeholderAvatar('#1c4966'),
+      visibleExtra: ['linkedin'],
+    },
+    sections: [
+      { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>Finance manager with seven years across budgeting, financial reporting, and business performance analysis in corporate environments.</p>' },
+      {
+        id: 's-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+        entries: [
+          { id: 'e1', heading: 'Finance Manager', subheading: 'Natura & Co', location: 'São Paulo, Brazil', start: '2022', end: '', description: bullets('Manage monthly budgeting cycles and variance analysis for two business units.', 'Lead reporting improvements that reduced closing timelines by three days.') },
+          { id: 'e2', heading: 'Senior Financial Analyst', subheading: 'Raízen', location: 'São Paulo, Brazil', start: '2019', end: '2022', description: bullets('Delivered monthly performance reports for leadership across revenue and expense lines.', 'Improved forecast models to support more accurate quarterly planning.') },
+        ],
+      },
+      { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'MBA in Finance', subheading: 'Fundação Getulio Vargas (FGV)', location: 'São Paulo, Brazil', start: '2020', end: '2022', description: '' }] },
+      { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Financial Planning', 'Budget Management', 'Forecasting', 'Variance Analysis', 'SAP'] },
+      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese', 'English', 'Spanish'] },
+    ],
+  },
+
+  portrait: {
+    basics: {
+      name: 'Arjun Mehta',
+      title: 'Project Engineer',
+      email: 'arjun.mehta@email.com',
+      phone: '+91 98765 43210',
+      address: 'Ahmedabad, India',
+      linkedin: 'linkedin.com/in/arjun-mehta',
+      photo: placeholderAvatar('#2f6fb0'),
+      visibleExtra: ['linkedin'],
+    },
+    sections: [
+      { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>Project engineer with six years supporting industrial and infrastructure projects, with a consistent focus on quality, safety, and on-time delivery.</p>' },
+      {
+        id: 's-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+        entries: [
+          { id: 'e1', heading: 'Project Engineer', subheading: 'Adani Infrastructure', location: 'Ahmedabad, India', start: '01/2022', end: '', description: bullets('Lead project coordination across teams for utility infrastructure upgrades.', 'Improved project tracking accuracy by standardizing reporting formats.') },
+          { id: 'e2', heading: 'Mechanical Engineer', subheading: 'Larsen & Toubro', location: 'Vadodara, India', start: '07/2019', end: '12/2021', description: bullets('Delivered equipment installation support for manufacturing projects.', 'Coordinated inspections and contractor activities to reduce delays.') },
+        ],
+      },
+      { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'Bachelor of Engineering in Mechanical Engineering', subheading: 'Gujarat Technological University', location: 'Ahmedabad, India', start: '2013', end: '2017', description: '' }] },
+      { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Project Coordination', 'Vendor Management', 'Technical Documentation', 'Site Execution', 'Quality Assurance'] },
+      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Hindi', 'Gujarati'] },
+    ],
+  },
+
+  vantage: {
+    basics: {
+      name: 'Michael Osei',
+      title: 'Marketing Director',
+      email: 'michael.osei@email.com',
+      phone: '+1 470 555 6612',
+      address: 'Atlanta, GA',
+      linkedin: 'linkedin.com/in/michael-osei',
+      photo: placeholderAvatar('#3f6f6b'),
+      visibleExtra: ['linkedin'],
+    },
+    sections: [
+      { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>Marketing director with ten years building brand and demand-generation programs for B2B software companies.</p>' },
+      {
+        id: 's-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+        entries: [
+          { id: 'e1', heading: 'Marketing Director', subheading: 'Ferncrest Software', location: 'Atlanta, GA', start: '2020', end: '', description: bullets('Grew pipeline contribution from marketing to 45% of total bookings.', 'Lead a team of eight across brand, content, and demand generation.') },
+          { id: 'e2', heading: 'Senior Marketing Manager', subheading: 'Bellhaven Tech', location: 'Atlanta, GA', start: '2016', end: '2020', description: bullets('Rebuilt the company’s positioning ahead of a Series C raise.') },
+        ],
+      },
+      { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Marketing', subheading: 'Emory University', location: 'Atlanta, GA', start: '2010', end: '2014', description: '' }] },
+      { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Brand Strategy', 'Demand Generation', 'Team Leadership', 'Marketing Analytics', 'Positioning'] },
+      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+    ],
+  },
+
+  element: {
+    basics: {
+      name: 'Yuki Tanaka',
+      title: 'UX Researcher',
+      email: 'yuki.tanaka@email.com',
+      phone: '+81 90 1234 5678',
+      address: 'Tokyo, Japan',
+      linkedin: 'linkedin.com/in/yuki-tanaka',
+      photo: placeholderAvatar('#3d2a6b'),
+      visibleExtra: ['linkedin'],
+    },
+    sections: [
+      { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>UX researcher with six years running qualitative and quantitative studies that shape product strategy for consumer apps.</p>' },
+      {
+        id: 's-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+        entries: [
+          { id: 'e1', heading: 'UX Researcher', subheading: 'Kaede Digital', location: 'Tokyo, Japan', start: '2021', end: '', description: bullets('Run a quarterly research program feeding the product roadmap.', 'Built the team’s first participant-recruitment pipeline.') },
+          { id: 'e2', heading: 'Junior UX Researcher', subheading: 'Sora Labs', location: 'Osaka, Japan', start: '2018', end: '2021', description: bullets('Conducted usability testing for three major app redesigns.') },
+        ],
+      },
+      { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.A. Human-Computer Interaction', subheading: 'University of Tokyo', location: 'Tokyo, Japan', start: '2016', end: '2018', description: '' }] },
+      { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['User Research', 'Usability Testing', 'Survey Design', 'Data Synthesis', 'Figma'] },
+      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Japanese', 'English'] },
+    ],
+  },
+
+  keystone: {
+    basics: {
+      name: 'Patricia Alves',
+      title: 'Operations Director',
+      email: 'patricia.alves@email.com',
+      phone: '+351 912 345 678',
+      address: 'Lisbon, Portugal',
+      linkedin: 'linkedin.com/in/patricia-alves',
+      photo: placeholderAvatar('#5c2340'),
+      visibleExtra: ['linkedin'],
+    },
+    sections: [
+      { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>Operations director with twelve years leading multi-site teams and process transformation programs across retail operations.</p>' },
+      {
+        id: 's-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+        entries: [
+          { id: 'e1', heading: 'Operations Director', subheading: 'Lisboa Retail Group', location: 'Lisbon, Portugal', start: '2019', end: '', description: bullets('Oversee operations across 24 stores and a central distribution center.', 'Cut operating costs by 14% through process standardization.') },
+          { id: 'e2', heading: 'Regional Operations Manager', subheading: 'Atlantic Commerce', location: 'Porto, Portugal', start: '2014', end: '2019', description: bullets('Managed regional operations for 9 retail locations.') },
+        ],
+      },
+      { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'Nova School of Business and Economics', location: 'Lisbon, Portugal', start: '2011', end: '2013', description: '' }] },
+      { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Operations Management', 'Process Improvement', 'Team Leadership', 'P&L Management', 'Retail Strategy'] },
+      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese', 'English', 'Spanish'] },
     ],
   },
 };

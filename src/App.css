@@ -50,6 +50,25 @@
   gap: 32px;
 }
 
+.see-more-templates-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 32px auto 0;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: 1.5px solid var(--text-h);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.see-more-templates-btn:hover {
+  background: var(--page-bg);
+}
+
 .template-grid-empty {
   display: flex;
   flex-direction: column;
@@ -75,9 +94,7 @@
 }
 
 .template-card {
-  background: #f2f1f5;
-  border-radius: 18px;
-  padding: 16px;
+  background: transparent;
 }
 
 .template-card-preview {
@@ -85,9 +102,12 @@
   width: 100%;
   height: 320px;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #fff;
   cursor: pointer;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 10px 24px rgba(20, 15, 25, 0.1);
 }
 
 .template-card-scale {
@@ -1516,6 +1536,14 @@
   color: #fff;
 }
 
+.tpl-header-block-compact {
+  padding: 0 0 20px;
+}
+
+.tpl-header-block-compact.tpl-header-block-colored {
+  padding: 0 0 20px;
+}
+
 .tpl-header-align-center {
   text-align: center;
 }
@@ -1529,6 +1557,19 @@
   flex-direction: column;
   gap: 12px;
   margin-bottom: 14px;
+  min-width: 0;
+}
+
+.tpl-header-block-text {
+  /* Flex items in a column container default to a content-based cross-size
+     (shrink-to-fit), so with align-items other than "stretch" (left-aligned
+     headers) this block sizes to fit its text unwrapped instead of the
+     column's actual width — the name overflows straight out of a narrow
+     sidebar column into whatever sits next to it. align-self: stretch
+     forces it to fill the row's width regardless of the container's
+     align-items, so the text wraps against the real column width. */
+  align-self: stretch;
+  min-width: 0;
 }
 
 .tpl-header-align-center .tpl-header-block-identity {
@@ -1546,6 +1587,7 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #17151c;
+  overflow-wrap: break-word;
 }
 
 .tpl-header-block-colored .tpl-header-block-text h1 {
@@ -3012,6 +3054,12 @@
   border-bottom: 1.5px dotted var(--heading-line-color, #17151c);
 }
 
+.heading-style-shadedBar {
+  background: #f2f1f5;
+  border-radius: 6px;
+  padding: 7px 12px;
+}
+
 /* ---------- Headings panel: style grid ---------- */
 
 .heading-style-grid {
@@ -3080,6 +3128,12 @@
   border-bottom: 2px dotted #8a8593;
   background: transparent;
   height: 5px;
+}
+
+.heading-style-preview-shadedBar {
+  background: #ececee;
+  border-radius: 5px;
+  padding: 6px 8px;
 }
 
 /* ---------- Font panel: custom hover-preview dropdown ---------- */

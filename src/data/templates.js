@@ -269,6 +269,80 @@ export const TEMPLATES = [
       header: { textAlign: 'center', detailsArrangement: 'stacked', iconStyle: 'plain' },
     },
   },
+
+  // Two-column, photo-forward templates: shaded rounded-bar section
+  // headings with an icon inside, contact/skills/languages in a narrow
+  // left column, experience/education/certificates in the main column.
+  {
+    id: 'presence',
+    name: 'Presence',
+    layout: 'onecolumn',
+    categories: ['simple', 'one-column', 'ats', 'modern', 'popular'],
+    swatches: ['#1c4966', '#000000', '#3f6f6b', '#5c2340'],
+    preset: {
+      font: { body: 'inter' },
+      layout: { columns: 'two', headerPosition: 'left', columnWidth: 32 },
+      photo: { show: true, shape: 'circle', size: 'l' },
+      headings: { style: 'shadedBar', capitalization: 'uppercase', icons: 'filled' },
+      header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'portrait',
+    name: 'Portrait',
+    layout: 'onecolumn',
+    categories: ['simple', 'one-column', 'ats', 'modern'],
+    swatches: ['#2f6fb0', '#000000', '#1c4966', '#3f4b54'],
+    preset: {
+      font: { body: 'roboto' },
+      layout: { columns: 'two', headerPosition: 'left', columnWidth: 30 },
+      photo: { show: true, shape: 'roundedSquare', size: 'l' },
+      headings: { style: 'shadedBar', capitalization: 'uppercase', icons: 'filled' },
+      header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'vantage',
+    name: 'Vantage',
+    layout: 'onecolumn',
+    categories: ['simple', 'one-column', 'ats', 'modern'],
+    swatches: ['#3f6f6b', '#000000', '#2a8fbd', '#c23b83'],
+    preset: {
+      font: { body: 'opensans' },
+      layout: { columns: 'two', headerPosition: 'left', columnWidth: 34 },
+      photo: { show: true, shape: 'circle', size: 'l' },
+      headings: { style: 'shadedBar', capitalization: 'uppercase', icons: 'filled' },
+      header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'element',
+    name: 'Element',
+    layout: 'onecolumn',
+    categories: ['simple', 'one-column', 'ats', 'modern'],
+    swatches: ['#3d2a6b', '#000000', '#c23b83', '#5c2340'],
+    preset: {
+      font: { body: 'montserrat' },
+      layout: { columns: 'two', headerPosition: 'left', columnWidth: 32 },
+      photo: { show: true, shape: 'circle', size: 'l' },
+      headings: { style: 'shadedBar', capitalization: 'capitalize', icons: 'filled' },
+      header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
+  {
+    id: 'keystone',
+    name: 'Keystone',
+    layout: 'onecolumn',
+    categories: ['simple', 'one-column', 'ats', 'professional'],
+    swatches: ['#5c2340', '#000000', '#1c4966', '#3f4b54'],
+    preset: {
+      font: { body: 'lora' },
+      layout: { columns: 'two', headerPosition: 'left', columnWidth: 32 },
+      photo: { show: true, shape: 'circle', size: 'l' },
+      headings: { style: 'shadedBar', capitalization: 'uppercase', icons: 'filled' },
+      header: { textAlign: 'left', detailsArrangement: 'stacked', iconStyle: 'plain' },
+    },
+  },
 ];
 
 export const FILTERS = [

@@ -100,8 +100,8 @@ export default function BannerTemplate({ resume }) {
             colors={colors}
             links={links}
             headerFill={headerFill}
-            marginLRpx={marginLRpx}
-            marginTBpx={marginTBpx}
+            marginLRpx={layout.headerPosition === 'top' ? marginLRpx : undefined}
+            marginTBpx={layout.headerPosition === 'top' ? marginTBpx : undefined}
           />
         }
         headerPosition={layout.headerPosition}

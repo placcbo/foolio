@@ -29,6 +29,7 @@ import {
   DEFAULT_PHOTO,
   DEFAULT_FOOTER,
   DEFAULT_LINKS,
+  TEMPLATE_DEFAULT_LAYOUT,
 } from '../state/resumeReducer';
 import ApplyTemplateModal from './ApplyTemplateModal';
 
@@ -100,7 +101,7 @@ function DesignTemplates({ resume, dispatch }) {
             ...resume,
             templateId: t.layout,
             accentColor: t.swatches[0],
-            settings: applyPresetToSettings(resume.settings, t.preset),
+            settings: applyPresetToSettings(resume.settings, t.preset, TEMPLATE_DEFAULT_LAYOUT[t.layout]),
           };
           return (
             <button
@@ -682,6 +683,7 @@ const HEADING_STYLE_OPTIONS = [
   'boldOnly',
   'underlineShort',
   'underlineDotted',
+  'shadedBar',
 ];
 
 function HeadingStylePreview({ variant }) {

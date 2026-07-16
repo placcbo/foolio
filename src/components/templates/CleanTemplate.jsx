@@ -51,8 +51,8 @@ export default function CleanTemplate({ resume }) {
       colors={colors}
       links={links}
       headerFill={headerFill}
-      marginLRpx={layout.columns !== 'one' ? marginLRpx : undefined}
-      marginTBpx={layout.columns !== 'one' ? marginTBpx : undefined}
+      marginLRpx={layout.columns !== 'one' && layout.headerPosition === 'top' ? marginLRpx : undefined}
+      marginTBpx={layout.columns !== 'one' && layout.headerPosition === 'top' ? marginTBpx : undefined}
     />
   );
 
