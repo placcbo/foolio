@@ -94,12 +94,13 @@
 .done-btn:hover {
   background: var(--accent);
   border-color: var(--ink);
+  color: var(--lime-ink);
 }
 
 .btn-download:active,
 .done-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
+  transform: translateY(1px);
+  box-shadow: var(--shadow-xs);
 }
 
 .add-content-btn,
@@ -265,12 +266,12 @@
   color: var(--lime);
   padding: 6px 10px;
   border-radius: var(--r-chip);
-  background: rgba(215, 255, 63, 0.12);
+  background: rgba(147, 168, 106, 0.12);
 }
 
 .save-indicator-error {
-  color: #ff8a65;
-  background: rgba(255, 138, 101, 0.12);
+  color: #b3542f;
+  background: rgba(179, 84, 47, 0.12);
   cursor: help;
 }
 
@@ -306,16 +307,17 @@
   background: var(--lime);
   border-color: var(--lime);
   color: var(--lime-ink);
-  box-shadow: 3px 3px 0 rgba(215, 255, 63, 0.25);
+  box-shadow: 0 3px 10px rgba(147, 168, 106, 0.35);
 }
 
 .topbar .btn-download:hover {
-  background: #c2ec2c;
-  border-color: #c2ec2c;
+  background: #7e9457;
+  border-color: #7e9457;
 }
 
 .topbar .btn-download:active {
-  box-shadow: 1px 1px 0 rgba(215, 255, 63, 0.25);
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(147, 168, 106, 0.3);
 }
 
 /* ---------- download menu ---------- */
@@ -529,7 +531,7 @@
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 20px;
-  background: linear-gradient(180deg, transparent 55%, rgba(22, 21, 28, 0.55) 100%);
+  background: linear-gradient(180deg, transparent 55%, rgba(42, 36, 28, 0.55) 100%);
   opacity: 0;
   transition: opacity var(--fast) var(--ease);
 }
@@ -599,7 +601,7 @@
 .preview-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(22, 21, 28, 0.55);
+  background: rgba(42, 36, 28, 0.55);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -751,7 +753,7 @@
 .apply-template-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(22, 21, 28, 0.55);
+  background: rgba(42, 36, 28, 0.55);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -1648,7 +1650,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(22, 21, 28, 0.55);
+  background: rgba(42, 36, 28, 0.55);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -1781,7 +1783,7 @@
 }
 
 .preview-panel-trigger:hover {
-  box-shadow: 0 24px 60px rgba(22, 21, 28, 0.18);
+  box-shadow: 0 24px 60px rgba(42, 36, 28, 0.18);
 }
 
 .preview-empty {
@@ -2698,8 +2700,8 @@ input[type='range']::-moz-range-thumb {
 .paper {
   width: 794px;
   min-height: 1123px;
-  background: #fff;
-  color: #1a1a1a;
+  background: #fffdf7;
+  color: #211d18;
   box-shadow: none;
   position: relative;
   overflow-x: hidden;
@@ -2786,8 +2788,8 @@ input[type='range']::-moz-range-thumb {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ececec;
-  color: #999;
+  background: #ece2cd;
+  color: #9c8b73;
   font-weight: 700;
 }
 
@@ -3056,12 +3058,12 @@ input[type='range']::-moz-range-thumb {
 
 .placeholder {
   font-size: 0.9em;
-  color: #b3b3b3;
+  color: #a89a86;
   font-style: italic;
 }
 
 .clean-text.placeholder {
-  color: #b3b3b3;
+  color: #a89a86;
 }
 
 /* ---------- misc paper section wrappers ---------- */
@@ -3549,9 +3551,9 @@ body.has-open-preview-modal {
 }
 
 .resume-card-action-danger:hover {
-  border-color: #c0392b;
-  color: #c0392b;
-  background: rgba(192, 57, 43, 0.08);
+  border-color: #b3452b;
+  color: #b3452b;
+  background: rgba(179, 69, 43, 0.08);
 }
 
 .resume-library-hint {
@@ -3578,7 +3580,7 @@ body.has-open-preview-modal {
   height: 24px;
   margin-top: 1px;
   border-radius: 50%;
-  background: rgba(63, 107, 79, 0.14);
+  background: rgba(107, 128, 88, 0.14);
   color: var(--mint);
 }
 
