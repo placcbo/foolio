@@ -38,13 +38,21 @@ export default function OneColumnTemplate({ resume }) {
     ...paperStyle,
   };
 
+  // The aside is a narrow (~30%) column — the user's configured name size
+  // (tuned for a full-width header) easily overflows it and forces an ugly
+  // mid-word wrap, so cap it down when the header actually lands there.
+  const asideNameFontSize =
+    layout.columns !== 'one' && layout.headerPosition === 'left'
+      ? `${Math.min(parseFloat(nameFontSize), 14)}pt`
+      : nameFontSize;
+
   const headerBlock = (
     <HeaderBlock
       basics={basics}
       contactItems={contactItems}
       colored={layout.columns === 'mix' || headerColored}
       accentColor={accentColor}
-      nameFontSize={nameFontSize}
+      nameFontSize={asideNameFontSize}
       nameFontFamily={nameFontFamily}
       header={header}
       photo={photo}

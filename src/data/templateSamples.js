@@ -37,6 +37,7 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Project Manager', subheading: 'Northbridge Digital', location: 'Toronto, Canada', start: '03/2022', end: '', description: bullets('Managed release plans across product, engineering, and operations teams.', 'Coordinated stakeholder updates, risk reviews, and milestone reporting.') },
           { id: 'e2', heading: 'Project Coordinator', subheading: 'MapleWorks Solutions', location: 'Toronto, Canada', start: '07/2019', end: '02/2022', description: bullets('Supported schedules, budgets, and documentation for transformation projects.', 'Facilitated team meetings and maintained cross-department action logs.') },
+          { id: 'e3', heading: 'Junior Project Coordinator', subheading: 'Bramwell Consulting', location: 'Toronto, Canada', start: '06/2017', end: '06/2019', description: bullets('Assisted senior coordinators with vendor logistics and meeting scheduling.') },
         ],
       },
       {
@@ -45,6 +46,10 @@ export const TEMPLATE_SAMPLES = {
       },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Project Planning', 'Risk Management', 'Budget Tracking', 'Stakeholder Management', 'Agile Delivery'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'French'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Project Management Professional (PMP)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -69,6 +74,7 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Operations Manager', subheading: 'Nova Retail Group', location: 'Berlin, Germany', start: '01/2022', end: '', description: bullets('Coordinated daily operations across warehousing, procurement, and support.', 'Improved order accuracy and weekly forecast reporting accuracy.') },
           { id: 'e2', heading: 'Operations Coordinator', subheading: 'Urban Freight Solutions', location: 'Hamburg, Germany', start: '03/2019', end: '12/2021', description: bullets('Coordinated transport schedules and resolved delivery escalations promptly.', 'Standardized reporting processes for weekly management reviews.') },
+          { id: 'e3', heading: 'Logistics Assistant', subheading: 'HanseFracht GmbH', location: 'Hamburg, Germany', start: '08/2017', end: '02/2019', description: bullets('Tracked shipments and supported customs documentation for import/export orders.') },
         ],
       },
       {
@@ -77,6 +83,10 @@ export const TEMPLATE_SAMPLES = {
       },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Process Improvement', 'Supply Chain Coordination', 'Vendor Management', 'KPI Reporting', 'Budget Tracking'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['German', 'English', 'French'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Supply Chain Professional (CSCP)', subheading: '', location: '', start: '2021', end: '', description: '' }],
+      },
     ],
   },
 
@@ -101,6 +111,7 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Sales Manager', subheading: 'Nexora Solutions', location: 'Chicago, Illinois', start: '2022', end: '', description: bullets('Manage a team of account executives across mid-market accounts.', 'Improve pipeline tracking and weekly forecast reporting accuracy.') },
           { id: 'e2', heading: 'Senior Sales Specialist', subheading: 'BrightPath Systems', location: 'Chicago, Illinois', start: '2019', end: '2022', description: bullets('Delivered quarterly targets through consultative selling and account expansion.', 'Built strong relationships with regional clients in healthcare and finance.') },
+          { id: 'e3', heading: 'Account Executive', subheading: 'BrightPath Systems', location: 'Chicago, Illinois', start: '2016', end: '2019', description: bullets('Closed new-business deals across mid-market healthcare accounts.') },
         ],
       },
       {
@@ -112,6 +123,10 @@ export const TEMPLATE_SAMPLES = {
       },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Sales Strategy', 'Enterprise Account Management', 'Pipeline Management', 'Negotiation', 'Revenue Growth', 'Team Leadership'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Spanish'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Sales Professional (CSP)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -132,11 +147,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Senior Software Engineer', subheading: 'Cascadia Cloud', location: 'Seattle, WA', start: '06/2020', end: '', description: bullets('Led migration of billing services to an event-driven architecture.', 'Mentored four engineers and ran the team’s incident review process.') },
           { id: 'e2', heading: 'Software Engineer', subheading: 'Rainier Systems', location: 'Seattle, WA', start: '08/2016', end: '05/2020', description: bullets('Built internal tooling that cut deployment time by 40%.', 'Owned the payments API serving 2M+ requests per day.') },
+          { id: 'e3', heading: 'Software Engineer I', subheading: 'Timberline Labs', location: 'Seattle, WA', start: '06/2014', end: '07/2016', description: bullets('Built internal APIs for the company’s first analytics platform.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Computer Science', subheading: 'University of Washington', location: 'Seattle, WA', start: '2012', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Distributed Systems', 'Go', 'Kubernetes', 'PostgreSQL', 'System Design', 'Mentorship'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'AWS Certified Solutions Architect – Associate', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -157,11 +177,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Research Scientist', subheading: 'MIT Materials Lab', location: 'Cambridge, MA', start: '09/2019', end: '', description: bullets('Lead a team investigating solid-state battery electrolytes.', 'Secured $1.2M in continued grant funding across two cycles.') },
           { id: 'e2', heading: 'Postdoctoral Fellow', subheading: 'Caltech', location: 'Pasadena, CA', start: '07/2016', end: '08/2019', description: bullets('Published 11 peer-reviewed papers on nanostructured catalysts.') },
+          { id: 'e3', heading: 'Graduate Research Assistant', subheading: 'Caltech', location: 'Pasadena, CA', start: '2013', end: '2016', description: bullets('Developed synthesis protocols for early-stage catalyst materials.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'Ph.D. Chemistry', subheading: 'Caltech', location: 'Pasadena, CA', start: '2011', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Materials Chemistry', 'Grant Writing', 'Spectroscopy', 'Peer Review', 'Data Analysis'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Hindi', 'Tamil'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'NSF Graduate Research Fellowship', subheading: '', location: '', start: '2013', end: '', description: '' }],
+      },
     ],
   },
 
@@ -183,11 +208,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Product Designer', subheading: 'Fieldstone', location: 'San Francisco, CA', start: '2021', end: '', description: bullets('Redesigned the onboarding flow, lifting activation by 18%.', 'Built and maintain the company’s design system.') },
           { id: 'e2', heading: 'UX Designer', subheading: 'Lightwell', location: 'Oakland, CA', start: '2018', end: '2021', description: bullets('Ran user research to inform the v2 dashboard redesign.') },
+          { id: 'e3', heading: 'Junior Designer', subheading: 'Hearth Studio', location: 'Oakland, CA', start: '2016', end: '2018', description: bullets('Supported visual design for marketing sites and product launch pages.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.F.A. Design', subheading: 'California College of the Arts', location: 'San Francisco, CA', start: '2014', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Figma', 'Design Systems', 'User Research', 'Prototyping', 'Interaction Design'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Spanish'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Google UX Design Certificate', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -208,11 +238,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Data Analyst', subheading: 'Longhorn Retail Group', location: 'Austin, TX', start: '2021', end: '', description: bullets('Built demand-forecasting dashboards used by 6 regional teams.', 'Automated weekly reporting, saving 8 hours per analyst per week.') },
           { id: 'e2', heading: 'Junior Analyst', subheading: 'Pecan Street Analytics', location: 'Austin, TX', start: '2019', end: '2021', description: bullets('Maintained SQL pipelines feeding the executive KPI dashboard.') },
+          { id: 'e3', heading: 'Data Entry & Reporting Intern', subheading: 'Longhorn Retail Group', location: 'Austin, TX', start: '2018', end: '2019', description: bullets('Cleaned and validated sales datasets used in weekly reporting.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Statistics', subheading: 'University of Texas at Austin', location: 'Austin, TX', start: '2015', end: '2019', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['SQL', 'Python', 'Tableau', 'Forecasting', 'A/B Testing'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Mandarin'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Tableau Desktop Specialist', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -233,11 +268,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Civil Engineer', subheading: 'Pennine Infrastructure', location: 'Manchester, UK', start: '2020', end: '', description: bullets('Managed structural design review for three regional bridge projects.', 'Coordinated with contractors to keep two major sites on schedule.') },
           { id: 'e2', heading: 'Graduate Engineer', subheading: 'Mersey Civil Partners', location: 'Liverpool, UK', start: '2017', end: '2020', description: bullets('Supported site surveys and drainage design for housing developments.') },
+          { id: 'e3', heading: 'Civil Engineering Intern', subheading: 'Mersey Civil Partners', location: 'Liverpool, UK', start: '2016', end: '2017', description: bullets('Assisted with site surveys and CAD drafting for drainage schemes.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.Eng. Civil Engineering', subheading: 'University of Manchester', location: 'Manchester, UK', start: '2013', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Structural Design', 'AutoCAD', 'Site Management', 'Regulatory Compliance', 'Cost Estimation'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Twi'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Chartered Engineer (ICE)', subheading: '', location: '', start: '2021', end: '', description: '' }],
+      },
     ],
   },
 
@@ -259,11 +299,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Marketing Manager', subheading: 'Nordhavn Media', location: 'Copenhagen, Denmark', start: '2021', end: '', description: bullets('Grew paid acquisition channels, reducing CAC by 22%.', 'Led a team of four across content, paid, and lifecycle marketing.') },
           { id: 'e2', heading: 'Marketing Specialist', subheading: 'Baltic Brands', location: 'Aarhus, Denmark', start: '2018', end: '2021', description: bullets('Ran email lifecycle programs lifting retention by 15%.') },
+          { id: 'e3', heading: 'Marketing Coordinator', subheading: 'Baltic Brands', location: 'Aarhus, Denmark', start: '2016', end: '2018', description: bullets('Coordinated social content calendars and influencer partnerships.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Marketing', subheading: 'Copenhagen Business School', location: 'Copenhagen, Denmark', start: '2014', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Performance Marketing', 'Campaign Strategy', 'SEO', 'Marketing Analytics', 'Team Leadership'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Danish', 'English', 'German'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Google Analytics Certification', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -284,11 +329,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Supply Chain Manager', subheading: 'Grupo Andino', location: 'Mexico City, Mexico', start: '2019', end: '', description: bullets('Cut inventory holding costs by 19% through demand-planning improvements.', 'Managed relationships with 40+ regional suppliers.') },
           { id: 'e2', heading: 'Logistics Analyst', subheading: 'Transportes del Norte', location: 'Monterrey, Mexico', start: '2015', end: '2019', description: bullets('Redesigned distribution routes, cutting delivery times by 12%.') },
+          { id: 'e3', heading: 'Logistics Coordinator', subheading: 'Transportes del Norte', location: 'Monterrey, Mexico', start: '2013', end: '2015', description: bullets('Coordinated freight scheduling across three regional warehouses.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Industrial Engineering', subheading: 'Tecnológico de Monterrey', location: 'Monterrey, Mexico', start: '2011', end: '2015', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Demand Planning', 'Vendor Negotiation', 'Logistics', 'ERP Systems', 'Inventory Management'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Spanish', 'English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Supply Chain Professional (CSCP)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -309,11 +359,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Senior Accountant', subheading: 'Peachtree Holdings', location: 'Atlanta, GA', start: '2020', end: '', description: bullets('Own month-end close for three business units.', 'Reduced close timeline from 8 to 5 business days.') },
           { id: 'e2', heading: 'Staff Accountant', subheading: 'Magnolia Financial', location: 'Atlanta, GA', start: '2017', end: '2020', description: bullets('Prepared reconciliations supporting annual external audits.') },
+          { id: 'e3', heading: 'Accounting Intern', subheading: 'Magnolia Financial', location: 'Atlanta, GA', start: '2016', end: '2017', description: bullets('Supported accounts payable processing and expense report audits.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.B.A. Accounting', subheading: 'University of Georgia', location: 'Athens, GA', start: '2013', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Financial Reporting', 'GAAP', 'Reconciliations', 'NetSuite', 'Audit Support'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Public Accountant (CPA)', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -335,11 +390,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Management Consultant', subheading: 'Thornfield Advisory', location: 'London, UK', start: '2021', end: '', description: bullets('Led a cost-transformation program saving a retail client £4.2M annually.', 'Manage a team of three analysts across two concurrent engagements.') },
           { id: 'e2', heading: 'Business Analyst', subheading: 'Kestrel Consulting', location: 'London, UK', start: '2018', end: '2021', description: bullets('Built the operating model for a client’s post-merger integration.') },
+          { id: 'e3', heading: 'Junior Analyst', subheading: 'Kestrel Consulting', location: 'London, UK', start: '2016', end: '2018', description: bullets('Supported data gathering and client workshops for strategy engagements.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'London Business School', location: 'London, UK', start: '2016', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Operating Model Design', 'Cost Transformation', 'Stakeholder Management', 'Financial Modeling'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'French'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Management Consultant (CMC)', subheading: '', location: '', start: '2021', end: '', description: '' }],
+      },
     ],
   },
 
@@ -361,11 +421,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Senior Product Manager', subheading: 'Brightloop', location: 'San Jose, CA', start: '2021', end: '', description: bullets('Launched a referral program driving 30% of new signups.', 'Own the roadmap for the core mobile app used by 4M+ users.') },
           { id: 'e2', heading: 'Product Manager', subheading: 'Fernway', location: 'San Francisco, CA', start: '2018', end: '2021', description: bullets('Shipped the v1 checkout redesign, lifting conversion by 11%.') },
+          { id: 'e3', heading: 'Associate Product Manager', subheading: 'Fernway', location: 'San Francisco, CA', start: '2016', end: '2018', description: bullets('Ran user interviews and A/B tests informing the onboarding redesign.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Business Administration', subheading: 'UC Berkeley', location: 'Berkeley, CA', start: '2014', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Product Strategy', 'Roadmapping', 'A/B Testing', 'User Research', 'SQL'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Korean'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Scrum Product Owner (CSPO)', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -386,11 +451,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Registered Nurse', subheading: 'Baylor Scott & White', location: 'Dallas, TX', start: '2021', end: '', description: bullets('Provide direct patient care in a 24-bed trauma unit.', 'Precept new graduate nurses during onboarding rotations.') },
           { id: 'e2', heading: 'Staff Nurse', subheading: 'Parkland Health', location: 'Dallas, TX', start: '2018', end: '2021', description: bullets('Delivered care across med-surg and step-down units.') },
+          { id: 'e3', heading: 'Nursing Extern', subheading: 'Parkland Health', location: 'Dallas, TX', start: '2017', end: '2018', description: bullets('Rotated across med-surg and emergency departments during clinical training.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Nursing', subheading: 'Texas Woman’s University', location: 'Denton, TX', start: '2014', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Trauma Care', 'Patient Assessment', 'EPIC EHR', 'IV Therapy', 'Preceptorship'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Korean'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Trauma Nursing Core Course (TNCC)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -412,11 +482,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'HR Manager', subheading: 'Fabrica Digitale', location: 'Milan, Italy', start: '2021', end: '', description: bullets('Scaled headcount from 40 to 130 while maintaining a 92% offer-accept rate.', 'Rebuilt the performance review process adopted company-wide.') },
           { id: 'e2', heading: 'HR Generalist', subheading: 'Ventura Studio', location: 'Turin, Italy', start: '2018', end: '2021', description: bullets('Managed onboarding and benefits administration for 60 employees.') },
+          { id: 'e3', heading: 'Recruiting Coordinator', subheading: 'Ventura Studio', location: 'Turin, Italy', start: '2016', end: '2018', description: bullets('Managed candidate pipelines and interview scheduling for engineering roles.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Human Resources', subheading: 'Bocconi University', location: 'Milan, Italy', start: '2014', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Recruiting', 'Employee Relations', 'Performance Management', 'HRIS', 'Onboarding'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Italian', 'English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'SHRM Certified Professional (SHRM-CP)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -437,11 +512,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'DevOps Engineer', subheading: 'Polarstack', location: 'Stockholm, Sweden', start: '2020', end: '', description: bullets('Cut deployment failures by 60% by rebuilding the CI/CD pipeline.', 'Run on-call rotation for a 99.95% uptime SLA.') },
           { id: 'e2', heading: 'Systems Engineer', subheading: 'Baltic Cloud', location: 'Gothenburg, Sweden', start: '2017', end: '2020', description: bullets('Migrated on-prem workloads to Kubernetes on AWS.') },
+          { id: 'e3', heading: 'Systems Administrator', subheading: 'Baltic Cloud', location: 'Gothenburg, Sweden', start: '2015', end: '2017', description: bullets('Maintained on-prem server infrastructure and backup systems.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.Sc. Computer Engineering', subheading: 'KTH Royal Institute of Technology', location: 'Stockholm, Sweden', start: '2012', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Kubernetes', 'Terraform', 'AWS', 'CI/CD', 'Observability'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Swedish', 'English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Kubernetes Administrator (CKA)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -463,11 +543,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Graphic Designer', subheading: 'Atelier Rhône', location: 'Lyon, France', start: '2021', end: '', description: bullets('Led rebrand for a regional hotel group across 12 properties.', 'Design print and digital campaigns for seasonal launches.') },
           { id: 'e2', heading: 'Junior Designer', subheading: 'Maison Verte', location: 'Lyon, France', start: '2019', end: '2021', description: bullets('Produced packaging design for a line of 20+ retail products.') },
+          { id: 'e3', heading: 'Design Intern', subheading: 'Maison Verte', location: 'Lyon, France', start: '2018', end: '2019', description: bullets('Assisted with packaging mockups and seasonal catalog layouts.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Graphic Design', subheading: 'École de Condé', location: 'Lyon, France', start: '2016', end: '2019', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Adobe Creative Suite', 'Branding', 'Typography', 'Print Design', 'Art Direction'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['French', 'English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Adobe Certified Professional', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -488,11 +573,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Corporate Counsel', subheading: 'Ashford Technologies', location: 'Washington, DC', start: '2021', end: '', description: bullets('Negotiate enterprise vendor and customer contracts.', 'Built the company’s first data-privacy compliance program.') },
           { id: 'e2', heading: 'Associate Attorney', subheading: 'Prescott & Lane LLP', location: 'Washington, DC', start: '2017', end: '2021', description: bullets('Advised clients on employment and commercial litigation matters.') },
+          { id: 'e3', heading: 'Law Clerk', subheading: 'Prescott & Lane LLP', location: 'Washington, DC', start: '2016', end: '2017', description: bullets('Drafted legal memoranda and supported discovery for litigation matters.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'J.D.', subheading: 'Georgetown University Law Center', location: 'Washington, DC', start: '2014', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Contract Negotiation', 'Compliance', 'Data Privacy', 'Risk Management', 'Legal Research'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'D.C. Bar Admission', subheading: '', location: '', start: '2017', end: '', description: '' }],
+      },
     ],
   },
 
@@ -514,11 +604,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Customer Success Manager', subheading: 'Summit Software', location: 'Denver, CO', start: '2021', end: '', description: bullets('Manage a $4M portfolio of enterprise accounts with 96% net retention.', 'Built the onboarding playbook adopted across the CS team.') },
           { id: 'e2', heading: 'Account Manager', subheading: 'Highline Tech', location: 'Denver, CO', start: '2018', end: '2021', description: bullets('Grew accounts through upsell, averaging 22% annual expansion.') },
+          { id: 'e3', heading: 'Support Specialist', subheading: 'Highline Tech', location: 'Denver, CO', start: '2016', end: '2018', description: bullets('Resolved technical support tickets with a 95% satisfaction rating.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Communications', subheading: 'University of Colorado Boulder', location: 'Boulder, CO', start: '2014', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Account Management', 'Renewals', 'Onboarding', 'Salesforce', 'Customer Advocacy'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Norwegian'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Customer Success Manager (CCSM)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -539,11 +634,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Financial Analyst', subheading: 'GEO Inc.', location: 'Boston, MA', start: '04/2018', end: '', description: bullets('Created budgets and reduced labor and material costs by 15%.', 'Generated financial reports on completed projects with positive results.') },
           { id: 'e2', heading: 'Financial Analyst', subheading: 'Sisco Enterprises', location: 'Boston, MA', start: '09/2014', end: '03/2018', description: bullets('Prepared cash flow analysis, annual budgets, and revenue projections.') },
+          { id: 'e3', heading: 'Financial Analyst Intern', subheading: 'Sisco Enterprises', location: 'Boston, MA', start: '05/2013', end: '08/2014', description: bullets('Supported month-end close and ad hoc financial reporting requests.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Finance', subheading: 'Boston University', location: 'Boston, MA', start: '2010', end: '2014', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Financial Modeling', 'Forecasting', 'Budget Management', 'Excel', 'Variance Analysis'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Chartered Financial Analyst (CFA) Level I', subheading: '', location: '', start: '2017', end: '', description: '' }],
+      },
     ],
   },
 
@@ -564,11 +664,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Executive Assistant to the CEO', subheading: 'Harlow Capital', location: 'New York, NY', start: '2020', end: '', description: bullets('Manage complex scheduling across four time zones.', 'Coordinate quarterly board meetings and investor communications.') },
           { id: 'e2', heading: 'Executive Assistant', subheading: 'Brookline Partners', location: 'New York, NY', start: '2016', end: '2020', description: bullets('Supported two senior partners and their client-facing schedules.') },
+          { id: 'e3', heading: 'Administrative Assistant', subheading: 'Brookline Partners', location: 'New York, NY', start: '2014', end: '2016', description: bullets('Managed office logistics and supported three department leads.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Business Communications', subheading: 'Fordham University', location: 'New York, NY', start: '2012', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Calendar Management', 'Travel Coordination', 'Board Support', 'Confidentiality', 'Event Planning'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified Administrative Professional (CAP)', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -590,11 +695,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Finance Manager', subheading: 'Natura & Co', location: 'São Paulo, Brazil', start: '2022', end: '', description: bullets('Manage monthly budgeting cycles and variance analysis for two business units.', 'Lead reporting improvements that reduced closing timelines by three days.') },
           { id: 'e2', heading: 'Senior Financial Analyst', subheading: 'Raízen', location: 'São Paulo, Brazil', start: '2019', end: '2022', description: bullets('Delivered monthly performance reports for leadership across revenue and expense lines.', 'Improved forecast models to support more accurate quarterly planning.') },
+          { id: 'e3', heading: 'Financial Analyst', subheading: 'Raízen', location: 'São Paulo, Brazil', start: '2017', end: '2019', description: bullets('Supported budget consolidation across four regional business units.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'MBA in Finance', subheading: 'Fundação Getulio Vargas (FGV)', location: 'São Paulo, Brazil', start: '2020', end: '2022', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Financial Planning', 'Budget Management', 'Forecasting', 'Variance Analysis', 'SAP'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese', 'English', 'Spanish'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'CFA Institute Investment Foundations', subheading: '', location: '', start: '2021', end: '', description: '' }],
+      },
     ],
   },
 
@@ -616,11 +726,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Project Engineer', subheading: 'Adani Infrastructure', location: 'Ahmedabad, India', start: '01/2022', end: '', description: bullets('Lead project coordination across teams for utility infrastructure upgrades.', 'Improved project tracking accuracy by standardizing reporting formats.') },
           { id: 'e2', heading: 'Mechanical Engineer', subheading: 'Larsen & Toubro', location: 'Vadodara, India', start: '07/2019', end: '12/2021', description: bullets('Delivered equipment installation support for manufacturing projects.', 'Coordinated inspections and contractor activities to reduce delays.') },
+          { id: 'e3', heading: 'Graduate Engineer Trainee', subheading: 'Larsen & Toubro', location: 'Vadodara, India', start: '07/2017', end: '06/2019', description: bullets('Rotated across fabrication and quality teams during onboarding training.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'Bachelor of Engineering in Mechanical Engineering', subheading: 'Gujarat Technological University', location: 'Ahmedabad, India', start: '2013', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Project Coordination', 'Vendor Management', 'Technical Documentation', 'Site Execution', 'Quality Assurance'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Hindi', 'Gujarati'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Project Management Professional (PMP)', subheading: '', location: '', start: '2022', end: '', description: '' }],
+      },
     ],
   },
 
@@ -642,11 +757,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Marketing Director', subheading: 'Ferncrest Software', location: 'Atlanta, GA', start: '2020', end: '', description: bullets('Grew pipeline contribution from marketing to 45% of total bookings.', 'Lead a team of eight across brand, content, and demand generation.') },
           { id: 'e2', heading: 'Senior Marketing Manager', subheading: 'Bellhaven Tech', location: 'Atlanta, GA', start: '2016', end: '2020', description: bullets('Rebuilt the company’s positioning ahead of a Series C raise.') },
+          { id: 'e3', heading: 'Marketing Manager', subheading: 'Bellhaven Tech', location: 'Atlanta, GA', start: '2013', end: '2016', description: bullets('Built the company’s first content marketing program from the ground up.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Marketing', subheading: 'Emory University', location: 'Atlanta, GA', start: '2010', end: '2014', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Brand Strategy', 'Demand Generation', 'Team Leadership', 'Marketing Analytics', 'Positioning'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'HubSpot Inbound Marketing Certification', subheading: '', location: '', start: '2018', end: '', description: '' }],
+      },
     ],
   },
 
@@ -668,11 +788,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'UX Researcher', subheading: 'Kaede Digital', location: 'Tokyo, Japan', start: '2021', end: '', description: bullets('Run a quarterly research program feeding the product roadmap.', 'Built the team’s first participant-recruitment pipeline.') },
           { id: 'e2', heading: 'Junior UX Researcher', subheading: 'Sora Labs', location: 'Osaka, Japan', start: '2018', end: '2021', description: bullets('Conducted usability testing for three major app redesigns.') },
+          { id: 'e3', heading: 'Research Assistant', subheading: 'Sora Labs', location: 'Osaka, Japan', start: '2016', end: '2018', description: bullets('Transcribed and coded interview data for early-stage product studies.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.A. Human-Computer Interaction', subheading: 'University of Tokyo', location: 'Tokyo, Japan', start: '2016', end: '2018', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['User Research', 'Usability Testing', 'Survey Design', 'Data Synthesis', 'Figma'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Japanese', 'English'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Certified User Experience Professional (CUXP)', subheading: '', location: '', start: '2020', end: '', description: '' }],
+      },
     ],
   },
 
@@ -694,11 +819,16 @@ export const TEMPLATE_SAMPLES = {
         entries: [
           { id: 'e1', heading: 'Operations Director', subheading: 'Lisboa Retail Group', location: 'Lisbon, Portugal', start: '2019', end: '', description: bullets('Oversee operations across 24 stores and a central distribution center.', 'Cut operating costs by 14% through process standardization.') },
           { id: 'e2', heading: 'Regional Operations Manager', subheading: 'Atlantic Commerce', location: 'Porto, Portugal', start: '2014', end: '2019', description: bullets('Managed regional operations for 9 retail locations.') },
+          { id: 'e3', heading: 'Store Operations Manager', subheading: 'Atlantic Commerce', location: 'Porto, Portugal', start: '2011', end: '2014', description: bullets('Managed daily operations and staff scheduling for a flagship retail location.') },
         ],
       },
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'Nova School of Business and Economics', location: 'Lisbon, Portugal', start: '2011', end: '2013', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Operations Management', 'Process Improvement', 'Team Leadership', 'P&L Management', 'Retail Strategy'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese', 'English', 'Spanish'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [{ id: 'c1', heading: 'Lean Six Sigma Green Belt', subheading: '', location: '', start: '2019', end: '', description: '' }],
+      },
     ],
   },
 
@@ -720,7 +850,13 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.A. Visual Communication', subheading: 'École des Arts Décoratifs', location: 'Paris, France', start: '2009', end: '2011', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Creative Direction', 'Brand Strategy', 'Art Direction', 'Team Leadership', 'Campaign Development'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['French', 'English', 'Italian'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Adobe Certified Expert', 'Brand Leadership Program (INSEAD)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Adobe Certified Expert', subheading: '', location: '', start: '2020', end: '', description: '' },
+        { id: 'c2', heading: 'Brand Leadership Program (INSEAD)', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -742,7 +878,13 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Industrial Engineering', subheading: 'Chalmers University of Technology', location: 'Gothenburg, Sweden', start: '2010', end: '2014', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Lean Manufacturing', 'Supply Chain', 'Team Leadership', 'Process Improvement', 'Six Sigma'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Swedish', 'English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Lean Six Sigma Black Belt', 'PMP Certification'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Lean Six Sigma Black Belt', subheading: '', location: '', start: '2021', end: '', description: '' },
+        { id: 'c2', heading: 'PMP Certification', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -764,7 +906,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Hospitality Management', subheading: 'Instituto Superior de Gestão', location: 'Lisbon, Portugal', start: '2011', end: '2015', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Event Production', 'Vendor Management', 'Budgeting', 'Client Relations', 'Logistics'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese', 'English', 'Spanish'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Certified Meeting Professional (CMP)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Certified Meeting Professional (CMP)', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -786,7 +933,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'University of Chicago Booth School of Business', location: 'Chicago, IL', start: '2010', end: '2012', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Operations Strategy', 'Due Diligence', 'Financial Modeling', 'Change Management', 'Stakeholder Management'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Mandarin'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Certified Management Consultant (CMC)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Certified Management Consultant (CMC)', subheading: '', location: '', start: '2019', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -808,7 +960,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Communications', subheading: 'Pontifícia Universidade Católica do Rio de Janeiro', location: 'Rio de Janeiro, Brazil', start: '2012', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Content Strategy', 'Copywriting', 'Social Media', 'Editorial Planning', 'SEO'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese', 'English', 'Spanish'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['HubSpot Content Marketing Certification'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'HubSpot Content Marketing Certification', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -830,7 +987,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.B.A.', subheading: 'Texas A&M University', location: 'College Station, TX', start: '2006', end: '2010', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Enterprise Sales', 'Team Leadership', 'Key Account Management', 'Sales Forecasting', 'Negotiation'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Spanish'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Certified Sales Leadership Professional'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Certified Sales Leadership Professional', subheading: '', location: '', start: '2018', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -852,13 +1014,19 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Computer Engineering', subheading: 'American University of Sharjah', location: 'Sharjah, UAE', start: '2011', end: '2015', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['AWS', 'Cloud Architecture', 'Terraform', 'Kubernetes', 'Security Compliance'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Arabic', 'English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['AWS Certified Solutions Architect – Professional', 'CISSP'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'AWS Certified Solutions Architect – Professional', subheading: '', location: '', start: '2020', end: '', description: '' },
+        { id: 'c2', heading: 'CISSP', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
   saffron: {
     basics: {
-      name: 'Priya Chandrasekaran', title: 'Brand Manager', email: 'priya.c@email.com', phone: '+91 98765 12340',
+      name: 'Priya Raman', title: 'Brand Manager', email: 'priya.raman@email.com', phone: '+91 98765 12340',
       address: 'Mumbai, India', linkedin: 'linkedin.com/in/priya-c', photo: placeholderAvatar('#c23b83'), visibleExtra: ['linkedin'],
     },
     sections: [
@@ -874,7 +1042,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A. Marketing', subheading: 'Indian Institute of Management, Ahmedabad', location: 'Ahmedabad, India', start: '2014', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Brand Management', 'Market Research', 'P&L Ownership', 'Campaign Strategy', 'Retail Marketing'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Hindi', 'Tamil'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Brand Management Certification (Kellogg)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Brand Management Certification (Kellogg)', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -896,7 +1069,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'Trinity College Dublin', location: 'Dublin, Ireland', start: '2007', end: '2009', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Operations Strategy', 'P&L Management', 'Supply Chain', 'Team Leadership', 'Continuous Improvement'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Irish'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Lean Six Sigma Black Belt'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Lean Six Sigma Black Belt', subheading: '', location: '', start: '2018', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -918,7 +1096,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Graphic Design', subheading: 'Elisava Barcelona School of Design', location: 'Barcelona, Spain', start: '2009', end: '2013', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Art Direction', 'Brand Identity', 'Typography', 'Motion Design', 'Adobe Creative Suite'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Spanish', 'Catalan', 'English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Adobe Certified Expert'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Adobe Certified Expert', subheading: '', location: '', start: '2019', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -940,7 +1123,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'J.D.', subheading: 'Boston University School of Law', location: 'Boston, MA', start: '2008', end: '2011', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Corporate Governance', 'M&A', 'IP Strategy', 'Regulatory Compliance', 'Contract Negotiation'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Massachusetts Bar Admission'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Massachusetts Bar Admission', subheading: '', location: '', start: '2019', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -962,7 +1150,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Interaction Design', subheading: 'Malmö University', location: 'Malmö, Sweden', start: '2012', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Product Design', 'Design Systems', 'User Research', 'Figma', 'Prototyping'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Swedish', 'Danish', 'English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Nielsen Norman Group UX Certification'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Nielsen Norman Group UX Certification', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -984,7 +1177,13 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.Arch.', subheading: 'Columbia University GSAPP', location: 'New York, NY', start: '2011', end: '2013', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Architectural Design', 'Revit', 'LEED Certification', 'Project Management', 'Construction Documentation'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Licensed Architect (NY)', 'LEED AP BD+C'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Licensed Architect (NY)', subheading: '', location: '', start: '2019', end: '', description: '' },
+        { id: 'c2', heading: 'LEED AP BD+C', subheading: '', location: '', start: '2019', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1006,7 +1205,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'University of Washington Foster School', location: 'Seattle, WA', start: '2012', end: '2014', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Strategic Planning', 'Executive Communication', 'Cross-Functional Leadership', 'Program Management', 'Board Reporting'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Russian'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Project Management Professional (PMP)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Project Management Professional (PMP)', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1028,14 +1232,19 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Fashion Management', subheading: 'Istituto Marangoni', location: 'Milan, Italy', start: '2010', end: '2014', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Assortment Planning', 'Vendor Negotiation', 'Trend Forecasting', 'Inventory Management', 'Retail Analytics'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Italian', 'English', 'French'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Retail Buying & Merchandising Certificate'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Retail Buying & Merchandising Certificate', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
   redwood: {
     basics: {
       name: 'Gregory Ashford', title: 'Managing Director', email: 'gregory.ashford@email.com', phone: '+44 20 7946 1234',
-      address: 'London, UK', linkedin: 'linkedin.com/in/gregory-ashford', photo: placeholderAvatar('#5c2340'), visibleExtra: ['linkedin'],
+      address: 'London, UK', linkedin: 'linkedin.com/in/gregory-ashford', photo: null, visibleExtra: ['linkedin'],
     },
     sections: [
       { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>Managing director with eighteen years leading investment banking teams across M&A advisory and capital markets.</p>' },
@@ -1050,7 +1259,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'London Business School', location: 'London, UK', start: '2006', end: '2008', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['M&A Advisory', 'Capital Markets', 'Deal Execution', 'Team Leadership', 'Financial Modeling'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'French'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Chartered Financial Analyst (CFA)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Chartered Financial Analyst (CFA)', subheading: '', location: '', start: '2017', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1072,7 +1286,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Sports Science', subheading: 'University of Cape Town', location: 'Cape Town, South Africa', start: '2012', end: '2016', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Program Management', 'Health Coaching', 'Employee Engagement', 'Event Planning', 'Data Reporting'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Zulu', 'Afrikaans'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Certified Wellness Program Coordinator'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Certified Wellness Program Coordinator', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1094,14 +1313,19 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.S. Finance', subheading: 'NYU Stern School of Business', location: 'New York, NY', start: '2013', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Equity Research', 'Financial Modeling', 'Valuation', 'Portfolio Analysis', 'Bloomberg Terminal'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Polish'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['CFA Level II Candidate'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'CFA Level II Candidate', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 
   ember: {
     basics: {
       name: 'Alexis Moreau', title: 'Social Media Director', email: 'alexis.moreau@email.com', phone: '+1 310 555 6642',
-      address: 'Los Angeles, CA', linkedin: 'linkedin.com/in/alexis-moreau', photo: placeholderAvatar('#e8615f'), visibleExtra: ['linkedin'],
+      address: 'Los Angeles, CA', linkedin: 'linkedin.com/in/alexis-moreau', photo: null, visibleExtra: ['linkedin'],
     },
     sections: [
       { id: 's-summary', type: 'summary', title: 'Summary', kind: 'text', content: '<p>Social media director with nine years building creator-led content programs for consumer beauty and lifestyle brands.</p>' },
@@ -1116,7 +1340,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Communications', subheading: 'University of Southern California', location: 'Los Angeles, CA', start: '2011', end: '2015', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Social Strategy', 'Creator Partnerships', 'Content Production', 'Community Management', 'Analytics'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'French'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Meta Certified Digital Marketing Associate'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Meta Certified Digital Marketing Associate', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1138,7 +1367,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.B.A.', subheading: 'Harvard Business School', location: 'Boston, MA', start: '2008', end: '2010', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Financial Strategy', 'Fundraising', 'FP&A', 'Investor Relations', 'M&A'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Certified Public Accountant (CPA)'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Certified Public Accountant (CPA)', subheading: '', location: '', start: '2019', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1160,7 +1394,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.S. Environmental Science', subheading: 'University of Oslo', location: 'Oslo, Norway', start: '2013', end: '2015', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['ESG Strategy', 'Sustainability Reporting', 'Carbon Accounting', 'Stakeholder Engagement', 'Regulatory Compliance'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Norwegian', 'English'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['GRI Certified Sustainability Professional'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'GRI Certified Sustainability Professional', subheading: '', location: '', start: '2020', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1182,7 +1421,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'M.S. Computer Science', subheading: 'Stanford University', location: 'Stanford, CA', start: '2009', end: '2011', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Engineering Leadership', 'System Architecture', 'Scaling Teams', 'Cloud Infrastructure', 'Technical Strategy'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Cantonese'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['AWS Certified Solutions Architect'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'AWS Certified Solutions Architect', subheading: '', location: '', start: '2019', end: '', description: '' },
+        ],
+      },
     ],
   },
 
@@ -1204,7 +1448,12 @@ export const TEMPLATE_SAMPLES = {
       { id: 's-edu', type: 'education', title: 'Education', kind: 'entries', entries: [{ id: 'ed1', heading: 'B.A. Radio-Television-Film', subheading: 'University of Texas at Austin', location: 'Austin, TX', start: '2013', end: '2017', description: '' }] },
       { id: 's-skills', type: 'skills', title: 'Skills', kind: 'tags', tags: ['Video Production', 'Budget Management', 'Vendor Coordination', 'Creative Direction', 'Post-Production'] },
       { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English', 'Spanish'] },
-      { id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'tags', tags: ['Adobe Premiere Pro Certification'] },
+      {
+        id: 's-cert', type: 'certificates', title: 'Certificates', kind: 'entries',
+        entries: [
+        { id: 'c1', heading: 'Adobe Premiere Pro Certification', subheading: '', location: '', start: '2021', end: '', description: '' },
+        ],
+      },
     ],
   },
 };

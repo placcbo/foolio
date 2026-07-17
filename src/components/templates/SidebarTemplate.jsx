@@ -37,6 +37,11 @@ export default function SidebarTemplate({ resume }) {
     '--space-offset': `${spaceOffsetPx}px`,
     ...paperStyle,
   };
+  // The aside is a narrow (~30%) column — the user's configured name size
+  // (tuned for a full-width header) easily overflows it and forces an ugly
+  // mid-word wrap, so cap it down when the header actually lands there.
+  const asideNameFontSize =
+    layout.headerPosition === 'left' ? `${Math.min(parseFloat(nameFontSize), 14)}pt` : nameFontSize;
 
   if (layout.columns === 'one') {
     return (
@@ -94,9 +99,15 @@ export default function SidebarTemplate({ resume }) {
           <HeaderBlock
             basics={basics}
             contactItems={contactItems}
-            colored={layout.columns === 'mix' || headerColored}
+            // The aside is always accent-filled here (`asideColored` below is
+            // unconditional, unlike OneColumnTemplate's split branch), so the
+            // header needs light/contrast-aware text whenever it actually
+            // lands in that aside — i.e. headerPosition 'left'. 'right' puts
+            // it in the plain white main column instead, and 'top' renders
+            // it outside the split entirely, so neither should be colored.
+            colored={layout.headerPosition === 'left' || headerColored}
             accentColor={accentColor}
-            nameFontSize={nameFontSize}
+            nameFontSize={asideNameFontSize}
             nameFontFamily={nameFontFamily}
             header={header}
             photo={photo}
