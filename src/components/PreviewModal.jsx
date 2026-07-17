@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconX, IconCheck } from './icons';
 
 const TEMPLATE_FEATURES = [
@@ -8,8 +8,31 @@ const TEMPLATE_FEATURES = [
   'Print ready format',
 ];
 
+const PAPER_WIDTH = 794;
+
 export default function PreviewModal({ mode, Template, resume, name, onClose, onUseTemplate }) {
-  const modalPaperRef = useRef(null);
+  const columnRef = useRef(null);
+  // The paper is a fixed 794px box, but this column's available width
+  // depends on the modal layout (narrower in "template" mode, which shares
+  // space with the info sidebar). Rendering the paper at native size inside
+  // a narrower column just overflows it — scaling never happened here, so
+  // it silently cropped instead. `zoom` (not `transform`) so the box model
+  // actually shrinks too, meaning no separate height math is needed to stop
+  // the column leaving a tall empty gap below a scaled-down page.
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = columnRef.current;
+    if (!el) return;
+    const update = () => {
+      const available = el.clientWidth - 48; // breathing room inside the column
+      setScale(Math.min(1, Math.max(0.3, available / PAPER_WIDTH)));
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [mode]);
 
   useEffect(() => {
     document.body.classList.add('has-open-preview-modal');
@@ -31,14 +54,14 @@ export default function PreviewModal({ mode, Template, resume, name, onClose, on
         style={mode === 'template' ? { '--modal-accent': resume.accentColor } : undefined}
         onClick={(e) => e.stopPropagation()}
       >
-        {mode === 'template' && (
-          <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
-            <IconX size={20} />
-          </button>
-        )}
+        <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
+          <IconX size={20} />
+        </button>
 
-        <div className="preview-modal-paper-col" ref={modalPaperRef}>
-          <Template resume={resume} accentColor={resume.accentColor} />
+        <div className="preview-modal-paper-col" ref={columnRef}>
+          <div style={{ zoom: scale }}>
+            <Template resume={resume} accentColor={resume.accentColor} />
+          </div>
         </div>
 
         {mode === 'template' && (

@@ -266,17 +266,28 @@ function getEntryFieldMeta(type) {
 // Experience into list mode.
 const BULLETED_ENTRY_TYPES = new Set(['experience']);
 
-function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTargetProps }) {
+function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTargetProps, autoOpen }) {
   const [open, setOpen] = useState(false);
   const [linkOpen, setLinkOpen] = useState(Boolean(entry.link));
   const meta = getEntryFieldMeta(section.type);
+  const rowRef = useRef(null);
+
+  // A freshly-added entry should already be open — expanding on mount alone
+  // isn't enough because "just added" is only known a render after the
+  // entry appears (see EntriesEditor), so this reacts to the prop flipping
+  // true rather than only reading it once at construction time.
+  useEffect(() => {
+    if (!autoOpen) return;
+    setOpen(true);
+    rowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [autoOpen]);
 
   function updateEntry(field, value) {
     dispatch({ type: 'UPDATE_ENTRY', id: section.id, entryId: entry.id, field, value });
   }
 
   return (
-    <div className={`entry-row-card${entry.hidden ? ' is-hidden' : ''}`} {...dropTargetProps}>
+    <div className={`entry-row-card${entry.hidden ? ' is-hidden' : ''}`} ref={rowRef} {...dropTargetProps}>
       <div className="entry-row-header">
         <span className="entry-drag-handle" aria-hidden="true" {...handleDragProps}>
           <IconGripVertical size={16} />
@@ -398,6 +409,15 @@ function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTarget
 
 function EntriesEditor({ section, dispatch }) {
   const [draggedId, setDraggedId] = useState(null);
+  const prevEntryIdsRef = useRef(section.entries.map((e) => e.id));
+  const [justAddedEntryId, setJustAddedEntryId] = useState(null);
+
+  useEffect(() => {
+    const prevIds = prevEntryIdsRef.current;
+    const added = section.entries.find((e) => !prevIds.includes(e.id));
+    if (added) setJustAddedEntryId(added.id);
+    prevEntryIdsRef.current = section.entries.map((e) => e.id);
+  }, [section.entries]);
 
   function handleDrop(targetIndex) {
     if (draggedId == null) return;
@@ -414,6 +434,7 @@ function EntriesEditor({ section, dispatch }) {
           entry={entry}
           index={index}
           dispatch={dispatch}
+          autoOpen={entry.id === justAddedEntryId}
           // Split deliberately: only the grip handle is `draggable`, so
           // click-dragging inside an input or the rich-text editor to select
           // text isn't hijacked as "start reordering the entry". The drop
@@ -444,10 +465,17 @@ function EntriesEditor({ section, dispatch }) {
   );
 }
 
-export default function SectionCard({ section, dispatch }) {
+export default function SectionCard({ section, dispatch, autoOpen }) {
   const [expanded, setExpanded] = useState(false);
   const [renaming, setRenaming] = useState(false);
   const meta = getSectionMeta(section.type);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    if (!autoOpen) return;
+    setExpanded(true);
+    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [autoOpen]);
 
   function updateTitle(title) {
     dispatch({ type: 'UPDATE_SECTION_TITLE', id: section.id, title });
@@ -455,7 +483,7 @@ export default function SectionCard({ section, dispatch }) {
 
   if (!expanded) {
     return (
-      <div className={`section-card section-card-collapsed${section.hidden ? ' is-hidden' : ''}`}>
+      <div className={`section-card section-card-collapsed${section.hidden ? ' is-hidden' : ''}`} ref={cardRef}>
         <span className="section-icon" aria-hidden="true">
           {meta?.icon}
         </span>
@@ -503,7 +531,7 @@ export default function SectionCard({ section, dispatch }) {
   }
 
   return (
-    <div className="section-card section-card-expanded">
+    <div className="section-card section-card-expanded" ref={cardRef}>
       <div className="section-edit-header">
         <span className="section-icon" aria-hidden="true">
           {meta?.icon}

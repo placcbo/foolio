@@ -33,22 +33,42 @@ import {
 } from '../state/resumeReducer';
 import ApplyTemplateModal from './ApplyTemplateModal';
 
-const NAV_ITEMS = [
-  { id: 'document', label: 'Document' },
-  { id: 'templates', label: 'Templates' },
-  { id: 'layout', label: 'Layout' },
-  { id: 'fontSize', label: 'Font Size' },
-  { id: 'spacing', label: 'Spacing' },
-  { id: 'entries', label: 'Entries' },
-  { id: 'headings', label: 'Headings' },
-  { id: 'font', label: 'Font' },
-  { id: 'colors', label: 'Colors' },
-  { id: 'header', label: 'Header' },
-  { id: 'photo', label: 'Photo' },
-  { id: 'links', label: 'Links' },
-  { id: 'footer', label: 'Footer' },
-  { id: 'sections', label: 'Sections' },
+// Grouped so the sidebar reads as three clear questions — "what look",
+// "how is it arranged", "what shows in the header/footer" — instead of one
+// flat list of 14 same-weight items the eye has to scan one at a time.
+const NAV_GROUPS = [
+  {
+    label: 'Design',
+    items: [
+      { id: 'document', label: 'Document' },
+      { id: 'templates', label: 'Templates' },
+      { id: 'colors', label: 'Colors' },
+      { id: 'font', label: 'Font' },
+      { id: 'headings', label: 'Headings' },
+    ],
+  },
+  {
+    label: 'Layout',
+    items: [
+      { id: 'layout', label: 'Layout' },
+      { id: 'fontSize', label: 'Font Size' },
+      { id: 'spacing', label: 'Spacing' },
+      { id: 'entries', label: 'Entries' },
+      { id: 'sections', label: 'Sections' },
+    ],
+  },
+  {
+    label: 'Header & footer',
+    items: [
+      { id: 'header', label: 'Header' },
+      { id: 'photo', label: 'Photo' },
+      { id: 'links', label: 'Links' },
+      { id: 'footer', label: 'Footer' },
+    ],
+  },
 ];
+
+const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items);
 
 const LANGUAGES = ['English (UK)', 'English (US)', 'Spanish', 'French', 'German', 'Portuguese'];
 const PAGE_FORMATS = ['A4', 'US Letter'];
@@ -1292,15 +1312,20 @@ export default function CustomizePanel({ resume, dispatch, onFontPreview }) {
   return (
     <div className="customize-panel">
       <nav className="customize-sidebar">
-        {NAV_ITEMS.map((item) => (
-          <button
-            type="button"
-            key={item.id}
-            className={`customize-sidebar-item${activeSection === item.id ? ' active' : ''}`}
-            onClick={() => setActiveSection(item.id)}
-          >
-            {item.label}
-          </button>
+        {NAV_GROUPS.map((group) => (
+          <div className="customize-sidebar-group" key={group.label}>
+            <span className="customize-sidebar-group-label">{group.label}</span>
+            {group.items.map((item) => (
+              <button
+                type="button"
+                key={item.id}
+                className={`customize-sidebar-item${activeSection === item.id ? ' active' : ''}`}
+                onClick={() => setActiveSection(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         ))}
       </nav>
 

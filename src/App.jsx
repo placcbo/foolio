@@ -162,7 +162,7 @@ function App() {
           <ResumePreview resume={resume} paperRef={paperRef} />
         </div>
       ) : activeTab === 'customize' ? (
-        <div className="editor-body">
+        <div className="editor-body editor-body-customize">
           <CustomizePanel resume={resume} dispatch={dispatch} onFontPreview={handleFontPreview} />
           <ResumePreview resume={previewResume} paperRef={paperRef} />
         </div>
