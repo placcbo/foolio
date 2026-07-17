@@ -390,6 +390,22 @@ export function resumeReducer(state, action) {
       };
     }
 
+    case 'LOAD_RESUME':
+      // Wholesale state swap for switching between resumes in the library —
+      // everything (basics, sections, settings, template) comes from
+      // whatever was loaded from storage for that resume's id.
+      return action.resume;
+
+    case 'IMPORT_RESUME':
+      // Wholesale replace of the content (name, contact info, sections) from
+      // a parsed paste-in — but keep whatever template/settings are already
+      // chosen, since importing text says nothing about how it should look.
+      return {
+        ...state,
+        basics: { ...state.basics, ...action.basics },
+        sections: action.sections,
+      };
+
     default:
       return state;
   }

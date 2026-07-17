@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { SECTION_TYPES } from '../data/sectionTypes';
 import { IconX, IconUpload } from './icons';
+import ImportResumeModal from './ImportResumeModal';
 
-export default function AddContentModal({ existingTypes, onAdd, onClose }) {
+export default function AddContentModal({ existingTypes, onAdd, onImport, onClose }) {
+  const [importOpen, setImportOpen] = useState(false);
   const available = SECTION_TYPES.filter(
     (s) => s.repeatable || !existingTypes.includes(s.type)
   );
@@ -13,7 +16,7 @@ export default function AddContentModal({ existingTypes, onAdd, onClose }) {
           <h2>Add content</h2>
           <div className="modal-header-right">
             <span className="quick-start-label">Quick start:</span>
-            <button type="button" className="import-btn">
+            <button type="button" className="import-btn" onClick={() => setImportOpen(true)}>
               <IconUpload size={16} />
               Import Resume
             </button>
@@ -40,6 +43,16 @@ export default function AddContentModal({ existingTypes, onAdd, onClose }) {
           ))}
         </div>
       </div>
+
+      {importOpen && (
+        <ImportResumeModal
+          onClose={() => setImportOpen(false)}
+          onImport={(parsed) => {
+            setImportOpen(false);
+            onImport(parsed);
+          }}
+        />
+      )}
     </div>
   );
 }

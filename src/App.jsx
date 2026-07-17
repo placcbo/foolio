@@ -1,14 +1,21 @@
 import { useReducer, useState, useEffect, useRef } from 'react';
 import TopBar from './components/TopBar';
+import NavRail from './components/NavRail';
 import ContentPanel from './components/ContentPanel';
 import CustomizePanel from './components/CustomizePanel';
+import ResumeLibrary from './components/ResumeLibrary';
 import ResumePreview from './components/ResumePreview';
 import TemplatePicker from './components/TemplatePicker';
 import { resumeReducer, initialResumeState } from './state/resumeReducer';
 import './App.css';
 
-const RESUME_STORAGE_KEY = 'candidly:resume';
+const LIBRARY_KEY = 'candidly:library';
+const ACTIVE_RESUME_KEY = 'candidly:activeResumeId';
 const PAGE_STORAGE_KEY = 'candidly:page';
+// Pre-multi-resume save location — only ever read once, to migrate an
+// existing single resume into the new library on someone's first load
+// after this update. Never written to again after that.
+const LEGACY_RESUME_KEY = 'candidly:resume';
 
 // Bump this whenever a default value or settings shape changes in a way that
 // should NOT be silently inherited from an old save — otherwise stale
@@ -16,58 +23,126 @@ const PAGE_STORAGE_KEY = 'candidly:page';
 // forever (merge-over-fallback can't tell "old save" from "user's choice").
 const RESUME_SCHEMA_VERSION = 3;
 
-function loadInitialResume(fallback) {
-  try {
-    const raw = localStorage.getItem(RESUME_STORAGE_KEY);
-    if (!raw) return fallback;
-    const parsed = JSON.parse(raw);
-    // A schema mismatch means the SETTINGS shape/defaults changed underneath
-    // an old save, so those get reset to the fresh defaults below. It must
-    // NOT throw away the user's actual resume — name, sections, every entry
-    // they've written — that content merges in unconditionally either way.
-    const settingsMatch = parsed.__schemaVersion === RESUME_SCHEMA_VERSION;
-    delete parsed.__schemaVersion;
+function resumeKey(id) {
+  return `candidly:resume:${id}`;
+}
 
-    // Merge over the current default shape so older saves missing newer
-    // fields (like visibleExtra) don't crash the app after an update.
-    return {
-      ...fallback,
-      ...parsed,
-      basics: { ...fallback.basics, ...parsed.basics },
-      settings: settingsMatch
-        ? {
-            ...fallback.settings,
-            ...parsed.settings,
-            layout: { ...fallback.settings.layout, ...parsed.settings?.layout },
-            fontSize: { ...fallback.settings.fontSize, ...parsed.settings?.fontSize },
-            spacing: { ...fallback.settings.spacing, ...parsed.settings?.spacing },
-            entryLayout: { ...fallback.settings.entryLayout, ...parsed.settings?.entryLayout },
-            headings: { ...fallback.settings.headings, ...parsed.settings?.headings },
-            font: { ...fallback.settings.font, ...parsed.settings?.font },
-            colors: {
-              ...fallback.settings.colors,
-              ...parsed.settings?.colors,
-              applyTo: { ...fallback.settings.colors.applyTo, ...parsed.settings?.colors?.applyTo },
-            },
-            header: { ...fallback.settings.header, ...parsed.settings?.header },
-            photo: { ...fallback.settings.photo, ...parsed.settings?.photo },
-            footer: { ...fallback.settings.footer, ...parsed.settings?.footer },
-            links: { ...fallback.settings.links, ...parsed.settings?.links },
-          }
-        : fallback.settings,
-    };
+function nextId() {
+  return `resume-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+}
+
+// Shared by initial boot and by switching/duplicating resumes later — a
+// schema mismatch means the SETTINGS shape/defaults changed underneath an
+// old save, so those reset to fresh defaults, but the user's actual content
+// (name, sections, every entry they've written) always merges in as-is.
+function mergeWithSchema(parsed, fallback = initialResumeState) {
+  const settingsMatch = parsed.__schemaVersion === RESUME_SCHEMA_VERSION;
+  const clean = { ...parsed };
+  delete clean.__schemaVersion;
+
+  return {
+    ...fallback,
+    ...clean,
+    basics: { ...fallback.basics, ...clean.basics },
+    settings: settingsMatch
+      ? {
+          ...fallback.settings,
+          ...clean.settings,
+          layout: { ...fallback.settings.layout, ...clean.settings?.layout },
+          fontSize: { ...fallback.settings.fontSize, ...clean.settings?.fontSize },
+          spacing: { ...fallback.settings.spacing, ...clean.settings?.spacing },
+          entryLayout: { ...fallback.settings.entryLayout, ...clean.settings?.entryLayout },
+          headings: { ...fallback.settings.headings, ...clean.settings?.headings },
+          font: { ...fallback.settings.font, ...clean.settings?.font },
+          colors: {
+            ...fallback.settings.colors,
+            ...clean.settings?.colors,
+            applyTo: { ...fallback.settings.colors.applyTo, ...clean.settings?.colors?.applyTo },
+          },
+          header: { ...fallback.settings.header, ...clean.settings?.header },
+          photo: { ...fallback.settings.photo, ...clean.settings?.photo },
+          footer: { ...fallback.settings.footer, ...clean.settings?.footer },
+          links: { ...fallback.settings.links, ...clean.settings?.links },
+        }
+      : fallback.settings,
+  };
+}
+
+function loadResumeById(id) {
+  try {
+    const raw = localStorage.getItem(resumeKey(id));
+    if (!raw) return initialResumeState;
+    return mergeWithSchema(JSON.parse(raw));
   } catch (e) {
-    console.warn('Could not load saved resume, starting fresh.', e);
-    return fallback;
+    console.warn('Could not load resume, starting fresh.', e);
+    return initialResumeState;
   }
 }
 
-function loadInitialPage() {
+function saveResumeById(id, resume) {
+  localStorage.setItem(resumeKey(id), JSON.stringify({ ...resume, __schemaVersion: RESUME_SCHEMA_VERSION }));
+}
+
+// Reads the library index, migrating the old single-resume save into it the
+// first time this runs after the update. Never returns an empty array once
+// there's any resume data at all — callers can treat "no library" and "no
+// resumes yet" as the same thing (show the picker).
+function loadLibrary() {
+  try {
+    const raw = localStorage.getItem(LIBRARY_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch {
+    // fall through to migration/empty
+  }
+
+  try {
+    const legacy = localStorage.getItem(LEGACY_RESUME_KEY);
+    if (legacy) {
+      const id = 'resume-1';
+      localStorage.setItem(resumeKey(id), legacy);
+      let name = 'Resume 1';
+      let templateId = 'onecolumn';
+      let accentColor = '#000000';
+      try {
+        const parsedLegacy = JSON.parse(legacy);
+        if (parsedLegacy.basics?.name) name = parsedLegacy.basics.name;
+        templateId = parsedLegacy.templateId || templateId;
+        accentColor = parsedLegacy.accentColor || accentColor;
+      } catch {
+        // legacy save was unreadable — still register the id so it isn't lost
+      }
+      const library = [{ id, name, updatedAt: Date.now(), templateId, accentColor, nameManuallySet: false }];
+      localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
+      return library;
+    }
+  } catch {
+    // ignore — worst case, they see an empty library and start fresh
+  }
+
+  return [];
+}
+
+function loadInitialPage(library) {
+  if (!library.length) return 'picker';
   try {
     return localStorage.getItem(PAGE_STORAGE_KEY) === 'editor' ? 'editor' : 'picker';
   } catch {
     return 'picker';
   }
+}
+
+function loadInitialActiveId(library) {
+  if (!library.length) return null;
+  try {
+    const saved = localStorage.getItem(ACTIVE_RESUME_KEY);
+    if (saved && library.some((r) => r.id === saved)) return saved;
+  } catch {
+    // fall through
+  }
+  return library[0].id;
 }
 
 function ComingSoon({ label }) {
@@ -80,8 +155,20 @@ function ComingSoon({ label }) {
 }
 
 function App() {
-  const [resume, dispatch] = useReducer(resumeReducer, initialResumeState, loadInitialResume);
-  const [page, setPage] = useState(loadInitialPage);
+  const [library, setLibrary] = useState(loadLibrary);
+  const [activeResumeId, setActiveResumeId] = useState(() => loadInitialActiveId(library));
+  const [resume, dispatch] = useReducer(
+    resumeReducer,
+    initialResumeState,
+    () => (activeResumeId ? loadResumeById(activeResumeId) : initialResumeState)
+  );
+  const [page, setPage] = useState(() => loadInitialPage(library));
+  // Distinguishes "picking a template to change the current resume's look"
+  // (the pre-existing Templates back-button flow) from "picking a template
+  // to start a brand-new resume" (Overview / resume-switcher's + New) —
+  // both land on the same TemplatePicker, this just decides what happens
+  // when a template is actually chosen.
+  const [creatingNew, setCreatingNew] = useState(false);
   const [activeTab, setActiveTab] = useState('content');
   const [savedAt, setSavedAt] = useState(null);
   const [saveError, setSaveError] = useState(null);
@@ -105,16 +192,30 @@ function App() {
     : resume;
 
   // Debounced autosave — waits for a pause in typing so we're not hitting
-  // localStorage on every keystroke.
+  // localStorage on every keystroke. Also keeps this resume's library card
+  // (name/thumbnail info) in sync, unless the person has manually renamed
+  // it — an explicit rename shouldn't keep getting silently overwritten by
+  // whatever they later type into the name field.
   useEffect(() => {
+    if (!activeResumeId) return;
     const id = setTimeout(() => {
       try {
-        localStorage.setItem(
-          RESUME_STORAGE_KEY,
-          JSON.stringify({ ...resume, __schemaVersion: RESUME_SCHEMA_VERSION })
-        );
+        saveResumeById(activeResumeId, resume);
         setSavedAt(Date.now());
         setSaveError(null);
+        setLibrary((lib) =>
+          lib.map((r) =>
+            r.id === activeResumeId
+              ? {
+                  ...r,
+                  updatedAt: Date.now(),
+                  templateId: resume.templateId,
+                  accentColor: resume.accentColor,
+                  name: r.nameManuallySet ? r.name : resume.basics.name || r.name,
+                }
+              : r
+          )
+        );
       } catch (e) {
         console.warn('Could not save resume.', e);
         // Surface this instead of failing silently — without it, the "Saved"
@@ -125,7 +226,23 @@ function App() {
       }
     }, 500);
     return () => clearTimeout(id);
-  }, [resume]);
+  }, [resume, activeResumeId]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
+    } catch {
+      // non-critical — worst case the dashboard is stale until next save
+    }
+  }, [library]);
+
+  useEffect(() => {
+    try {
+      if (activeResumeId) localStorage.setItem(ACTIVE_RESUME_KEY, activeResumeId);
+    } catch {
+      // ignore
+    }
+  }, [activeResumeId]);
 
   useEffect(() => {
     try {
@@ -136,39 +253,148 @@ function App() {
   }, [page]);
 
   function handleSelectTemplate(templateId, accentColor, preset) {
-    dispatch({ type: 'SET_TEMPLATE', templateId, accentColor, preset });
+    if (creatingNew) {
+      const id = nextId();
+      const entry = {
+        id,
+        name: `Resume ${library.length + 1}`,
+        updatedAt: Date.now(),
+        templateId,
+        accentColor: accentColor ?? '#000000',
+        nameManuallySet: false,
+      };
+      setLibrary((lib) => [...lib, entry]);
+      setActiveResumeId(id);
+      dispatch({ type: 'LOAD_RESUME', resume: initialResumeState });
+      dispatch({ type: 'SET_TEMPLATE', templateId, accentColor, preset });
+      setCreatingNew(false);
+    } else {
+      dispatch({ type: 'SET_TEMPLATE', templateId, accentColor, preset });
+    }
+    setActiveTab('content');
     setPage('editor');
   }
 
+  function handleStartNewResume() {
+    setCreatingNew(true);
+    setPage('picker');
+  }
+
+  function handleSwitchResume(id) {
+    if (id === activeResumeId) {
+      setActiveTab('content');
+      setPage('editor');
+      return;
+    }
+    dispatch({ type: 'LOAD_RESUME', resume: loadResumeById(id) });
+    setActiveResumeId(id);
+    setActiveTab('content');
+    setPage('editor');
+  }
+
+  function handleDuplicateResume(id) {
+    const original = loadResumeById(id);
+    const source = library.find((r) => r.id === id);
+    const newId = nextId();
+    saveResumeById(newId, original);
+    setLibrary((lib) => [
+      ...lib,
+      {
+        id: newId,
+        name: `${source?.name || 'Resume'} (copy)`,
+        updatedAt: Date.now(),
+        templateId: original.templateId,
+        accentColor: original.accentColor,
+        nameManuallySet: true,
+      },
+    ]);
+  }
+
+  function handleDeleteResume(id) {
+    const entry = library.find((r) => r.id === id);
+    const ok = window.confirm(`Delete "${entry?.name || 'this resume'}"? This can't be undone.`);
+    if (!ok) return;
+    localStorage.removeItem(resumeKey(id));
+    const remaining = library.filter((r) => r.id !== id);
+    setLibrary(remaining);
+    if (id === activeResumeId) {
+      if (remaining.length) {
+        handleSwitchResume(remaining[0].id);
+      } else {
+        setActiveResumeId(null);
+        dispatch({ type: 'LOAD_RESUME', resume: initialResumeState });
+        setPage('picker');
+      }
+    }
+  }
+
+  function handleRenameResume(id, name) {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    setLibrary((lib) => lib.map((r) => (r.id === id ? { ...r, name: trimmed, nameManuallySet: true } : r)));
+  }
+
   if (page === 'picker') {
-    return <TemplatePicker onSelectTemplate={handleSelectTemplate} />;
+    return (
+      <TemplatePicker
+        onSelectTemplate={handleSelectTemplate}
+        onCancel={
+          library.length
+            ? () => {
+                setCreatingNew(false);
+                setPage('editor');
+              }
+            : undefined
+        }
+      />
+    );
   }
 
   return (
     <div className="app-shell">
-      <TopBar
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        onBack={() => setPage('picker')}
-        resume={resume}
-        savedAt={savedAt}
-        saveError={saveError}
-        paperRef={paperRef}
-      />
+      <NavRail activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {activeTab === 'content' ? (
-        <div className="editor-body">
-          <ContentPanel resume={resume} dispatch={dispatch} />
-          <ResumePreview resume={resume} paperRef={paperRef} />
-        </div>
-      ) : activeTab === 'customize' ? (
-        <div className="editor-body editor-body-customize">
-          <CustomizePanel resume={resume} dispatch={dispatch} onFontPreview={handleFontPreview} />
-          <ResumePreview resume={previewResume} paperRef={paperRef} />
-        </div>
-      ) : (
-        <ComingSoon label={activeTab === 'overview' ? 'Overview' : 'AI Tools'} />
-      )}
+      <div className="app-main">
+        <TopBar
+          onBack={() => {
+            setCreatingNew(false);
+            setPage('picker');
+          }}
+          resume={resume}
+          savedAt={savedAt}
+          saveError={saveError}
+          paperRef={paperRef}
+          library={library}
+          activeResumeId={activeResumeId}
+          onSwitchResume={handleSwitchResume}
+          onCreateResume={handleStartNewResume}
+          onRenameResume={handleRenameResume}
+        />
+
+        {activeTab === 'content' ? (
+          <div className="editor-body">
+            <ContentPanel resume={resume} dispatch={dispatch} />
+            <ResumePreview resume={resume} paperRef={paperRef} />
+          </div>
+        ) : activeTab === 'customize' ? (
+          <div className="editor-body editor-body-customize">
+            <CustomizePanel resume={resume} dispatch={dispatch} onFontPreview={handleFontPreview} />
+            <ResumePreview resume={previewResume} paperRef={paperRef} />
+          </div>
+        ) : activeTab === 'overview' ? (
+          <ResumeLibrary
+            library={library}
+            activeResumeId={activeResumeId}
+            onSwitch={handleSwitchResume}
+            onCreate={handleStartNewResume}
+            onDuplicate={handleDuplicateResume}
+            onDelete={handleDeleteResume}
+            onRename={handleRenameResume}
+          />
+        ) : (
+          <ComingSoon label="AI Tools" />
+        )}
+      </div>
     </div>
   );
 }

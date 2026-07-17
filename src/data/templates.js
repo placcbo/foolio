@@ -8,8 +8,8 @@ export const TEMPLATES = [];
 
 export const FILTERS = [
   { id: 'all', label: 'All Templates' },
-  { id: 'popular', label: 'Popular' },
-  { id: 'simple', label: 'Simple' },
+  { id: 'popular', label: 'Simple' },
+  { id: 'simple', label: 'Modern' },
   { id: 'modern', label: 'Modern' },
   { id: 'creative', label: 'Creative' },
   { id: 'professional', label: 'Professional' },

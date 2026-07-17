@@ -30,6 +30,12 @@ export default function ContentPanel({ resume, dispatch }) {
     setBasicsExpanded(false);
   }
 
+  function handleImport(parsed) {
+    dispatch({ type: 'IMPORT_RESUME', basics: parsed.basics, sections: parsed.sections });
+    setModalOpen(false);
+    setBasicsExpanded(true);
+  }
+
   return (
     <div className="content-panel">
       <BasicsCard
@@ -57,6 +63,7 @@ export default function ContentPanel({ resume, dispatch }) {
         <AddContentModal
           existingTypes={resume.sections.map((s) => s.type)}
           onAdd={handleAdd}
+          onImport={handleImport}
           onClose={() => setModalOpen(false)}
         />
       )}
