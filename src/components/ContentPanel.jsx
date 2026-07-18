@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import BasicsCard from './BasicsCard';
 import SectionCard from './SectionCard';
 import AddContentModal from './AddContentModal';
-import { IconPlus } from './icons';
+import { IconPlus, IconArrowLeft } from './icons';
 import { isHtmlEmpty } from './templates/shared';
 
 // Mirrors SectionCard's collapsed summary logic: a section counts as filled
@@ -26,14 +26,21 @@ export default function ContentPanel({ resume, dispatch }) {
   // dispatch call site) means this also self-heals for entries added deep
   // inside a SectionCard, which ContentPanel has no direct visibility into.
   const prevSectionIdsRef = useRef(resume.sections.map((s) => s.id));
-  const [justAddedSectionId, setJustAddedSectionId] = useState(null);
+  const [openSectionId, setOpenSectionId] = useState(null);
 
   useEffect(() => {
     const prevIds = prevSectionIdsRef.current;
-    const added = resume.sections.find((s) => !prevIds.includes(s.id));
-    if (added) setJustAddedSectionId(added.id);
+    const added = resume.sections.filter((s) => !prevIds.includes(s.id));
+    // Exactly one new section -> jump straight into editing it. Several at
+    // once (an import) -> stay on the outline so everything that came in
+    // is visible.
+    if (added.length === 1) setOpenSectionId(added[0].id);
     prevSectionIdsRef.current = resume.sections.map((s) => s.id);
   }, [resume.sections]);
+
+  // Derive rather than trust the id — the open section may have just been
+  // deleted from inside its own editor.
+  const openSection = resume.sections.find((s) => s.id === openSectionId) || null;
 
   function handleAdd(sectionType) {
     dispatch({ type: 'ADD_SECTION', sectionType });
@@ -50,6 +57,26 @@ export default function ContentPanel({ resume, dispatch }) {
   const total = resume.sections.length;
   const filled = resume.sections.filter(isSectionFilled).length;
 
+  if (openSection) {
+    return (
+      <div className="content-panel content-panel-focus">
+        <button type="button" className="focus-back-btn" onClick={() => setOpenSectionId(null)}>
+          <IconArrowLeft size={16} />
+          All sections
+        </button>
+        <SectionCard
+          key={openSection.id}
+          section={openSection}
+          dispatch={dispatch}
+          expanded
+          onExpandedChange={(v) => {
+            if (!v) setOpenSectionId(null);
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="content-panel">
       <BasicsCard
@@ -59,16 +86,21 @@ export default function ContentPanel({ resume, dispatch }) {
         onExpandedChange={setBasicsExpanded}
       />
 
-      {total > 0 && (
-        <div className="content-progress">
-          <span className="content-progress-label">
-            {filled} of {total} sections filled in
-          </span>
+      <div className="content-head">
+        <div className="content-head-row">
+          <h2 className="content-head-title">Resume content</h2>
+          {total > 0 && (
+            <span className="content-progress-label">
+              {filled} of {total} filled in
+            </span>
+          )}
+        </div>
+        {total > 0 && (
           <span className="content-progress-bar">
             <span style={{ width: `${Math.round((filled / total) * 100)}%` }} />
           </span>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="outline-list">
         {resume.sections.map((section) => (
@@ -76,7 +108,10 @@ export default function ContentPanel({ resume, dispatch }) {
             key={section.id}
             section={section}
             dispatch={dispatch}
-            autoOpen={section.id === justAddedSectionId}
+            expanded={false}
+            onExpandedChange={(v) => {
+              if (v) setOpenSectionId(section.id);
+            }}
           />
         ))}
 

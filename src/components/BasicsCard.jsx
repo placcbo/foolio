@@ -140,7 +140,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
               <label>{meta.label}</label>
               <div className="basics-edit-input-row">
                 <input
-                  type="text"
+                  type={meta.inputType || 'text'}
                   placeholder={meta.placeholder}
                   value={basics[key] || ''}
                   onChange={(e) => updateField(key, e.target.value)}

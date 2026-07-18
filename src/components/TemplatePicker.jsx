@@ -21,8 +21,12 @@ const FILTER_ICONS = {
 export default function TemplatePicker({ onSelectTemplate, onCancel, hasExistingResumes }) {
   const [activeFilter, setActiveFilter] = useState('all');
   const [showAll, setShowAll] = useState(false);
+  const [query, setQuery] = useState('');
+  const q = query.trim().toLowerCase();
   const filtered = TEMPLATES.filter(
-    (t) => activeFilter === 'all' || t.categories.includes(activeFilter)
+    (t) =>
+      (activeFilter === 'all' || t.categories.includes(activeFilter)) &&
+      (!q || t.name.toLowerCase().includes(q) || t.categories.some((cat) => cat.includes(q)))
   );
   const visible = showAll ? filtered : filtered.slice(0, INITIAL_VISIBLE_COUNT);
   const hasMore = !showAll && filtered.length > INITIAL_VISIBLE_COUNT;
@@ -45,25 +49,40 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
         <p>Choose a design you like. You can customize or switch it later.</p>
       </div>
 
-      <nav className="filter-tabs">
-        {FILTERS.map((f) => {
-          const Icon = FILTER_ICONS[f.id];
-          return (
-            <button
-              key={f.id}
-              type="button"
-              className={`filter-tab${activeFilter === f.id ? ' active' : ''}`}
-              onClick={() => handleFilterChange(f.id)}
-            >
-              {Icon && <Icon size={14} />}
-              {f.label}
-            </button>
-          );
-        })}
-      </nav>
+      <div className="picker-toolbar">
+        <nav className="filter-tabs">
+          {FILTERS.map((f) => {
+            const Icon = FILTER_ICONS[f.id];
+            return (
+              <button
+                key={f.id}
+                type="button"
+                className={`filter-tab${activeFilter === f.id ? ' active' : ''}`}
+                onClick={() => handleFilterChange(f.id)}
+              >
+                {Icon && <Icon size={14} />}
+                {f.label}
+              </button>
+            );
+          })}
+        </nav>
+        <input
+          type="search"
+          className="picker-search"
+          placeholder="Search templates…"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setShowAll(false);
+          }}
+        />
+      </div>
 
       {filtered.length > 0 ? (
         <>
+          <p className="picker-count">
+            {filtered.length} {filtered.length === 1 ? 'template' : 'templates'}
+          </p>
           <div className="template-grid">
             {visible.map((t) => (
               <TemplateCard key={t.id} template={t} onSelect={onSelectTemplate} />
@@ -76,6 +95,13 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
             </button>
           )}
         </>
+      ) : q ? (
+        <div className="template-grid-empty">
+          <p>No templates match “{query}”.</p>
+          <button type="button" className="skip-templates-btn" onClick={() => setQuery('')}>
+            Clear search
+          </button>
+        </div>
       ) : (
         <div className="template-grid-empty">
           <p>No templates in this category yet.</p>

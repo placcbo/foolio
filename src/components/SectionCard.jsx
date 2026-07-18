@@ -21,8 +21,10 @@ import {
   IconGripVertical,
   IconCheck,
   IconEdit,
+  IconCalendar,
 } from './icons';
 import { getSectionMeta } from '../data/sectionTypes';
+import { toMonthInputValue, fromMonthInputValue } from '../utils/dateFormat';
 import { isHtmlEmpty } from './templates/shared';
 
 // One-line summary shown on a collapsed section card, so the whole content
@@ -288,6 +290,67 @@ function getEntryFieldMeta(type) {
 // Experience into list mode.
 const BULLETED_ENTRY_TYPES = new Set(['experience']);
 
+// Free-text date field with a native month picker alongside. The text input
+// stays authoritative — "2015", "Jan 2022", and "Present" all still work and
+// nothing already typed is disturbed — while the calendar button opens the
+// browser's own month picker (via a visually hidden <input type="month">)
+// for people who'd rather click than type. End dates get a Present toggle.
+function DateField({ label, value, onChange, allowPresent }) {
+  const monthRef = useRef(null);
+
+  function openPicker() {
+    const el = monthRef.current;
+    if (!el) return;
+    if (typeof el.showPicker === 'function') {
+      try {
+        el.showPicker();
+        return;
+      } catch {
+        // fall through — showPicker can throw if not user-activated
+      }
+    }
+    el.focus();
+    el.click();
+  }
+
+  return (
+    <div className="entry-field">
+      <label className="date-label-row">
+        {label}
+        {allowPresent && (
+          <button
+            type="button"
+            className={`date-present-btn${value === 'Present' ? ' active' : ''}`}
+            onClick={() => onChange(value === 'Present' ? '' : 'Present')}
+          >
+            Present
+          </button>
+        )}
+      </label>
+      <div className="date-input-wrap">
+        <input
+          type="text"
+          placeholder="MM/YYYY"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <button type="button" className="date-cal-btn" onClick={openPicker} aria-label={`Pick ${label.toLowerCase()}`}>
+          <IconCalendar size={15} />
+        </button>
+        <input
+          ref={monthRef}
+          type="month"
+          className="date-month-hidden"
+          tabIndex={-1}
+          aria-hidden="true"
+          value={toMonthInputValue(value)}
+          onChange={(e) => onChange(fromMonthInputValue(e.target.value))}
+        />
+      </div>
+    </div>
+  );
+}
+
 function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTargetProps, autoOpen }) {
   const [open, setOpen] = useState(false);
   const [linkOpen, setLinkOpen] = useState(Boolean(entry.link));
@@ -376,6 +439,7 @@ function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTarget
               <input
                 type="text"
                 className="entry-link-input"
+                type="url"
                 placeholder="https://..."
                 value={entry.link}
                 onChange={(e) => updateEntry('link', e.target.value)}
@@ -384,24 +448,8 @@ function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTarget
           </div>
 
           <div className="entry-3col">
-            <div className="entry-field">
-              <label>Start Date</label>
-              <input
-                type="text"
-                placeholder="MM/YYYY"
-                value={entry.start}
-                onChange={(e) => updateEntry('start', e.target.value)}
-              />
-            </div>
-            <div className="entry-field">
-              <label>End Date</label>
-              <input
-                type="text"
-                placeholder="MM/YYYY"
-                value={entry.end}
-                onChange={(e) => updateEntry('end', e.target.value)}
-              />
-            </div>
+            <DateField label="Start Date" value={entry.start} onChange={(v) => updateEntry('start', v)} />
+            <DateField label="End Date" value={entry.end} onChange={(v) => updateEntry('end', v)} allowPresent />
             <div className="entry-field">
               <label>Location</label>
               <input
@@ -432,7 +480,13 @@ function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTarget
 function EntriesEditor({ section, dispatch }) {
   const [draggedId, setDraggedId] = useState(null);
   const prevEntryIdsRef = useRef(section.entries.map((e) => e.id));
-  const [justAddedEntryId, setJustAddedEntryId] = useState(null);
+  // A section with exactly one entry opens it immediately on entering the
+  // editor — showing a single collapsed "New Entry" row that must be
+  // clicked again before any field is visible is a pointless extra step.
+  // With several entries the collapsed list stays, since scanning matters.
+  const [justAddedEntryId, setJustAddedEntryId] = useState(() =>
+    section.entries.length === 1 ? section.entries[0].id : null
+  );
 
   useEffect(() => {
     const prevIds = prevEntryIdsRef.current;
@@ -487,27 +541,26 @@ function EntriesEditor({ section, dispatch }) {
   );
 }
 
-export default function SectionCard({ section, dispatch, autoOpen }) {
-  const [expanded, setExpanded] = useState(false);
+// Expansion is controlled by ContentPanel (not local state) so that opening
+// a section can switch the whole panel into focus mode — only the open
+// section's editor is rendered, full-width, with everything else hidden
+// behind a back button.
+export default function SectionCard({ section, dispatch, expanded, onExpandedChange }) {
   const [renaming, setRenaming] = useState(false);
   const meta = getSectionMeta(section.type);
   const cardRef = useRef(null);
-
-  useEffect(() => {
-    if (!autoOpen) return;
-    setExpanded(true);
-    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, [autoOpen]);
 
   function updateTitle(title) {
     dispatch({ type: 'UPDATE_SECTION_TITLE', id: section.id, title });
   }
 
   if (!expanded) {
+    const summary = collapsedSummary(section);
+    const filledCls = summary !== 'Empty' ? ' outline-row-filled' : '';
     return (
-      <div className={`outline-row${section.hidden ? ' is-hidden' : ''}`} ref={cardRef}>
+      <div className={`outline-row${filledCls}${section.hidden ? ' is-hidden' : ''}`} ref={cardRef}>
         <span className="outline-dot" aria-hidden="true" />
-        <button type="button" className="outline-row-main" onClick={() => setExpanded(true)}>
+        <button type="button" className="outline-row-main" onClick={() => onExpandedChange(true)}>
           <span className="outline-row-icon" aria-hidden="true">
             {meta?.icon}
           </span>
@@ -526,7 +579,7 @@ export default function SectionCard({ section, dispatch, autoOpen }) {
             ) : (
               <span className="outline-row-title">{section.title}</span>
             )}
-            <span className="outline-row-meta">{collapsedSummary(section)}</span>
+            <span className="outline-row-meta">{summary}</span>
           </span>
         </button>
         <div className="outline-row-actions">
@@ -550,7 +603,7 @@ export default function SectionCard({ section, dispatch, autoOpen }) {
           <button
             type="button"
             className="section-icon-btn"
-            onClick={() => setExpanded((v) => !v)}
+            onClick={() => onExpandedChange(!expanded)}
             aria-label="Expand section"
           >
             <IconChevronDown size={18} />
@@ -566,7 +619,7 @@ export default function SectionCard({ section, dispatch, autoOpen }) {
         <span className="section-icon" aria-hidden="true">
           {meta?.icon}
         </span>
-        <h3 className="section-edit-header-title">Edit Entry</h3>
+        <h3 className="section-edit-header-title">Edit Section</h3>
         <div className="section-edit-header-actions">
           {section.kind === 'text' && (
             <button type="button" className="get-tips-btn">
@@ -622,7 +675,7 @@ export default function SectionCard({ section, dispatch, autoOpen }) {
       {section.kind === 'entries' && <EntriesEditor section={section} dispatch={dispatch} />}
 
       <div className="section-card-footer">
-        <button type="button" className="done-btn" onClick={() => setExpanded(false)}>
+        <button type="button" className="done-btn" onClick={() => onExpandedChange(false)}>
           <IconCheck size={18} />
           Done
         </button>

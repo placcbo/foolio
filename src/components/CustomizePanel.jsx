@@ -78,17 +78,6 @@ const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items);
 // the exporter), switching templates, and the accent color.
 const SELF_CONTAINED_LAYOUTS = new Set(['simple']);
 
-const FIXED_NAV_GROUPS = [
-  {
-    label: 'Design',
-    items: [
-      { id: 'document', label: 'Document' },
-      { id: 'templates', label: 'Templates' },
-      { id: 'colors', label: 'Accent Color' },
-    ],
-  },
-];
-
 const LANGUAGES = ['English (UK)', 'English (US)', 'Spanish', 'French', 'German', 'Portuguese'];
 const PAGE_FORMATS = ['A4', 'US Letter'];
 
@@ -929,7 +918,7 @@ function ColorsSection({ resume, dispatch, accentOnly = false }) {
 
   return (
     <div className="customize-card">
-      <h2>Colors</h2>
+      <h2>{accentOnly ? 'Accent Color' : 'Colors'}</h2>
 
       {!accentOnly && (
       <>
@@ -1333,11 +1322,30 @@ function ComingSoonCard({ label }) {
 export default function CustomizePanel({ resume, dispatch, onFontPreview }) {
   const [activeSection, setActiveSection] = useState('document');
   const isFixedDesign = SELF_CONTAINED_LAYOUTS.has(resume.templateId);
-  const groups = isFixedDesign ? FIXED_NAV_GROUPS : NAV_GROUPS;
+
+  // Fixed-design templates have only three working controls, and a sidebar
+  // with three lonely items reads as the app being gutted. So they skip the
+  // sidebar entirely: everything lives on one scrollable page — template
+  // gallery, accent color, document settings — all visible at once.
+  if (isFixedDesign) {
+    return (
+      <div className="customize-panel customize-panel-simple">
+        <div className="customize-main">
+          <div className="fixed-design-note">
+            This template's fonts, spacing, and layout are hand-tuned and always export exactly as
+            previewed. Pick its accent color below, adjust document settings, or switch designs.
+          </div>
+          <DesignTemplates resume={resume} dispatch={dispatch} />
+          <ColorsSection resume={resume} dispatch={dispatch} accentOnly />
+          <DocumentSection resume={resume} dispatch={dispatch} />
+          <CustomizeUndoPill />
+        </div>
+      </div>
+    );
+  }
+
+  const groups = NAV_GROUPS;
   const validIds = groups.flatMap((g) => g.items).map((i) => i.id);
-  // If the person switches to a fixed-design template while sitting on a
-  // panel that no longer exists (e.g. Spacing), snap back to Document
-  // rather than rendering a dead panel.
   const currentSection = validIds.includes(activeSection) ? activeSection : 'document';
   const activeLabel = NAV_ITEMS.find((n) => n.id === currentSection)?.label ?? '';
 
@@ -1362,14 +1370,6 @@ export default function CustomizePanel({ resume, dispatch, onFontPreview }) {
       </nav>
 
       <div className="customize-main">
-        {isFixedDesign && (
-          <div className="fixed-design-note">
-            This template has a hand-tuned, fixed design — fonts, spacing, and layout are professionally set
-            and always export exactly as previewed. You can still change its accent color and document
-            settings, or switch to a different template.
-          </div>
-        )}
-
         {currentSection === 'document' ? (
           <DocumentSection resume={resume} dispatch={dispatch} />
         ) : currentSection === 'templates' ? (

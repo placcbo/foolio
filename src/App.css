@@ -23,7 +23,7 @@
 
 .editor-body {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 480px 1fr;
   flex: 1;
   min-height: 0;
 }
@@ -384,17 +384,17 @@
 
 .picker-header {
   max-width: 640px;
-  margin: 0 auto 40px;
+  margin: 0 auto 26px;
   text-align: center;
 }
 
 .picker-header h1 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-family: var(--heading);
-  font-size: 52px;
+  font-size: 38px;
   font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--text-h);
 }
 
@@ -409,7 +409,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 40px;
 }
 
 .filter-tab {
@@ -490,7 +489,7 @@
 /* ---------- template cards ---------- */
 
 .template-card {
-  width: 260px;
+  width: 300px;
   flex-shrink: 0;
   background: transparent;
   display: flex;
@@ -502,7 +501,7 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 210 / 297;
+  aspect-ratio: 210 / 250;
   padding: 0;
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -910,10 +909,11 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 22px;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
+  padding: 8px 4px 22px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
 }
 
 .basics-edit-trigger {
@@ -948,7 +948,7 @@
   border: none;
   background: transparent;
   font-family: var(--heading);
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--text-h);
   padding: 2px 0;
@@ -4370,4 +4370,274 @@ body.has-open-preview-modal {
   background: var(--lime);
   border: none;
   color: var(--lime-ink);
+}
+
+/* ---------- picker toolbar (filters + search) ---------- */
+
+.picker-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.picker-search {
+  width: min(380px, 100%);
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.picker-search:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.picker-search::placeholder {
+  color: var(--text-dim);
+}
+
+.picker-count {
+  margin: 0 auto 14px;
+  max-width: 1280px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ---------- single-column customize (fixed-design templates) ---------- */
+
+.customize-panel-simple {
+  grid-template-columns: 1fr;
+}
+
+.customize-panel-simple .customize-main {
+  max-width: 620px;
+  width: 100%;
+}
+
+/* =========================================================================
+   Content panel — focus mode
+   Opening a section hides everything else and gives that section's editor
+   the entire (wider) panel: no card-in-a-card nesting, bigger inputs, a
+   taller writing area, and a back bar to return to the outline.
+   ========================================================================= */
+
+/* widen the editor column while a section is focused */
+.editor-body:has(.content-panel-focus) {
+  grid-template-columns: 560px 1fr;
+}
+
+.content-panel-focus {
+  gap: 10px;
+}
+
+.focus-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 8px 14px 8px 10px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.focus-back-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* the editor is the page now, not a card inside a card */
+.content-panel-focus .section-card-expanded {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 2px 48px;
+}
+
+.content-panel-focus .outline-expanded::before {
+  display: none;
+}
+
+/* roomier everything */
+.content-panel-focus .section-title-label,
+.content-panel-focus .section-title-label-input {
+  font-size: 26px;
+  padding-bottom: 20px;
+}
+
+.content-panel-focus .richtext-editable {
+  min-height: 200px;
+  font-size: 14px;
+  padding: 14px 16px;
+}
+
+.content-panel-focus .entry-row-body {
+  padding: 8px 18px 22px;
+  gap: 16px;
+}
+
+.content-panel-focus .entry-row-header {
+  padding: 13px 14px;
+}
+
+.content-panel-focus .entry-field input {
+  padding: 11px 13px;
+  font-size: 14px;
+}
+
+.content-panel-focus .tag-input {
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.content-panel-focus .entry-add,
+.content-panel-focus .add-content-btn {
+  padding: 13px 18px;
+  font-size: 14px;
+}
+
+/* ---------- content panel head ---------- */
+
+.content-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px 4px;
+}
+
+.content-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.content-head-title {
+  margin: 0;
+  font-family: var(--heading);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+
+/* ---------- filled-state spine dots ---------- */
+
+.outline-row-filled .outline-dot {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ---------- template card name ---------- */
+
+.template-card-name {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text-h);
+  margin-right: auto;
+}
+
+.template-card-footer {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+/* ---------- date fields: text + native month picker ---------- */
+
+.date-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.date-present-btn {
+  padding: 1px 8px;
+  line-height: 1.4;
+  border-radius: var(--r-chip);
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text-dim);
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.date-present-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.date-present-btn.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--lime);
+}
+
+.date-input-wrap {
+  position: relative;
+}
+
+.date-input-wrap input[type='text'] {
+  width: 100%;
+  padding-right: 36px;
+}
+
+/* calendar lives inside the input, so the text field keeps its full width */
+.date-cal-btn {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-xs);
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.date-cal-btn:hover {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+/* Visually hidden but still renderable, so showPicker() can anchor the
+   browser's month-picker popup right next to the field. display:none would
+   make showPicker throw. */
+.date-month-hidden {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  border: 0;
+  padding: 0;
+}
+
+/* keep the three column labels baseline-aligned even though End Date's
+   label row also carries the Present pill */
+.entry-3col .entry-field > label {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
 }

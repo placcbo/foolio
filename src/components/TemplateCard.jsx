@@ -6,7 +6,10 @@ import { initialResumeState, TEMPLATE_DEFAULT_LAYOUT } from '../state/resumeRedu
 import { applyPresetToSettings } from '../utils/templatePreset';
 import PreviewModal from './PreviewModal';
 
-const SCALE = 0.34;
+// Width-fit for the 300px card (300 / 794). The card's CSS aspect ratio is
+// shorter than a full A4, so the page's bottom crops — thumbnails read as a
+// design preview, not an endless miniature document.
+const SCALE = 0.378;
 
 export default function TemplateCard({ template, onSelect }) {
   const [color, setColor] = useState(template.swatches[0]);
@@ -37,6 +40,7 @@ export default function TemplateCard({ template, onSelect }) {
       </div>
 
       <div className="template-card-footer">
+        <span className="template-card-name">{template.name}</span>
         <div className="swatch-row">
           {template.swatches.map((sw) => (
             <button

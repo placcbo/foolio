@@ -1,8 +1,8 @@
 export const EXTRA_FIELDS = [
-  { key: 'linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/yourname' },
-  { key: 'website', label: 'Website', placeholder: 'yourwebsite.com' },
+  { key: 'linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/yourname', inputType: 'url' },
+  { key: 'website', label: 'Website', placeholder: 'yourwebsite.com', inputType: 'url' },
   { key: 'nationality', label: 'Nationality', placeholder: 'Nationality' },
-  { key: 'dob', label: 'Date of Birth', placeholder: 'DD/MM/YYYY' },
+  { key: 'dob', label: 'Date of Birth', placeholder: 'DD/MM/YYYY', inputType: 'date' },
   { key: 'visa', label: 'Visa', placeholder: 'Visa status' },
   { key: 'passportId', label: 'Passport or Id', placeholder: 'ID number' },
   { key: 'availability', label: 'Availability', placeholder: 'e.g. Immediately' },

@@ -76,3 +76,21 @@ export function formatEntryDateRange(entry, formatId) {
     end: formatFlexibleDate(entry.end, formatId),
   };
 }
+
+// ---- native month-picker bridge --------------------------------------------
+// The entry date fields keep their flexible free-text input (so "2015",
+// "Jan 2022", and "Present" all still work) but offer a native month picker
+// alongside. These convert between whatever's stored and the "YYYY-MM"
+// format the <input type="month"> element speaks.
+
+export function toMonthInputValue(input) {
+  const p = parseFlexibleDate(input);
+  if (!p || !p.month) return '';
+  return `${p.year}-${String(p.month).padStart(2, '0')}`;
+}
+
+export function fromMonthInputValue(value) {
+  if (!value) return '';
+  const [y, m] = value.split('-');
+  return `${m}/${y}`;
+}
