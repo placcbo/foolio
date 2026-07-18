@@ -1,5 +1,3 @@
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
 import { formatEntryDateRange } from './dateFormat';
 import { DEFAULT_FONT_SIZE } from '../state/resumeReducer';
@@ -9,40 +7,53 @@ const DOCX_PAGE_SIZES = {
   'US Letter': { width: 12240, height: 15840 },
 };
 
-// PDF: renders the actual .paper DOM node to a canvas, then drops that
-// image into a PDF and saves it immediately — no print dialog, no extra
-// click. Handles multi-page overflow if the resume runs long.
-export async function downloadResumeAsPdf(paperEl, filename = 'resume', pageFormat = 'A4') {
-  if (!paperEl) throw new Error('Could not find the resume to export.');
+// PDF: uses the browser's native print engine instead of screenshotting the
+// DOM to a canvas. html2canvas has to re-implement font measurement and
+// text layout itself when rasterizing to an image, and repeatedly proved
+// unreliable doing that with this app's webfont — printing instead reuses
+// the exact same rendering already shown on screen (real vector text, the
+// browser's own font engine), so that whole category of bug can't happen.
+// Trade-off: this opens the OS print dialog rather than downloading
+// instantly — the person picks "Save as PDF" as the destination.
+//
+// Implementation note: the paper can't just be isolated in place with a
+// visibility:hidden trick on everything else — it's nested inside
+// scrollable/overflow-clipped containers (the preview panel), and
+// visibility:hidden doesn't remove an ancestor from layout, so the paper
+// stayed trapped inside that clipped box and printed blank. Instead, clone
+// the paper's rendered markup into a plain node appended directly to
+// <body> (no scroll containers, no clipping ancestors) and hide the real
+// app with display:none — that's what actually removes it from the
+// printable layout.
+export function printResumeAsPdf(paperEl, pageFormat = 'A4') {
+  if (!paperEl) throw new Error('Could not find the resume to print.');
 
-  const canvas = await html2canvas(paperEl, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#ffffff',
-  });
+  const printRoot = document.createElement('div');
+  printRoot.id = 'print-root';
+  printRoot.innerHTML = paperEl.outerHTML;
+  document.body.appendChild(printRoot);
 
-  const imgData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF({ unit: 'pt', format: pageFormat === 'US Letter' ? 'letter' : 'a4' });
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
+  const styleEl = document.createElement('style');
+  styleEl.textContent = `@page { size: ${pageFormat === 'US Letter' ? 'letter' : 'A4'}; margin: 0; }`;
+  document.head.appendChild(styleEl);
 
-  const imgWidth = pageWidth;
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  document.body.classList.add('is-printing');
 
-  let heightLeft = imgHeight;
-  let position = 0;
-
-  pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-  heightLeft -= pageHeight;
-
-  while (heightLeft > 0) {
-    position -= pageHeight;
-    pdf.addPage();
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
+  let cleaned = false;
+  function cleanup() {
+    if (cleaned) return;
+    cleaned = true;
+    document.body.classList.remove('is-printing');
+    printRoot.remove();
+    styleEl.remove();
+    window.removeEventListener('afterprint', cleanup);
   }
+  window.addEventListener('afterprint', cleanup);
+  // Safety net — some browsers don't reliably fire `afterprint` if the
+  // dialog is cancelled a certain way.
+  setTimeout(cleanup, 10000);
 
-  pdf.save(`${filename}.pdf`);
+  window.print();
 }
 
 function buildContactLine(basics) {

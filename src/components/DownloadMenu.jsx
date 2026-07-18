@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { IconDownload, IconFileText } from './icons';
-import { downloadResumeAsPdf, exportResumeAsDocx } from '../utils/resumeExport';
+import { printResumeAsPdf, exportResumeAsDocx } from '../utils/resumeExport';
+import { exportSimpleTemplatePdf } from '../utils/simplePdf';
 
 export default function DownloadMenu({ resume, paperRef, className = 'btn-download' }) {
   const [open, setOpen] = useState(false);
@@ -19,20 +20,25 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
     return (resume.basics?.name || 'resume').trim().replace(/\s+/g, '_') || 'resume';
   }
 
-  async function handlePdf() {
+  function handlePdf() {
     setOpen(false);
-    setExporting(true);
     try {
+      // Templates with a dedicated exporter (currently Simple) draw their
+      // exact fixed design straight into the PDF from resume data —
+      // instant download, real selectable text, nothing rendered from the
+      // DOM at all. Everything else falls back to the native print path.
+      if (resume.templateId === 'simple') {
+        exportSimpleTemplatePdf(resume, fileBaseName());
+        return;
+      }
       const container = paperRef?.current;
       const paperEl = container?.classList?.contains('paper')
         ? container
         : container?.querySelector?.('.paper');
-      await downloadResumeAsPdf(paperEl, fileBaseName(), resume.settings?.pageFormat);
+      printResumeAsPdf(paperEl, resume.settings?.pageFormat);
     } catch (e) {
       console.error(e);
-      alert("Couldn't generate the PDF. Please try again.");
-    } finally {
-      setExporting(false);
+      alert("Couldn't export the PDF. Please try again.");
     }
   }
 
@@ -59,7 +65,7 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
             <IconFileText size={16} />
             <div>
               <span className="download-menu-item-title">Download as PDF</span>
-              <span className="download-menu-item-sub">Downloads immediately</span>
+              <span className="download-menu-item-sub">Selectable text, ready to send</span>
             </div>
           </button>
           <button type="button" className="download-menu-item" onClick={handleDocx}>

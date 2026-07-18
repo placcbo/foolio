@@ -16,6 +16,85 @@ function placeholderAvatar(bg) {
 }
 
 export const TEMPLATE_SAMPLES = {
+  simple: {
+    basics: {
+      name: 'Kevin Ndirangu',
+      title: 'Customer Support Representative',
+      email: 'placbo2@gmail.com',
+      phone: '',
+      address: 'Nairobi, Kenya',
+      availability: 'EST / CST / MST / PST compatible (remote)',
+      photo: null,
+      visibleExtra: ['availability'],
+    },
+    sections: [
+      {
+        id: 's-summary', type: 'summary', title: 'Professional Summary', kind: 'text',
+        content: '<p>Dynamic customer support professional with 3+ years of experience delivering high-volume, time-sensitive support in fast-paced digital environments. Passionate about sports and sports gaming, with a strong grasp of online payments, identity verification, and fraud prevention. Known for owning outcomes autonomously, spotting issues before escalation, and using AI tools to drive speed and quality. Excited by Boom Sports\u2019 mission to make Daily Fantasy Sports accessible to every fan.</p>',
+      },
+      {
+        id: 's-exp', type: 'experience', title: 'Experience', kind: 'entries',
+        entries: [
+          {
+            id: 'e1', heading: 'Senior Customer Support Specialist', subheading: 'Betika (SportsPesa Group)',
+            location: 'Nairobi, Kenya', start: 'Jan 2022', end: 'Present',
+            description: bullets(
+              'Managed 100+ daily customer interactions via live chat (Intercom) and email (Zendesk) for one of East Africa\u2019s largest sports-betting platforms.',
+              'Resolved high-stakes account, payment, and gameplay disputes with empathy and precision, maintaining a 96%+ CSAT score across 18 consecutive months.',
+              'Led identity verification (KYC) reviews during peak sign-up periods, flagging fraud patterns and escalating suspicious accounts to the compliance team.',
+              'Monitored real-time platform dashboards for critical site issues; escalated payment gateway outages within 5 minutes, reducing resolution time by 30%.',
+              'Trained two junior agents on Zendesk workflows, macros, and escalation protocols, cutting average first-response time from 6 min to under 2 min.',
+              'Proactively used AI writing tools (ChatGPT, Claude) to draft support macros and improve response clarity, increasing deflection rate by 18%.'
+            ),
+          },
+          {
+            id: 'e2', heading: 'Customer Support Representative', subheading: 'Cellulant',
+            location: 'Nairobi, Kenya', start: 'May 2020', end: 'Dec 2021',
+            description: bullets(
+              'Provided Tier 1 & 2 support for digital payments and mobile money products across 18 African markets, handling billing disputes, failed transactions, and refund requests.',
+              'Collaborated with the engineering team to reproduce and document recurring payment bugs, accelerating fix cycles by an average of 2 days.',
+              'Built a knowledge-base template library in Zendesk, reducing duplicate tickets by 22% within the first quarter of deployment.',
+              'Maintained full compliance with PCI-DSS guidelines when handling sensitive financial data and user verification.'
+            ),
+          },
+          {
+            id: 'e3', heading: 'Sports Content & Community Support Intern', subheading: 'SportPesa Kenya',
+            location: 'Nairobi, Kenya', start: 'Jan 2019', end: 'Apr 2020',
+            description: bullets(
+              'Moderated community forums and social channels, responding to contest rule queries and gameplay questions within SLA targets.',
+              'Assisted in writing sports-rules FAQs and how-to guides for daily fantasy and in-play betting features.',
+              'Escalated VIP account issues to account managers, ensuring white-glove service for high-value players.'
+            ),
+          },
+        ],
+      },
+      {
+        id: 's-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
+        tags: [
+          'Zendesk', 'Intercom', 'Freshdesk', 'Salesforce Service Cloud',
+          'Football (EPL, UCL)', 'Basketball (NBA)', 'American Football (NFL)', 'Daily Fantasy Sports mechanics',
+          'KYC/AML compliance', 'Chargeback management', 'Mobile money', 'PCI-DSS basics',
+          'ChatGPT', 'Claude', 'Notion AI',
+          'High-volume live chat', 'Escalation management', 'CSAT optimisation', 'Remote async work',
+        ],
+      },
+      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+      {
+        id: 's-edu', type: 'education', title: 'Education', kind: 'entries',
+        entries: [
+          {
+            id: 'ed1', heading: 'Bachelor of Commerce \u2013 Business Information Technology', subheading: 'University of Nairobi',
+            location: '', start: '2015', end: '2019', description: '',
+          },
+        ],
+      },
+      {
+        id: 's-why', type: 'custom', title: 'Why Boom', kind: 'text',
+        content: '<p>I thrive in exactly the environment Boom describes \u2014 fast-paced, high-ownership, and sports-obsessed. I don\u2019t wait to be told what\u2019s broken; I find it, flag it, and fix it. I\u2019ve grown up watching the rise of DFS in the US and I want to be part of the team that brings that energy to every fan. Boom\u2019s track record of nearly $100 million in player prizes tells me this product is real, and I want to help protect and grow the community behind it.</p>',
+      },
+    ],
+  },
+
   clean: {
     basics: {
       name: 'Emily Carter',
