@@ -1,87 +1,90 @@
 /* =========================================================================
    Candidly — design tokens
-   Direction: warm, natural, paper-and-earth palette (linen, clay, moss)
-   instead of stark dark-chrome/neon. An editorial serif for headings paired
-   with a soft rounded sans for UI — an app that feels handmade, not tooled.
+   Direction: tool-grade dark chrome (topbar/sidebars) around a plain white
+   paper canvas — like a real design app, not a marketing page. One loud
+   accent (lime) used rarely and deliberately. No serif, no gradient wash.
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap');
 
 :root {
-  /* ---------- warm paper canvas (where the resume + forms live) ---------- */
-  --ink: #2a241c;
-  --ink-soft: #55483a;
-  --text: #6b5d4f;
-  --text-h: #2a241c;
-  --text-dim: #96876f;
-  --bg: #fffdf8;
-  --page-bg: #f6f0e3;
-  --preview-bg: #efe6d4;
-  --surface: #fffdf8;
-  --surface-2: #f2ebdc;
-  --surface-3: #e9dfc9;
-  --border: #ddd0b4;
-  --border-soft: #ece2cc;
+  /* ---------- light canvas (where the resume + forms live) ---------- */
+  --ink: #121214;
+  --ink-soft: #45444a;
+  --text: #5c5b62;
+  --text-h: #121214;
+  --text-dim: #8f8e95;
+  --bg: #ffffff;
+  --page-bg: #f4f4f2;
+  --preview-bg: #ececeb;
+  --surface: #ffffff;
+  --surface-2: #f2f2f0;
+  --surface-3: #e7e7e4;
+  --border: #dcdbd7;
+  --border-soft: #ececea;
 
-  /* ---------- warm dark chrome (topbar / sidebars) ---------- */
-  --chrome-bg: #23190f;
-  --chrome-surface: #2e2216;
-  --chrome-surface-2: #392b1c;
-  --chrome-border: #46351f;
-  --chrome-text: #f4ead8;
-  --chrome-text-dim: #ab9678;
+  /* ---------- dark chrome (topbar / sidebars) ---------- */
+  --chrome-bg: #131316;
+  --chrome-surface: #1c1c20;
+  --chrome-surface-2: #232327;
+  --chrome-border: #2d2d32;
+  --chrome-text: #f3f3f1;
+  --chrome-text-dim: #8d8c93;
 
-  /* ---------- one natural accent, used rarely ---------- */
-  --lime: #93a866;
-  --lime-ink: #232f18;
-  --violet: var(--ink);
-  --violet-2: var(--ink);
-  --coral: var(--ink);
-  --coral-2: var(--ink);
-  --mint: #6b8058;
-  --amber: #c9903f;
-  --sky: #5c7a74;
+  /* ---------- one loud accent, used rarely ---------- */
+  --lime: #d7ff3f;
+  --lime-ink: #121214;
+  --violet: #121214;
+  --violet-2: #121214;
+  --coral: #121214;
+  --coral-2: #121214;
+  --mint: #3f6b4f;
+  --amber: #d7ff3f;
+  --sky: #33546b;
 
   --brand: var(--ink);
-  --brand-ink: #fffdf8;
+  --brand-ink: #ffffff;
   --brand-gradient: var(--ink);
   --brand-gradient-soft: var(--surface-2);
   --accent: var(--lime);
   --accent-2: var(--ink);
-  --accent-bg: #eef1e1;
-  --accent-border: var(--ink);
-  --ring: rgba(42, 36, 28, 0.35);
+  --accent-bg: #f2f2ea;
+  --accent-border: #121214;
+  --ring: rgba(18, 18, 20, 0.35);
 
-  --shadow-xs: 0 1px 2px rgba(42, 36, 28, 0.07);
-  --shadow-sm: 0 2px 6px rgba(42, 36, 28, 0.08);
-  --shadow-md: 0 6px 16px rgba(42, 36, 28, 0.12);
-  --shadow-lg: 0 14px 32px rgba(42, 36, 28, 0.16);
-  --shadow-soft: 0 2px 10px rgba(42, 36, 28, 0.06), 0 20px 48px rgba(42, 36, 28, 0.12);
-  --shadow-brand: 0 4px 14px rgba(42, 36, 28, 0.22);
-  --shadow-coral: 0 4px 14px rgba(42, 36, 28, 0.22);
+  --shadow-xs: 0 1px 0 rgba(18, 18, 20, 0.08);
+  --shadow-sm: 0 1px 3px rgba(18, 18, 20, 0.1);
+  --shadow-md: 2px 2px 0 rgba(18, 18, 20, 0.9);
+  --shadow-lg: 4px 4px 0 rgba(18, 18, 20, 0.9);
+  /* The hard offset shadow is a small-element signature (buttons, chips,
+     popovers) — on anything tall (a full resume page, a full-screen modal)
+     it just reads as a stray black bar running down the side. Large
+     surfaces use this soft ambient shadow instead. */
+  --shadow-soft: 0 2px 8px rgba(18, 18, 20, 0.08), 0 16px 40px rgba(18, 18, 20, 0.14);
+  --shadow-brand: 3px 3px 0 var(--ink);
+  --shadow-coral: 3px 3px 0 var(--ink);
   --shadow:
-    rgba(42, 36, 28, 0.1) 0 10px 15px -3px, rgba(42, 36, 28, 0.06) 0 4px 6px -2px;
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  /* ---------- type: editorial serif for headings, soft rounded sans for UI ---------- */
-  --sans: 'Figtree', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-  --heading: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  /* ---------- type: one bold grotesk, weight does the work ---------- */
+  --sans: 'Archivo', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --heading: 'Archivo', -apple-system, system-ui, sans-serif;
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
   --mono: ui-monospace, 'SF Mono', Consolas, monospace;
 
   /* ---------- shape / motion ---------- */
-  --r-xs: 6px;
-  --r-sm: 8px;
-  --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 22px;
-  --r-pill: 999px;
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-pill: 6px;
   --r-chip: 999px;
   --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
   --fast: 120ms;
   --med: 200ms;
 
   font: 15.5px/1.5 var(--sans);
-  letter-spacing: 0;
   color-scheme: light;
   color: var(--text);
   background: var(--page-bg);
@@ -122,7 +125,7 @@ button {
 
 ::selection {
   background: var(--lime);
-  color: var(--lime-ink);
+  color: var(--ink);
 }
 
 :focus-visible {

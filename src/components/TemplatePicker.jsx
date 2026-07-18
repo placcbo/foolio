@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import TemplateCard from './TemplateCard';
 import { TEMPLATES, FILTERS } from '../data/templates';
-import { IconChevronDown, IconX } from './icons';
+import { IconChevronDown, IconX, IconGrid, IconStar, IconBox, IconHexagon, IconPalette, IconUser, IconFlag } from './icons';
 
 // Roughly two rows at the grid's typical column count — exact row count
 // varies with viewport width since the grid is responsive, but this keeps
 // the initial view short with "See more" revealing the rest.
 const INITIAL_VISIBLE_COUNT = 10;
 
-export default function TemplatePicker({ onSelectTemplate, onCancel }) {
+const FILTER_ICONS = {
+  all: IconGrid,
+  popular: IconStar,
+  simple: IconBox,
+  modern: IconHexagon,
+  creative: IconPalette,
+  professional: IconUser,
+  executive: IconFlag,
+};
+
+export default function TemplatePicker({ onSelectTemplate, onCancel, hasExistingResumes }) {
   const [activeFilter, setActiveFilter] = useState('all');
   const [showAll, setShowAll] = useState(false);
   const filtered = TEMPLATES.filter(
@@ -31,21 +41,25 @@ export default function TemplatePicker({ onSelectTemplate, onCancel }) {
       )}
 
       <div className="picker-header">
-        <h1>Start building your resume</h1>
+        <h1>{hasExistingResumes ? 'Pick a design for your new resume' : 'Start building your resume'}</h1>
         <p>Choose a design you like. You can customize or switch it later.</p>
       </div>
 
       <nav className="filter-tabs">
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            type="button"
-            className={`filter-tab${activeFilter === f.id ? ' active' : ''}`}
-            onClick={() => handleFilterChange(f.id)}
-          >
-            {f.label}
-          </button>
-        ))}
+        {FILTERS.map((f) => {
+          const Icon = FILTER_ICONS[f.id];
+          return (
+            <button
+              key={f.id}
+              type="button"
+              className={`filter-tab${activeFilter === f.id ? ' active' : ''}`}
+              onClick={() => handleFilterChange(f.id)}
+            >
+              {Icon && <Icon size={14} />}
+              {f.label}
+            </button>
+          );
+        })}
       </nav>
 
       {filtered.length > 0 ? (

@@ -84,7 +84,7 @@ export default function ApplyTemplateModal({ resume, dispatch, onClose }) {
                   onClick={() => applyTemplate(t)}
                 >
                   <span className="apply-template-card-preview">
-                    <span className="apply-template-card-scale" style={{ transform: `scale(${SCALE})` }}>
+                    <span className="apply-template-card-scale" style={{ zoom: SCALE }}>
                       <Template resume={previewResume} accentColor={t.swatches[0]} />
                     </span>
                   </span>

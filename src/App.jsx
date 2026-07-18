@@ -338,6 +338,7 @@ function App() {
     return (
       <TemplatePicker
         onSelectTemplate={handleSelectTemplate}
+        hasExistingResumes={library.length > 0}
         onCancel={
           library.length
             ? () => {

@@ -70,6 +70,25 @@ const NAV_GROUPS = [
 
 const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items);
 
+// Templates that own their entire look (see SimpleTemplate.jsx) don't read
+// resume.settings for layout/typography at all — showing the full settings
+// sidebar for them means ten panels that silently do nothing, which reads
+// as the app being broken. These layouts get a reduced nav with only the
+// controls that genuinely apply: document settings (date/page format feed
+// the exporter), switching templates, and the accent color.
+const SELF_CONTAINED_LAYOUTS = new Set(['simple']);
+
+const FIXED_NAV_GROUPS = [
+  {
+    label: 'Design',
+    items: [
+      { id: 'document', label: 'Document' },
+      { id: 'templates', label: 'Templates' },
+      { id: 'colors', label: 'Accent Color' },
+    ],
+  },
+];
+
 const LANGUAGES = ['English (UK)', 'English (US)', 'Spanish', 'French', 'German', 'Portuguese'];
 const PAGE_FORMATS = ['A4', 'US Letter'];
 
@@ -893,7 +912,7 @@ function ApplyToCheckbox({ label, checked, onChange }) {
   );
 }
 
-function ColorsSection({ resume, dispatch }) {
+function ColorsSection({ resume, dispatch, accentOnly = false }) {
   const colors = resume.settings.colors ?? DEFAULT_COLORS;
 
   function update(field, value) {
@@ -912,6 +931,8 @@ function ColorsSection({ resume, dispatch }) {
     <div className="customize-card">
       <h2>Colors</h2>
 
+      {!accentOnly && (
+      <>
       <div className="customize-field">
         <label>Background Scope</label>
         <div className="layout-option-row">
@@ -943,6 +964,8 @@ function ColorsSection({ resume, dispatch }) {
           ))}
         </div>
       </div>
+      </>
+      )}
 
       <div className="customize-field">
         <label>Accent Color</label>
@@ -966,6 +989,7 @@ function ColorsSection({ resume, dispatch }) {
         </div>
       </div>
 
+      {!accentOnly && (
       <div className="apply-accent-section">
         <label>Apply Accent Color to</label>
         <div className="apply-to-grid">
@@ -991,6 +1015,7 @@ function ColorsSection({ resume, dispatch }) {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
@@ -1307,19 +1332,26 @@ function ComingSoonCard({ label }) {
 
 export default function CustomizePanel({ resume, dispatch, onFontPreview }) {
   const [activeSection, setActiveSection] = useState('document');
-  const activeLabel = NAV_ITEMS.find((n) => n.id === activeSection)?.label ?? '';
+  const isFixedDesign = SELF_CONTAINED_LAYOUTS.has(resume.templateId);
+  const groups = isFixedDesign ? FIXED_NAV_GROUPS : NAV_GROUPS;
+  const validIds = groups.flatMap((g) => g.items).map((i) => i.id);
+  // If the person switches to a fixed-design template while sitting on a
+  // panel that no longer exists (e.g. Spacing), snap back to Document
+  // rather than rendering a dead panel.
+  const currentSection = validIds.includes(activeSection) ? activeSection : 'document';
+  const activeLabel = NAV_ITEMS.find((n) => n.id === currentSection)?.label ?? '';
 
   return (
     <div className="customize-panel">
       <nav className="customize-sidebar">
-        {NAV_GROUPS.map((group) => (
+        {groups.map((group) => (
           <div className="customize-sidebar-group" key={group.label}>
             <span className="customize-sidebar-group-label">{group.label}</span>
             {group.items.map((item) => (
               <button
                 type="button"
                 key={item.id}
-                className={`customize-sidebar-item${activeSection === item.id ? ' active' : ''}`}
+                className={`customize-sidebar-item${currentSection === item.id ? ' active' : ''}`}
                 onClick={() => setActiveSection(item.id)}
               >
                 {item.label}
@@ -1330,31 +1362,39 @@ export default function CustomizePanel({ resume, dispatch, onFontPreview }) {
       </nav>
 
       <div className="customize-main">
-        {activeSection === 'document' ? (
+        {isFixedDesign && (
+          <div className="fixed-design-note">
+            This template has a hand-tuned, fixed design — fonts, spacing, and layout are professionally set
+            and always export exactly as previewed. You can still change its accent color and document
+            settings, or switch to a different template.
+          </div>
+        )}
+
+        {currentSection === 'document' ? (
           <DocumentSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'templates' ? (
+        ) : currentSection === 'templates' ? (
           <DesignTemplates resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'layout' ? (
+        ) : currentSection === 'layout' ? (
           <LayoutSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'fontSize' ? (
+        ) : currentSection === 'fontSize' ? (
           <FontSizeSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'spacing' ? (
+        ) : currentSection === 'spacing' ? (
           <SpacingSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'entries' ? (
+        ) : currentSection === 'entries' ? (
           <EntriesSection resume={resume} dispatch={dispatch} onNavigate={() => setActiveSection('layout')} />
-        ) : activeSection === 'headings' ? (
+        ) : currentSection === 'headings' ? (
           <HeadingsSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'font' ? (
+        ) : currentSection === 'font' ? (
           <FontSection resume={resume} dispatch={dispatch} onFontPreview={onFontPreview} />
-        ) : activeSection === 'colors' ? (
-          <ColorsSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'header' ? (
+        ) : currentSection === 'colors' ? (
+          <ColorsSection resume={resume} dispatch={dispatch} accentOnly={isFixedDesign} />
+        ) : currentSection === 'header' ? (
           <HeaderSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'photo' ? (
+        ) : currentSection === 'photo' ? (
           <PhotoSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'links' ? (
+        ) : currentSection === 'links' ? (
           <LinksSection resume={resume} dispatch={dispatch} />
-        ) : activeSection === 'footer' ? (
+        ) : currentSection === 'footer' ? (
           <FooterSection resume={resume} dispatch={dispatch} />
         ) : (
           <ComingSoonCard label={activeLabel} />

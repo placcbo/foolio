@@ -25,6 +25,28 @@ import {
 import { getSectionMeta } from '../data/sectionTypes';
 import { isHtmlEmpty } from './templates/shared';
 
+// One-line summary shown on a collapsed section card, so the whole content
+// panel is scannable without clicking every section open: entry sections
+// show the first role plus a count, tag sections show an item count, text
+// sections show whether they're filled — and anything empty says so, which
+// doubles as a gentle "you haven't done this one yet" nudge.
+function collapsedSummary(section) {
+  if (section.kind === 'entries') {
+    const visible = (section.entries || []).filter(
+      (e) => !e.hidden && (e.heading || e.subheading || !isHtmlEmpty(e.description))
+    );
+    if (!visible.length) return 'Empty';
+    const first = visible[0].heading || visible[0].subheading || '';
+    const extra = visible.length - 1;
+    return extra > 0 ? `${first} +${extra} more` : first;
+  }
+  if (section.kind === 'tags') {
+    const n = (section.tags || []).length;
+    return n ? `${n} ${n === 1 ? 'item' : 'items'}` : 'Empty';
+  }
+  return isHtmlEmpty(section.content) ? 'Empty' : 'Filled in';
+}
+
 function RichTextToolbar({ editableRef }) {
   function exec(cmd, value) {
     editableRef.current?.focus();
@@ -483,55 +505,63 @@ export default function SectionCard({ section, dispatch, autoOpen }) {
 
   if (!expanded) {
     return (
-      <div className={`section-card section-card-collapsed${section.hidden ? ' is-hidden' : ''}`} ref={cardRef}>
-        <span className="section-icon" aria-hidden="true">
-          {meta?.icon}
-        </span>
-        {renaming ? (
-          <input
-            className="section-title-input"
-            type="text"
-            autoFocus
-            value={section.title}
-            onChange={(e) => updateTitle(e.target.value)}
-            onBlur={() => setRenaming(false)}
-            onKeyDown={(e) => e.key === 'Enter' && setRenaming(false)}
-          />
-        ) : (
-          <button type="button" className="section-collapsed-title-btn" onClick={() => setExpanded(true)}>
-            {section.title}
+      <div className={`outline-row${section.hidden ? ' is-hidden' : ''}`} ref={cardRef}>
+        <span className="outline-dot" aria-hidden="true" />
+        <button type="button" className="outline-row-main" onClick={() => setExpanded(true)}>
+          <span className="outline-row-icon" aria-hidden="true">
+            {meta?.icon}
+          </span>
+          <span className="outline-row-text">
+            {renaming ? (
+              <input
+                className="section-title-input"
+                type="text"
+                autoFocus
+                value={section.title}
+                onChange={(e) => updateTitle(e.target.value)}
+                onBlur={() => setRenaming(false)}
+                onKeyDown={(e) => e.key === 'Enter' && setRenaming(false)}
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <span className="outline-row-title">{section.title}</span>
+            )}
+            <span className="outline-row-meta">{collapsedSummary(section)}</span>
+          </span>
+        </button>
+        <div className="outline-row-actions">
+          <button
+            type="button"
+            className="section-icon-btn"
+            title="Rename section"
+            aria-label="Rename section"
+            // Without this, clicking the button while the rename input is
+            // focused blurs it first (closing it), then this onClick's toggle
+            // reads that just-queued `false` and flips it straight back to
+            // `true` — so the first click to close it visually does nothing.
+            // Suppressing the mousedown-driven focus change means the input
+            // never blurs from this click, so the toggle only ever sees one
+            // state change per click.
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setRenaming((v) => !v)}
+          >
+            <IconEdit size={15} />
           </button>
-        )}
-        <button
-          type="button"
-          className="edit-heading-btn"
-          // Without this, clicking the button while the rename input is
-          // focused blurs it first (closing it), then this onClick's toggle
-          // reads that just-queued `false` and flips it straight back to
-          // `true` — so the first click to close it visually does nothing.
-          // Suppressing the mousedown-driven focus change means the input
-          // never blurs from this click, so the toggle only ever sees one
-          // state change per click.
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={() => setRenaming((v) => !v)}
-        >
-          <IconEdit size={13} />
-          Edit Heading
-        </button>
-        <button
-          type="button"
-          className="section-icon-btn"
-          onClick={() => setExpanded((v) => !v)}
-          aria-label={expanded ? 'Collapse section' : 'Expand section'}
-        >
-          <IconChevronDown size={18} />
-        </button>
+          <button
+            type="button"
+            className="section-icon-btn"
+            onClick={() => setExpanded((v) => !v)}
+            aria-label="Expand section"
+          >
+            <IconChevronDown size={18} />
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="section-card section-card-expanded" ref={cardRef}>
+    <div className="section-card section-card-expanded outline-expanded" ref={cardRef}>
       <div className="section-edit-header">
         <span className="section-icon" aria-hidden="true">
           {meta?.icon}

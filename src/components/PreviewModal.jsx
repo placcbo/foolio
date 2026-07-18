@@ -49,14 +49,27 @@ export default function PreviewModal({ mode, Template, resume, name, onClose, on
 
   return (
     <div className="preview-modal-overlay" onClick={onClose}>
+      {mode === 'template' && (
+        <button
+          type="button"
+          className="preview-modal-close preview-modal-close-floating"
+          onClick={onClose}
+          aria-label="Close preview"
+        >
+          <IconX size={20} />
+        </button>
+      )}
+
       <div
         className={`preview-modal ${mode === 'template' ? 'preview-modal-template' : 'preview-modal-live'}`}
         style={mode === 'template' ? { '--modal-accent': resume.accentColor } : undefined}
         onClick={(e) => e.stopPropagation()}
       >
-        <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
-          <IconX size={20} />
-        </button>
+        {mode !== 'template' && (
+          <button type="button" className="preview-modal-close" onClick={onClose} aria-label="Close preview">
+            <IconX size={20} />
+          </button>
+        )}
 
         <div className="preview-modal-paper-col" ref={columnRef}>
           <div style={{ zoom: scale }}>

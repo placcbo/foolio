@@ -3973,27 +3973,27 @@ body.has-open-preview-modal {
   line-height: 1.5;
   padding: 48px 56px;
   box-sizing: border-box;
+  text-align: left;
 }
 
 .simple-header {
   margin-bottom: 18px;
   padding-bottom: 14px;
-  border-bottom: 3px solid var(--simple-accent, #d9622b);
+  border-bottom: 3px solid var(--simple-accent, #e4570f);
 }
 
 .simple-name {
   margin: 0;
-  font-size: 26pt;
-  font-weight: 800;
+  font-size: 24pt;
+  font-weight: 700;
   color: #17171a;
-  letter-spacing: -0.01em;
 }
 
 .simple-title {
   margin: 4px 0 0;
-  font-size: 12.5pt;
-  font-weight: 600;
-  color: var(--simple-accent, #d9622b);
+  font-size: 13pt;
+  font-weight: 400;
+  color: var(--simple-accent, #e4570f);
 }
 
 .simple-contact-row {
@@ -4030,10 +4030,10 @@ body.has-open-preview-modal {
 .simple-heading {
   margin: 0 0 10px;
   font-size: 11pt;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--simple-accent, #d9622b);
+  color: var(--simple-accent, #e4570f);
 }
 
 .simple-text {
@@ -4121,4 +4121,253 @@ body.has-open-preview-modal {
 
 .simple-bullets li:last-child {
   margin-bottom: 0;
+}
+
+/* ---------- fixed-design template note (Customize tab) ---------- */
+
+.fixed-design-note {
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border);
+  border-left: 3px solid var(--lime);
+  background: var(--surface-2);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ---------- collapsed section card summary ---------- */
+
+.section-collapsed-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 260px;
+}
+
+/* =========================================================================
+   Content panel — outline design
+   Sections read as nodes on a document spine (a table of contents you
+   build), replacing the anonymous floating cards. The Add button is the
+   final node of the outline; a slim progress bar shows fill state.
+   ========================================================================= */
+
+.content-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 4px;
+}
+
+.content-progress-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.content-progress-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.content-progress-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--lime);
+  transition: width var(--med) var(--ease);
+}
+
+/* ---------- the spine ---------- */
+
+.outline-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 26px;
+}
+
+.outline-list::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: var(--border);
+}
+
+.outline-dot {
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--text-dim);
+  z-index: 1;
+}
+
+/* ---------- collapsed rows ---------- */
+
+.outline-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: var(--r-md);
+  border: 1.5px solid transparent;
+  background: transparent;
+  padding-right: 6px;
+  transition: border-color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+
+.outline-row:hover {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.outline-row.is-hidden {
+  opacity: 0.5;
+}
+
+.outline-row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.outline-row-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+}
+
+.outline-row-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.outline-row-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outline-row-meta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* actions stay quiet until the row is hovered */
+.outline-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease);
+}
+
+.outline-row:hover .outline-row-actions,
+.outline-row:focus-within .outline-row-actions {
+  opacity: 1;
+}
+
+/* filled sections get an ink dot; the hover state previews it */
+.outline-row:hover .outline-dot {
+  border-color: var(--ink);
+}
+
+/* ---------- expanded card sits on the spine too ---------- */
+
+.outline-expanded {
+  position: relative;
+}
+
+.outline-expanded::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 26px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  z-index: 1;
+}
+
+/* ---------- add node ---------- */
+
+.outline-add {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+
+.outline-add:hover {
+  border-color: var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.outline-add .outline-dot-add {
+  position: absolute;
+  left: -22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--lime);
+  border: none;
+  color: var(--lime-ink);
 }

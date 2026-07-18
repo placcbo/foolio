@@ -166,9 +166,7 @@ export default function ResumeLibrary({ library, activeResumeId, onSwitch, onCre
 
       <div className="resume-library-grid">
         <button type="button" className="resume-card resume-card-new" onClick={onCreate}>
-          <span className="resume-card-new-icon">
-            <IconPlus size={20} />
-          </span>
+          <IconPlus size={26} />
           New resume
         </button>
 
@@ -187,11 +185,8 @@ export default function ResumeLibrary({ library, activeResumeId, onSwitch, onCre
 
       {library.length <= 1 && (
         <p className="resume-library-hint">
-          <span className="resume-library-hint-icon">
-            <IconCheck size={13} />
-          </span>
-          Tip: keep a separate copy for each job you apply to — duplicate a resume and tailor it instead of
-          overwriting your main one.
+          <IconCheck size={13} /> Tip: keep a separate copy for each job you apply to — duplicate a resume and
+          tailor it instead of overwriting your main one.
         </p>
       )}
     </div>

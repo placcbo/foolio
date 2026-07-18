@@ -3,6 +3,17 @@ import BasicsCard from './BasicsCard';
 import SectionCard from './SectionCard';
 import AddContentModal from './AddContentModal';
 import { IconPlus } from './icons';
+import { isHtmlEmpty } from './templates/shared';
+
+// Mirrors SectionCard's collapsed summary logic: a section counts as filled
+// once it has any real content in it.
+function isSectionFilled(s) {
+  if (s.kind === 'entries') {
+    return (s.entries || []).some((e) => !e.hidden && (e.heading || e.subheading || !isHtmlEmpty(e.description)));
+  }
+  if (s.kind === 'tags') return (s.tags || []).length > 0;
+  return !isHtmlEmpty(s.content);
+}
 
 export default function ContentPanel({ resume, dispatch }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -36,6 +47,9 @@ export default function ContentPanel({ resume, dispatch }) {
     setBasicsExpanded(true);
   }
 
+  const total = resume.sections.length;
+  const filled = resume.sections.filter(isSectionFilled).length;
+
   return (
     <div className="content-panel">
       <BasicsCard
@@ -45,19 +59,34 @@ export default function ContentPanel({ resume, dispatch }) {
         onExpandedChange={setBasicsExpanded}
       />
 
-      {resume.sections.map((section) => (
-        <SectionCard
-          key={section.id}
-          section={section}
-          dispatch={dispatch}
-          autoOpen={section.id === justAddedSectionId}
-        />
-      ))}
+      {total > 0 && (
+        <div className="content-progress">
+          <span className="content-progress-label">
+            {filled} of {total} sections filled in
+          </span>
+          <span className="content-progress-bar">
+            <span style={{ width: `${Math.round((filled / total) * 100)}%` }} />
+          </span>
+        </div>
+      )}
 
-      <button type="button" className="add-content-btn" onClick={() => setModalOpen(true)}>
-        <IconPlus size={18} />
-        Add Content
-      </button>
+      <div className="outline-list">
+        {resume.sections.map((section) => (
+          <SectionCard
+            key={section.id}
+            section={section}
+            dispatch={dispatch}
+            autoOpen={section.id === justAddedSectionId}
+          />
+        ))}
+
+        <button type="button" className="outline-add" onClick={() => setModalOpen(true)}>
+          <span className="outline-dot outline-dot-add" aria-hidden="true">
+            <IconPlus size={11} />
+          </span>
+          Add Content
+        </button>
+      </div>
 
       {modalOpen && (
         <AddContentModal

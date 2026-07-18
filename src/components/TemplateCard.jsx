@@ -28,7 +28,7 @@ export default function TemplateCard({ template, onSelect }) {
           if (e.key === 'Enter' || e.key === ' ') setPreviewOpen(true);
         }}
       >
-        <div className="template-card-scale" style={{ transform: `scale(${SCALE})` }}>
+        <div className="template-card-scale" style={{ zoom: SCALE }}>
           <Template resume={previewResume} accentColor={color} />
         </div>
         <div className="template-card-overlay">
