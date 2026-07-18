@@ -9,7 +9,8 @@
 .app-shell {
   display: flex;
   flex-direction: row;
-  min-height: 100svh;
+  height: 100svh;
+  overflow: hidden;
   background: var(--page-bg);
 }
 

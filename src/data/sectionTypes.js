@@ -110,3 +110,22 @@ export const SECTION_TYPES = [
 export function getSectionMeta(type) {
   return SECTION_TYPES.find((s) => s.type === type);
 }
+
+// What one item in an entries-type section is called, in the user's
+// vocabulary — "Add degree" and "New position" beat the developer-speak
+// "Add Entry" / "New Entry" that confused nobody's mental model but ours.
+const ITEM_LABELS = {
+  education: 'degree',
+  experience: 'position',
+  certificates: 'certificate',
+  projects: 'project',
+  courses: 'course',
+  awards: 'award',
+  organisations: 'role',
+  publications: 'publication',
+  references: 'reference',
+};
+
+export function getItemLabel(type) {
+  return ITEM_LABELS[type] || 'entry';
+}

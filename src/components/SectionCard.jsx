@@ -23,7 +23,7 @@ import {
   IconEdit,
   IconCalendar,
 } from './icons';
-import { getSectionMeta } from '../data/sectionTypes';
+import { getSectionMeta, getItemLabel } from '../data/sectionTypes';
 import { toMonthInputValue, fromMonthInputValue } from '../utils/dateFormat';
 import { isHtmlEmpty } from './templates/shared';
 
@@ -217,6 +217,14 @@ function SectionCustomizationsToggle() {
   );
 }
 
+// Example-driven placeholders per tag section — a concrete example teaches
+// the expected format better than a generic instruction.
+const TAG_PLACEHOLDERS = {
+  skills: 'e.g. Zendesk — press Enter to add',
+  languages: 'e.g. English (fluent) — press Enter to add',
+  interests: 'e.g. Chess — press Enter to add',
+};
+
 function TagsEditor({ section, dispatch }) {
   const [draft, setDraft] = useState('');
 
@@ -253,7 +261,7 @@ function TagsEditor({ section, dispatch }) {
       <input
         type="text"
         className="tag-input"
-        placeholder="Type and press Enter to add"
+        placeholder={TAG_PLACEHOLDERS[section.type] || 'Type and press Enter to add'}
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={handleKeyDown}
@@ -263,9 +271,9 @@ function TagsEditor({ section, dispatch }) {
   );
 }
 
-function entryLabel(entry) {
+function entryLabel(entry, sectionType) {
   if (entry.heading && entry.subheading) return `${entry.heading} · ${entry.subheading}`;
-  return entry.heading || entry.subheading || 'New Entry';
+  return entry.heading || entry.subheading || `New ${getItemLabel(sectionType)}`;
 }
 
 const ENTRY_FIELD_META = {
@@ -277,7 +285,7 @@ const ENTRY_FIELD_META = {
   awards: { heading: 'Award', subheading: 'Issuer', headingPlaceholder: 'e.g. Employee of the Year', subheadingPlaceholder: 'e.g. Acme Corp' },
   organisations: { heading: 'Role', subheading: 'Organisation', headingPlaceholder: 'e.g. Volunteer', subheadingPlaceholder: 'e.g. Red Cross' },
   publications: { heading: 'Title', subheading: 'Publisher', headingPlaceholder: 'e.g. Scaling Distributed Systems', subheadingPlaceholder: 'e.g. IEEE' },
-  references: { heading: 'Name', subheading: 'Company', headingPlaceholder: 'e.g. Jane Smith', subheadingPlaceholder: 'e.g. Acme Corp' },
+  references: { heading: 'Name', subheading: 'Company & Role', headingPlaceholder: 'e.g. Jane Smith', subheadingPlaceholder: 'e.g. Acme Corp — Engineering Manager', noDates: true },
 };
 const DEFAULT_ENTRY_FIELD_META = { heading: 'Title', subheading: 'Organization', headingPlaceholder: 'Title', subheadingPlaceholder: 'Organization' };
 
@@ -378,7 +386,7 @@ function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTarget
           <IconGripVertical size={16} />
         </span>
         <button type="button" className="entry-row-title" onClick={() => setOpen((v) => !v)}>
-          {entryLabel(entry)}
+          {entryLabel(entry, section.type)}
         </button>
         <VisibilityToggle
           hidden={entry.hidden}
@@ -447,26 +455,38 @@ function EntryRow({ section, entry, index, dispatch, handleDragProps, dropTarget
             )}
           </div>
 
-          <div className="entry-3col">
-            <DateField label="Start Date" value={entry.start} onChange={(v) => updateEntry('start', v)} />
-            <DateField label="End Date" value={entry.end} onChange={(v) => updateEntry('end', v)} allowPresent />
+          {meta.noDates ? (
             <div className="entry-field">
-              <label>Location</label>
+              <label>Contact / Location</label>
               <input
                 type="text"
-                placeholder="City, Country"
+                placeholder="e.g. jane@acme.com · +254 700 000000"
                 value={entry.location}
                 onChange={(e) => updateEntry('location', e.target.value)}
               />
             </div>
-          </div>
+          ) : (
+            <div className="entry-3col">
+              <DateField label="Start Date" value={entry.start} onChange={(v) => updateEntry('start', v)} />
+              <DateField label="End Date" value={entry.end} onChange={(v) => updateEntry('end', v)} allowPresent />
+              <div className="entry-field">
+                <label>Location</label>
+                <input
+                  type="text"
+                  placeholder="City, Country"
+                  value={entry.location}
+                  onChange={(e) => updateEntry('location', e.target.value)}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="entry-field">
             <label>Description</label>
             <RichTextEditor
               value={entry.description}
               onChange={(html) => updateEntry('description', html)}
-              placeholder={`Add a description of your ${section.title.toLowerCase()} entry...`}
+              placeholder={`Describe this ${getItemLabel(section.type)}…`}
               startAsList={BULLETED_ENTRY_TYPES.has(section.type)}
             />
             <AiHelperRow suggestContent />
@@ -535,7 +555,7 @@ function EntriesEditor({ section, dispatch }) {
       ))}
       <button type="button" className="entry-add" onClick={() => dispatch({ type: 'ADD_ENTRY', id: section.id })}>
         <IconPlus size={14} />
-        Add Entry
+        Add {section.entries.filter((e) => !e.hidden).length ? 'another ' : ''}{getItemLabel(section.type)}
       </button>
     </div>
   );
