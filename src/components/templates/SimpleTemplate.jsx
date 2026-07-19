@@ -27,6 +27,49 @@ function Bullets({ html }) {
   return <div className="simple-bullets" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
+// Users type "acme.com" as often as "https://acme.com" — without a scheme
+// the browser treats the href as a relative path, so normalize.
+function normalizeUrl(link) {
+  return /^https?:\/\//i.test(link) ? link : `https://${link}`;
+}
+
+function TagsBlock({ section }) {
+  const groups = (section.groups?.length
+    ? section.groups
+    : [{ id: 'flat', label: '', tags: section.tags || [] }]
+  ).filter((g) => (g.tags || []).length > 0);
+  const flat = groups.flatMap((g) => g.tags);
+
+  if (!flat.length) {
+    return <p className="simple-placeholder">Add your {section.title.toLowerCase()}…</p>;
+  }
+
+  const hasLabels = groups.some((g) => g.label && g.label.trim());
+  if (!hasLabels) {
+    return (
+      <div className="simple-tags">
+        {flat.map((tag, i) => (
+          <span className="simple-tag" key={`${tag}-${i}`}>
+            {i > 0 && <span className="simple-tag-sep" aria-hidden="true" />}
+            {tag}
+          </span>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="simple-skill-groups">
+      {groups.map((g) => (
+        <div className="simple-skill-row" key={g.id}>
+          <span className="simple-skill-label">{g.label && g.label.trim() ? `${g.label.trim()}:` : ''}</span>
+          <span className="simple-skill-values">{g.tags.join(', ')}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function SectionHeading({ title }) {
   return <h2 className="simple-heading">{title}</h2>;
 }
@@ -72,20 +115,7 @@ export default function SimpleTemplate({ resume, accentColor = '#d9622b' }) {
             )
           )}
 
-          {section.kind === 'tags' && (
-            section.tags.length === 0 ? (
-              <p className="simple-placeholder">Add your {section.title.toLowerCase()}…</p>
-            ) : (
-              <div className="simple-tags">
-                {section.tags.map((tag, i) => (
-                  <span className="simple-tag" key={`${tag}-${i}`}>
-                    {i > 0 && <span className="simple-tag-sep" aria-hidden="true" />}
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )
-          )}
+          {section.kind === 'tags' && <TagsBlock section={section} />}
 
           {section.kind === 'entries' && (
             section.entries.filter(
@@ -101,7 +131,15 @@ export default function SimpleTemplate({ resume, accentColor = '#d9622b' }) {
                   return (
                     <div className="simple-entry" key={entry.id}>
                       <div className="simple-entry-row">
-                        <span className="simple-entry-heading">{entry.heading}</span>
+                        <span className="simple-entry-heading">
+                          {entry.link ? (
+                            <a href={normalizeUrl(entry.link)} target="_blank" rel="noopener noreferrer">
+                              {entry.heading}
+                            </a>
+                          ) : (
+                            entry.heading
+                          )}
+                        </span>
                         {dateRange && <span className="simple-entry-date">{dateRange}</span>}
                       </div>
                       {(entry.subheading || entry.location) && (

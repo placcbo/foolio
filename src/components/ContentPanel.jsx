@@ -4,6 +4,7 @@ import SectionCard from './SectionCard';
 import AddContentModal from './AddContentModal';
 import { IconPlus, IconArrowLeft } from './icons';
 import { isHtmlEmpty } from './templates/shared';
+import { templateSupportsPhoto } from '../data/templates';
 
 // Mirrors SectionCard's collapsed summary logic: a section counts as filled
 // once it has any real content in it.
@@ -84,6 +85,7 @@ export default function ContentPanel({ resume, dispatch }) {
         dispatch={dispatch}
         expanded={basicsExpanded}
         onExpandedChange={setBasicsExpanded}
+        supportsPhoto={templateSupportsPhoto(resume.templateId)}
       />
 
       <div className="content-head">

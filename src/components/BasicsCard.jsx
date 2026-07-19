@@ -13,7 +13,7 @@ import {
 } from './icons';
 import { EXTRA_FIELDS, EXTRA_FIELDS_MORE, getExtraFieldMeta } from '../data/extraFields';
 
-export default function BasicsCard({ basics, dispatch, expanded, onExpandedChange }) {
+export default function BasicsCard({ basics, dispatch, expanded, onExpandedChange, supportsPhoto = true }) {
   const fileInputRef = useRef(null);
   const [showMore, setShowMore] = useState(false);
 
@@ -74,17 +74,19 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
             </div>
           </div>
 
-          <div className="basics-edit-photo-col">
-            <label>Photo</label>
-            <button
-              type="button"
-              className="basics-photo basics-photo-lg"
-              onClick={() => fileInputRef.current?.click()}
-              aria-label="Upload photo"
-            >
-              {basics.photo ? <img src={basics.photo} alt="Profile" /> : <IconCamera size={26} />}
-            </button>
-          </div>
+          {supportsPhoto && (
+            <div className="basics-edit-photo-col">
+              <label>Photo</label>
+              <button
+                type="button"
+                className="basics-photo basics-photo-lg"
+                onClick={() => fileInputRef.current?.click()}
+                aria-label="Upload photo"
+              >
+                {basics.photo ? <img src={basics.photo} alt="Profile" /> : <IconCamera size={26} />}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="basics-edit-field">
@@ -261,14 +263,16 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
         </label>
       </div>
 
-      <button
-        type="button"
-        className="basics-photo"
-        onClick={() => fileInputRef.current?.click()}
-        aria-label="Upload photo"
-      >
-        {basics.photo ? <img src={basics.photo} alt="Profile" /> : <IconCamera size={30} />}
-      </button>
+      {supportsPhoto && (
+        <button
+          type="button"
+          className="basics-photo"
+          onClick={() => fileInputRef.current?.click()}
+          aria-label="Upload photo"
+        >
+          {basics.photo ? <img src={basics.photo} alt="Profile" /> : <IconCamera size={30} />}
+        </button>
+      )}
 
       {photoInput}
     </div>

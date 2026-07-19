@@ -22,6 +22,12 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
   const [activeFilter, setActiveFilter] = useState('all');
   const [showAll, setShowAll] = useState(false);
   const [query, setQuery] = useState('');
+  // A filter pill for an empty category is a promise the page can't keep —
+  // only show categories that actually contain templates. The row grows on
+  // its own as templates are added.
+  const visibleFilters = FILTERS.filter(
+    (f) => f.id === 'all' || TEMPLATES.some((t) => t.categories.includes(f.id))
+  );
   const q = query.trim().toLowerCase();
   const filtered = TEMPLATES.filter(
     (t) =>
@@ -38,6 +44,11 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
 
   return (
     <div className="picker-page">
+      <div className="picker-brand" aria-hidden="true">
+        <span className="picker-brand-mark">C</span>
+        candidly
+      </div>
+
       {onCancel && (
         <button type="button" className="picker-cancel-btn" onClick={onCancel} aria-label="Cancel">
           <IconX size={18} />
@@ -51,7 +62,7 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
 
       <div className="picker-toolbar">
         <nav className="filter-tabs">
-          {FILTERS.map((f) => {
+          {visibleFilters.map((f) => {
             const Icon = FILTER_ICONS[f.id];
             return (
               <button
@@ -108,7 +119,7 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
           <button
             type="button"
             className="skip-templates-btn"
-            onClick={() => onSelectTemplate('onecolumn', '#000000')}
+            onClick={() => onSelectTemplate('simple', '#e4570f')}
           >
             Skip for now — go to editor
           </button>

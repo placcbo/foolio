@@ -225,13 +225,13 @@ const TAG_PLACEHOLDERS = {
   interests: 'e.g. Chess — press Enter to add',
 };
 
-function TagsEditor({ section, dispatch }) {
+function TagGroupRow({ group, canRemove, placeholder, onChange, onRemove }) {
   const [draft, setDraft] = useState('');
 
   function commit() {
     const value = draft.trim();
     if (!value) return;
-    dispatch({ type: 'ADD_TAG', id: section.id, value });
+    onChange({ ...group, tags: [...group.tags, value] });
     setDraft('');
   }
 
@@ -243,14 +243,28 @@ function TagsEditor({ section, dispatch }) {
   }
 
   return (
-    <div className="tags-editor">
+    <div className="tag-group">
+      <div className="tag-group-head">
+        <input
+          type="text"
+          className="tag-group-label-input"
+          placeholder={'Group name (optional) \u2014 e.g. \u201cSupport Tools\u201d'}
+          value={group.label}
+          onChange={(e) => onChange({ ...group, label: e.target.value })}
+        />
+        {canRemove && (
+          <button type="button" className="section-icon-btn" aria-label="Remove group" onClick={onRemove}>
+            <IconTrash size={14} />
+          </button>
+        )}
+      </div>
       <div className="tag-list">
-        {section.tags.map((tag, i) => (
+        {group.tags.map((tag, i) => (
           <span className="tag-pill" key={`${tag}-${i}`}>
             {tag}
             <button
               type="button"
-              onClick={() => dispatch({ type: 'REMOVE_TAG', id: section.id, index: i })}
+              onClick={() => onChange({ ...group, tags: group.tags.filter((_, j) => j !== i) })}
               aria-label={`Remove ${tag}`}
             >
               <IconX size={12} />
@@ -261,12 +275,51 @@ function TagsEditor({ section, dispatch }) {
       <input
         type="text"
         className="tag-input"
-        placeholder={TAG_PLACEHOLDERS[section.type] || 'Type and press Enter to add'}
+        placeholder={placeholder}
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={commit}
       />
+    </div>
+  );
+}
+
+// Groups are an OPTIONAL layer over plain tags. Someone who never types a
+// group name gets exactly the flat list they always had — one unnamed group
+// renders inline on the resume. Naming groups ("Support Tools", "Payments &
+// Fraud"...) switches the template to labelled rows. `tags` is always kept
+// as the flattened copy so every consumer that predates groups (DOCX
+// export, older templates, section summaries) keeps working untouched.
+function TagsEditor({ section, dispatch }) {
+  const groups = section.groups?.length
+    ? section.groups
+    : [{ id: `${section.id}-g1`, label: '', tags: section.tags || [] }];
+
+  function commitGroups(next) {
+    dispatch({ type: 'UPDATE_TAG_GROUPS', id: section.id, groups: next });
+  }
+
+  return (
+    <div className="tags-editor">
+      {groups.map((g, i) => (
+        <TagGroupRow
+          key={g.id}
+          group={g}
+          canRemove={groups.length > 1}
+          placeholder={TAG_PLACEHOLDERS[section.type] || 'Type and press Enter to add'}
+          onChange={(updated) => commitGroups(groups.map((x, j) => (j === i ? updated : x)))}
+          onRemove={() => commitGroups(groups.filter((_, j) => j !== i))}
+        />
+      ))}
+      <button
+        type="button"
+        className="entry-add"
+        onClick={() => commitGroups([...groups, { id: `${section.id}-g${Date.now()}`, label: '', tags: [] }])}
+      >
+        <IconPlus size={14} />
+        Add group
+      </button>
     </div>
   );
 }
@@ -655,7 +708,14 @@ export default function SectionCard({ section, dispatch, expanded, onExpandedCha
           <button
             type="button"
             className="section-icon-btn"
-            onClick={() => dispatch({ type: 'REMOVE_SECTION', id: section.id })}
+            onClick={() => {
+              // Deleting a section is the most destructive click in the app
+              // and there is no undo — confirm first, naming what's about
+              // to be lost.
+              if (window.confirm(`Delete the "${section.title}" section and everything in it? This can't be undone.`)) {
+                dispatch({ type: 'REMOVE_SECTION', id: section.id });
+              }
+            }}
             aria-label={`Remove ${section.title}`}
           >
             <IconTrash size={16} />

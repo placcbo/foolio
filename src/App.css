@@ -528,30 +528,38 @@
   pointer-events: none;
 }
 
+/* No gradient wash over the CV — darkening the preview someone is trying
+   to inspect is self-defeating. Instead a solid ink action bar slides up
+   from the card's bottom edge, in the app's own chrome language. */
 .template-card-overlay {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 20px;
-  background: linear-gradient(180deg, transparent 55%, rgba(22, 21, 28, 0.55) 100%);
-  opacity: 0;
-  transition: opacity var(--fast) var(--ease);
+  gap: 8px;
+  padding: 12px;
+  background: var(--ink);
+  transform: translateY(100%);
+  transition: transform var(--med) var(--ease);
 }
 
-.template-card-preview:hover .template-card-overlay {
-  opacity: 1;
+.template-card-preview:hover .template-card-overlay,
+.template-card-preview:focus-visible .template-card-overlay {
+  transform: translateY(0);
 }
 
 .template-card-overlay span {
-  padding: 8px 16px;
-  border-radius: var(--r-pill);
-  background: #fff;
-  color: var(--ink);
-  font-size: 12.5px;
+  color: #fff;
+  font-size: 13px;
   font-weight: 700;
-  box-shadow: var(--shadow-md);
+}
+
+.template-card-overlay span::after {
+  content: ' \2192';
+  color: var(--lime);
 }
 
 .template-card-footer {
@@ -4641,4 +4649,127 @@ body.has-open-preview-modal {
   min-height: 20px;
   display: flex;
   align-items: center;
+}
+
+/* ---------- grouped skills: on-resume rows ---------- */
+
+.simple-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10pt;
+}
+
+.simple-skill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.simple-skill-label {
+  flex: 0 0 150px;
+  font-weight: 700;
+  color: #17171a;
+}
+
+.simple-skill-values {
+  flex: 1;
+  color: #262626;
+}
+
+/* ---------- grouped skills: editor ---------- */
+
+.tag-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.tag-group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag-group-label-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  border-bottom: 1.5px dashed var(--border);
+  background: transparent;
+  padding: 3px 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.tag-group-label-input::placeholder {
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.tag-group-label-input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+
+/* entry links: clickable without changing the resume's look */
+.simple-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- picker brand mark ---------- */
+
+.picker-brand {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--heading);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-h);
+}
+
+.picker-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  background: var(--lime);
+  color: var(--lime-ink);
+  font-size: 15px;
+}
+
+/* ---------- template card footer: tidy grid ---------- */
+
+.template-card-footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'name swatches'
+    'badges swatches';
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.template-card-name {
+  grid-area: name;
+}
+
+.format-badges {
+  grid-area: badges;
+}
+
+.swatch-row {
+  grid-area: swatches;
 }

@@ -119,7 +119,25 @@ export function exportSimpleTemplatePdf(resume, filename = 'resume') {
   }
 
   const b = resume?.basics || {};
-  const sections = (resume?.sections || []).filter((s) => !s.hidden);
+
+  // A section with no real content must not export at all — an orange
+  // heading floating over nothing reads as a mistake on a finished CV.
+  // (The on-screen editor still shows empty sections with a placeholder;
+  // this filter is export-only.)
+  function sectionHasContent(section) {
+    if (section.kind === 'text') return htmlParagraphs(section.content).length > 0;
+    if (section.kind === 'tags') {
+      const groups = section.groups && section.groups.length ? section.groups : [{ tags: section.tags || [] }];
+      return groups.some((g) => (g.tags || []).length > 0);
+    }
+    return (section.entries || []).some(
+      (e) =>
+        !e.hidden &&
+        (e.heading || e.subheading || htmlListItems(e.description).length > 0 || htmlParagraphs(e.description).length > 0)
+    );
+  }
+
+  const sections = (resume?.sections || []).filter((s) => !s.hidden && sectionHasContent(s));
   const dateFormat = resume?.settings?.dateFormat;
 
   // ----- header -----
@@ -172,8 +190,36 @@ export function exportSimpleTemplatePdf(resume, filename = 'resume') {
     }
 
     if (section.kind === 'tags') {
-      const joined = (section.tags || []).join(', ');
-      if (joined) para(joined, 10, 'normal', body, { lh: 1.45 });
+      const groups = (section.groups && section.groups.length
+        ? section.groups
+        : [{ label: '', tags: section.tags || [] }]
+      ).filter((g) => (g.tags || []).length);
+      const hasLabels = groups.some((g) => g.label && g.label.trim());
+
+      if (!hasLabels) {
+        const joined = groups.flatMap((g) => g.tags).join(', ');
+        if (joined) para(joined, 10, 'normal', body, { lh: 1.45 });
+      } else {
+        // Labelled rows, matching the on-screen template: bold label in a
+        // fixed left column, values wrapping in the right column.
+        const LABEL_W = 150;
+        groups.forEach((g) => {
+          const label = g.label && g.label.trim() ? g.label.trim() + ':' : '';
+          const values = (g.tags || []).join(', ');
+          setF(10, 'bold', ink);
+          const labelLines = label ? pdf.splitTextToSize(label, LABEL_W - 10) : [];
+          setF(10, 'normal', body);
+          const valueLines = pdf.splitTextToSize(values, CW - LABEL_W);
+          const rows = Math.max(labelLines.length, valueLines.length, 1);
+          ensure(rows * 13.5 + 3);
+          const startY = y;
+          setF(10, 'bold', ink);
+          labelLines.forEach((ln, i) => pdf.text(ln, M, startY + i * 13.5));
+          setF(10, 'normal', body);
+          valueLines.forEach((ln, i) => pdf.text(ln, M + LABEL_W, startY + i * 13.5));
+          y = startY + rows * 13.5 + 3;
+        });
+      }
       y += 11;
       return;
     }
@@ -196,7 +242,12 @@ export function exportSimpleTemplatePdf(resume, filename = 'resume') {
 
         setF(10.5, 'bold', ink);
         const headingLines = pdf.splitTextToSize(entry.heading || '', CW - (dateWidth ? dateWidth + 14 : 0));
-        pdf.text(headingLines[0] || '', M, y);
+        if (entry.link) {
+          const url = /^https?:\/\//i.test(entry.link) ? entry.link : `https://${entry.link}`;
+          pdf.textWithLink(headingLines[0] || '', M, y, { url });
+        } else {
+          pdf.text(headingLines[0] || '', M, y);
+        }
         if (dateRange) {
           setF(9.5, 'normal', dim);
           pdf.text(dateRange, W - M, y, { align: 'right' });

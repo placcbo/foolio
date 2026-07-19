@@ -311,6 +311,19 @@ export function resumeReducer(state, action) {
         ),
       };
 
+    case 'UPDATE_TAG_GROUPS':
+      // `groups` is the structured source; `tags` is always re-derived as the
+      // flattened copy so consumers that predate grouping (DOCX export, older
+      // templates, summaries) keep working without knowing groups exist.
+      return {
+        ...state,
+        sections: state.sections.map((s) =>
+          s.id === action.id
+            ? { ...s, groups: action.groups, tags: action.groups.flatMap((g) => g.tags || []) }
+            : s
+        ),
+      };
+
     case 'ADD_TAG':
       return {
         ...state,
