@@ -61,6 +61,14 @@ export const TEMPLATES = [
     categories: ['simple', 'popular'],
     swatches: ['#e0263f', '#0f6e5c', '#2a6f97', '#5b4bb5', '#b3541e', '#111111'],
   },
+  {
+    id: 'codex',
+    name: 'Codex',
+    layout: 'codex',
+    supportsPhoto: false,
+    categories: ['modern', 'creative'],
+    swatches: ['#5b4bb5', '#0f6e5c', '#d43d2a', '#2a6f97', '#b3541e', '#111111'],
+  },
 ];
 
 export const FILTERS = [

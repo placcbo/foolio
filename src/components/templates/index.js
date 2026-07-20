@@ -6,6 +6,7 @@ import CleanTemplate from './CleanTemplate';
 import SimpleTemplate from './SimpleTemplate';
 import ClassicTemplate from './ClassicTemplate';
 import NovaTemplate from './NovaTemplate';
+import CodexTemplate from './CodexTemplate';
 import SlateTemplate from './SlateTemplate';
 import BloomTemplate from './BloomTemplate';
 import PortraitTemplate from './PortraitTemplate';
@@ -24,6 +25,7 @@ export const TEMPLATE_COMPONENTS = {
   simple: SimpleTemplate,
   classic: ClassicTemplate,
   nova: NovaTemplate,
+  codex: CodexTemplate,
   slate: SlateTemplate,
   bloom: BloomTemplate,
   portrait: PortraitTemplate,

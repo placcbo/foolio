@@ -7,6 +7,8 @@ import { exportSlateTemplatePdf } from '../utils/slatePdf';
 import { exportBloomTemplatePdf } from '../utils/bloomPdf';
 import { exportPortraitTemplatePdf } from '../utils/portraitPdf';
 import { exportMeridianTemplatePdf } from '../utils/meridianPdf';
+import { exportNovaTemplatePdf } from '../utils/novaPdf';
+import { exportCodexTemplatePdf } from '../utils/codexPdf';
 
 export default function DownloadMenu({ resume, paperRef, className = 'btn-download' }) {
   const [open, setOpen] = useState(false);
@@ -39,6 +41,8 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
         bloom: exportBloomTemplatePdf,
         portrait: exportPortraitTemplatePdf,
         meridian: exportMeridianTemplatePdf,
+        nova: exportNovaTemplatePdf,
+        codex: exportCodexTemplatePdf,
       };
       const dedicated = exporters[resume.templateId];
       if (dedicated) {
