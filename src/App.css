@@ -6060,3 +6060,238 @@ body.has-open-preview-modal {
 .meridian-bullets li {
   margin-bottom: 3px;
 }
+
+/* =========================================================================
+   NovaTemplate — self-contained (.nova-* namespace)
+   A slim accent spine runs the full height of the page; the job title reads
+   as a pill badge; sections are numbered like a magazine contents page.
+   ========================================================================= */
+
+.nova-template {
+  display: flex;
+  align-items: stretch;
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #262626;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.nova-spine {
+  flex: 0 0 10px;
+  background: var(--nova-accent, #e0263f);
+}
+
+.nova-body {
+  flex: 1;
+  min-width: 0;
+  padding: 46px 54px 46px 42px;
+  box-sizing: border-box;
+}
+
+.nova-header {
+  margin-bottom: 24px;
+}
+
+.nova-name {
+  margin: 0;
+  font-size: 25pt;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #14141a;
+}
+
+.nova-title-badge {
+  display: inline-block;
+  margin-top: 9px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--nova-accent, #e0263f) 12%, white);
+  color: var(--nova-accent, #e0263f);
+  font-size: 9.5pt;
+  font-weight: 700;
+}
+
+.nova-contact-row {
+  margin-top: 12px;
+  font-size: 9.5pt;
+  color: #55555b;
+}
+
+.nova-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-contact-sep {
+  display: inline-block;
+  width: 1px;
+  height: 9px;
+  margin: 0 10px;
+  background: #c4c4c8;
+  vertical-align: middle;
+}
+
+.nova-section {
+  margin-bottom: 20px;
+}
+
+.nova-section:last-child {
+  margin-bottom: 0;
+}
+
+.nova-heading-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  border-bottom: 1.5px solid #1c1c20;
+}
+
+.nova-heading-index {
+  font-size: 9pt;
+  font-weight: 800;
+  color: var(--nova-accent, #e0263f);
+  font-variant-numeric: tabular-nums;
+}
+
+.nova-heading {
+  margin: 0;
+  font-size: 11pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #14141a;
+}
+
+.nova-text {
+  font-size: 10.5pt;
+  line-height: 1.55;
+}
+
+.nova-text p {
+  margin: 0 0 8px;
+}
+
+.nova-text p:last-child {
+  margin-bottom: 0;
+}
+
+.nova-placeholder {
+  margin: 0;
+  font-size: 10pt;
+  font-style: italic;
+  color: #a3a3a3;
+}
+
+.nova-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nova-chip {
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--nova-accent, #e0263f) 35%, white);
+  color: var(--nova-accent, #e0263f);
+  font-size: 8.5pt;
+  font-weight: 700;
+}
+
+.nova-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10pt;
+}
+
+.nova-skill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.nova-skill-label {
+  flex: 0 0 150px;
+  font-weight: 700;
+  color: #14141a;
+}
+
+.nova-skill-values {
+  flex: 1;
+  color: #262626;
+}
+
+.nova-entry {
+  margin-bottom: 14px;
+}
+
+.nova-entry:last-child {
+  margin-bottom: 0;
+}
+
+.nova-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nova-entry-heading {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #14141a;
+}
+
+.nova-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-entry-marker {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  background: var(--nova-accent, #e0263f);
+  vertical-align: middle;
+}
+
+.nova-entry-date {
+  flex-shrink: 0;
+  font-size: 9.5pt;
+  color: #6b6b6b;
+  white-space: nowrap;
+}
+
+.nova-entry-sub {
+  font-size: 10pt;
+  color: #55555b;
+  margin-top: 1px;
+  margin-left: 15px;
+}
+
+.nova-bullets {
+  margin-top: 6px;
+  margin-left: 15px;
+  font-size: 10pt;
+  line-height: 1.55;
+}
+
+.nova-bullets ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.nova-bullets li {
+  margin-bottom: 3px;
+}
+
+.nova-bullets li:last-child {
+  margin-bottom: 0;
+}

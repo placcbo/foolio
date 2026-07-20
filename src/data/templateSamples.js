@@ -108,6 +108,7 @@ export const TEMPLATE_SAMPLES = {
 TEMPLATE_SAMPLES.classic = TEMPLATE_SAMPLES.simple;
 TEMPLATE_SAMPLES.slate = TEMPLATE_SAMPLES.simple;
 TEMPLATE_SAMPLES.bloom = TEMPLATE_SAMPLES.simple;
+TEMPLATE_SAMPLES.nova = TEMPLATE_SAMPLES.simple;
 
 // Portrait sample — its own persona, with a neutral silhouette avatar as
 // the photo placeholder (a shape, not a fabricated face).

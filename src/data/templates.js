@@ -53,6 +53,14 @@ export const TEMPLATES = [
     categories: ['modern', 'executive'],
     swatches: ['#d43d2a', '#000000', '#5b4bb5', '#1a5c50', '#1f3a5f', '#8a6d1f'],
   },
+  {
+    id: 'nova',
+    name: 'Nova',
+    layout: 'nova',
+    supportsPhoto: false,
+    categories: ['simple', 'popular'],
+    swatches: ['#e0263f', '#0f6e5c', '#2a6f97', '#5b4bb5', '#b3541e', '#111111'],
+  },
 ];
 
 export const FILTERS = [
