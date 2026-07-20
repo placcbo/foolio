@@ -9,6 +9,7 @@ import { exportPortraitTemplatePdf } from '../utils/portraitPdf';
 import { exportMeridianTemplatePdf } from '../utils/meridianPdf';
 import { exportNovaTemplatePdf } from '../utils/novaPdf';
 import { exportCodexTemplatePdf } from '../utils/codexPdf';
+import { exportLedgerTemplatePdf } from '../utils/ledgerPdf';
 
 export default function DownloadMenu({ resume, paperRef, className = 'btn-download' }) {
   const [open, setOpen] = useState(false);
@@ -43,6 +44,7 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
         meridian: exportMeridianTemplatePdf,
         nova: exportNovaTemplatePdf,
         codex: exportCodexTemplatePdf,
+        ledger: exportLedgerTemplatePdf,
       };
       const dedicated = exporters[resume.templateId];
       if (dedicated) {

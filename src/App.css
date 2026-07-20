@@ -6542,3 +6542,267 @@ body.has-open-preview-modal {
 .codex-bullets li:last-child {
   margin-bottom: 0;
 }
+
+/* =========================================================================
+   LedgerTemplate — self-contained (.ledger-* namespace)
+   A restrained "letterhead" look: a thin double frame runs around the
+   whole page, the header splits name (with a short accent mark) against
+   title/contact right-aligned, headings carry a small accent tick, and
+   flat skill tags render as a two-column dotted list.
+   ========================================================================= */
+
+.ledger-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #262626;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  padding: 14px;
+  box-sizing: border-box;
+  border: 1px solid #1a1a1c;
+  text-align: left;
+}
+
+.ledger-frame {
+  border: 1px solid var(--ledger-accent, #1f3a5f);
+  padding: 34px 44px;
+  box-sizing: border-box;
+}
+
+.ledger-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ledger-name-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ledger-mark {
+  flex-shrink: 0;
+  width: 5px;
+  height: 28px;
+  background: var(--ledger-accent, #1f3a5f);
+}
+
+.ledger-name {
+  margin: 0;
+  font-size: 23pt;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  color: #14141a;
+}
+
+.ledger-header-meta {
+  flex: 0 1 260px;
+  max-width: 260px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.ledger-title {
+  margin: 0;
+  font-size: 9.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ledger-accent, #1f3a5f);
+}
+
+.ledger-contact-row {
+  font-size: 9pt;
+  color: #5a5a60;
+}
+
+.ledger-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ledger-contact-sep {
+  display: inline-block;
+  width: 1px;
+  height: 9px;
+  margin: 0 9px;
+  background: #c7c7cc;
+  vertical-align: middle;
+}
+
+.ledger-header-rule {
+  height: 1px;
+  background: #1a1a1c;
+  margin-top: 16px;
+  margin-bottom: 22px;
+}
+
+.ledger-section {
+  margin-bottom: 18px;
+}
+
+.ledger-section:last-child {
+  margin-bottom: 0;
+}
+
+.ledger-heading-wrap {
+  padding-bottom: 6px;
+  margin-bottom: 11px;
+  border-bottom: 1px solid #e2e2e6;
+}
+
+.ledger-heading {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10pt;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #14141a;
+}
+
+.ledger-heading-mark {
+  flex-shrink: 0;
+  width: 13px;
+  height: 3px;
+  background: var(--ledger-accent, #1f3a5f);
+}
+
+.ledger-text {
+  font-size: 10.5pt;
+  line-height: 1.55;
+}
+
+.ledger-text p {
+  margin: 0 0 8px;
+}
+
+.ledger-text p:last-child {
+  margin-bottom: 0;
+}
+
+.ledger-placeholder {
+  margin: 0;
+  font-size: 10pt;
+  font-style: italic;
+  color: #a3a3a3;
+}
+
+.ledger-tag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 20px;
+}
+
+.ledger-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10pt;
+  color: #262626;
+}
+
+.ledger-tag-dot {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ledger-accent, #1f3a5f);
+}
+
+.ledger-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10pt;
+}
+
+.ledger-skill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.ledger-skill-label {
+  flex: 0 0 150px;
+  padding-top: 1px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 9pt;
+  color: #14141a;
+}
+
+.ledger-skill-values {
+  flex: 1;
+  color: #262626;
+}
+
+.ledger-entry {
+  margin-bottom: 13px;
+}
+
+.ledger-entry:last-child {
+  margin-bottom: 0;
+}
+
+.ledger-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ledger-entry-heading {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #14141a;
+}
+
+.ledger-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ledger-entry-date {
+  flex-shrink: 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  color: #7a7a80;
+  white-space: nowrap;
+}
+
+.ledger-entry-sub {
+  font-size: 10pt;
+  font-style: italic;
+  color: #5a5a60;
+  margin-top: 1px;
+}
+
+.ledger-bullets {
+  margin-top: 5px;
+  font-size: 10pt;
+  line-height: 1.55;
+}
+
+.ledger-bullets ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.ledger-bullets li {
+  margin-bottom: 3px;
+}
+
+.ledger-bullets li:last-child {
+  margin-bottom: 0;
+}

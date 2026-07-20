@@ -69,6 +69,14 @@ export const TEMPLATES = [
     categories: ['modern', 'creative'],
     swatches: ['#5b4bb5', '#0f6e5c', '#d43d2a', '#2a6f97', '#b3541e', '#111111'],
   },
+  {
+    id: 'ledger',
+    name: 'Ledger',
+    layout: 'ledger',
+    supportsPhoto: false,
+    categories: ['professional', 'executive'],
+    swatches: ['#1f3a5f', '#2f5d44', '#7b2d43', '#5b4bb5', '#8a6d1f', '#111111'],
+  },
 ];
 
 export const FILTERS = [
