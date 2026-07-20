@@ -37,6 +37,22 @@ export const TEMPLATES = [
     categories: ['creative', 'modern'],
     swatches: ['#c85a54', '#3aa7a3', '#5a8fd6', '#7b5cb8', '#2f5d44', '#1f3a5f'],
   },
+  {
+    id: 'portrait',
+    name: 'Portrait',
+    layout: 'portrait',
+    supportsPhoto: true,
+    categories: ['professional', 'popular'],
+    swatches: ['#2b4a6f', '#1a5c50', '#7b2d43', '#3aa7a3', '#c85a54', '#000000'],
+  },
+  {
+    id: 'meridian',
+    name: 'Meridian',
+    layout: 'meridian',
+    supportsPhoto: false,
+    categories: ['modern', 'executive'],
+    swatches: ['#d43d2a', '#000000', '#5b4bb5', '#1a5c50', '#1f3a5f', '#8a6d1f'],
+  },
 ];
 
 export const FILTERS = [

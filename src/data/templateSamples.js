@@ -1,16 +1,21 @@
-// Sample resumes shown in the template picker grid (see data/templates.js).
-// Each template gets its own distinct sample so the picker shows varied,
-// realistic content rather than the same resume re-skinned four times.
-// Descriptions use real markup (<ul><li>) since entry descriptions render
-// as rich text, not line-split plain text.
+// One unique sample resume per template card, keyed by template id (see
+// data/templates.js). Without this, every card in the picker grid showed
+// the exact same person — just recolored — which made 21 templates feel
+// like one template in 21 colors. Descriptions use real markup (<ul><li>)
+// since entry descriptions render as rich text, not line-split plain text.
 function bullets(...points) {
   return `<ul>${points.map((p) => `<li>${p}</li>`).join('')}</ul>`;
 }
 
+// A generic silhouette avatar (not a real or fake photo of a person) for
+// templates whose layout features a photo — so the preview shows the photo
+// slot actually populated instead of skipping it.
+function placeholderAvatar(bg) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="${bg}"/><circle cx="50" cy="39" r="18" fill="#ffffff" fill-opacity="0.85"/><path d="M50 60c-22 0-38 14-38 32v8h76v-8c0-18-16-32-38-32z" fill="#ffffff" fill-opacity="0.85"/></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 export const TEMPLATE_SAMPLES = {
-  // ---------------------------------------------------------------------
-  // SIMPLE — Customer support / sports-betting background
-  // ---------------------------------------------------------------------
   simple: {
     basics: {
       name: 'Kevin Ndirangu',
@@ -24,8 +29,8 @@ export const TEMPLATE_SAMPLES = {
     },
     sections: [
       {
-        id: 's-summary', type: 'summary', title: 'Professional Summary', kind: 'text',
-        content: '<p>Dynamic customer support professional with 3+ years of experience delivering high-volume, time-sensitive support in fast-paced digital environments. Passionate about sports and sports gaming, with a strong grasp of online payments, identity verification, and fraud prevention. Known for owning outcomes autonomously, spotting issues before escalation, and using AI tools to drive speed and quality. Excited by Boom Sports’ mission to make Daily Fantasy Sports accessible to every fan.</p>',
+        id: 's-summary', type: 'summary', title: 'Profile', kind: 'text',
+        content: '<p>Dynamic customer support professional with 3+ years of experience delivering high-volume, time-sensitive support in fast-paced digital environments. Passionate about sports and sports gaming, with a strong grasp of online payments, identity verification, and fraud prevention. Known for owning outcomes autonomously, spotting issues before escalation, and using AI tools to drive speed and quality. Excited by Boom Sports\u2019 mission to make Daily Fantasy Sports accessible to every fan.</p>',
       },
       {
         id: 's-exp', type: 'experience', title: 'Experience', kind: 'entries',
@@ -34,7 +39,7 @@ export const TEMPLATE_SAMPLES = {
             id: 'e1', heading: 'Senior Customer Support Specialist', subheading: 'Betika (SportsPesa Group)',
             location: 'Nairobi, Kenya', start: 'Jan 2022', end: 'Present',
             description: bullets(
-              'Managed 100+ daily customer interactions via live chat (Intercom) and email (Zendesk) for one of East Africa’s largest sports-betting platforms.',
+              'Managed 100+ daily customer interactions via live chat (Intercom) and email (Zendesk) for one of East Africa\u2019s largest sports-betting platforms.',
               'Resolved high-stakes account, payment, and gameplay disputes with empathy and precision, maintaining a 96%+ CSAT score across 18 consecutive months.',
               'Led identity verification (KYC) reviews during peak sign-up periods, flagging fraud patterns and escalating suspicious accounts to the compliance team.',
               'Monitored real-time platform dashboards for critical site issues; escalated payment gateway outages within 5 minutes, reducing resolution time by 30%.',
@@ -85,271 +90,113 @@ export const TEMPLATE_SAMPLES = {
         id: 's-edu', type: 'education', title: 'Education', kind: 'entries',
         entries: [
           {
-            id: 'ed1', heading: 'Bachelor of Commerce – Business Information Technology', subheading: 'University of Nairobi',
+            id: 'ed1', heading: 'Bachelor of Commerce \u2013 Business Information Technology', subheading: 'University of Nairobi',
             location: '', start: '2015', end: '2019', description: '',
           },
         ],
       },
       {
         id: 's-why', type: 'custom', title: 'Why Boom', kind: 'text',
-        content: '<p>I thrive in exactly the environment Boom describes — fast-paced, high-ownership, and sports-obsessed. I don’t wait to be told what’s broken; I find it, flag it, and fix it. I’ve grown up watching the rise of DFS in the US and I want to be part of the team that brings that energy to every fan. Boom’s track record of nearly $100 million in player prizes tells me this product is real, and I want to help protect and grow the community behind it.</p>',
-      },
-    ],
-  },
-
-  // ---------------------------------------------------------------------
-  // CLASSIC — Marketing / brand management background
-  // ---------------------------------------------------------------------
-  classic: {
-    basics: {
-      name: 'Sarah Mitchell',
-      title: 'Brand Marketing Manager',
-      email: 'sarah.mitchell@mailbox.com',
-      phone: '+1 (312) 555-0148',
-      address: 'Chicago, IL',
-      availability: 'Open to relocation',
-      photo: null,
-      visibleExtra: ['availability'],
-    },
-    sections: [
-      {
-        id: 's-summary', type: 'summary', title: 'Professional Summary', kind: 'text',
-        content: '<p>Results-driven brand marketer with 6+ years leading integrated campaigns for consumer goods and grocery-tech brands across North America. Skilled at translating market research into positioning that moves both awareness and revenue. Comfortable owning a budget, briefing agencies, and reporting results straight to leadership.</p>',
-      },
-      {
-        id: 's-exp', type: 'experience', title: 'Experience', kind: 'entries',
-        entries: [
-          {
-            id: 'e1', heading: 'Brand Marketing Manager', subheading: 'Instacart',
-            location: 'Chicago, IL', start: 'Mar 2022', end: 'Present',
-            description: bullets(
-              'Own brand strategy and creative direction for a grocery-delivery platform serving 14 metro markets, overseeing a $1.2M annual campaign budget.',
-              'Launched a member-facing rebrand that lifted unaided brand awareness by 21% in target markets within two quarters.',
-              'Directed a team of 4 marketers and 3 external agencies across paid, social, and experiential channels.',
-              'Partnered with product and data teams to build attribution models, improving marketing-sourced revenue reporting accuracy.',
-              'Negotiated sponsorship deals with two regional sporting events, generating 40M+ organic impressions.'
-            ),
-          },
-          {
-            id: 'e2', heading: 'Marketing Lead', subheading: 'Target',
-            location: 'Minneapolis, MN', start: 'Jul 2019', end: 'Feb 2022',
-            description: bullets(
-              'Planned and executed seasonal campaigns (Back to School, Holiday) driving up to 65% of quarterly online GMV.',
-              'Managed a $600K performance marketing budget across Meta, Google, and programmatic display.',
-              'Built a customer segmentation framework used across email and push channels, lifting repeat purchase rate by 14%.',
-              'Mentored two marketing associates into lead roles within 18 months.'
-            ),
-          },
-          {
-            id: 'e3', heading: 'Marketing Associate', subheading: 'Procter & Gamble',
-            location: 'Cincinnati, OH', start: 'Sep 2017', end: 'Jun 2019',
-            description: bullets(
-              'Supported brand management for a personal care portfolio, coordinating trade marketing activity across 6 regions.',
-              'Ran competitor and consumer research that informed a packaging refresh, contributing to a 9% volume uplift.'
-            ),
-          },
-        ],
-      },
-      {
-        id: 's-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
-        groups: [
-          { id: 'sg1', label: 'Strategy', tags: ['Brand positioning', 'Go-to-market planning', 'Campaign strategy', 'Budget ownership'] },
-          { id: 'sg2', label: 'Channels', tags: ['Paid social', 'Programmatic', 'Email/CRM', 'Sponsorships & experiential'] },
-          { id: 'sg3', label: 'Analytics', tags: ['Attribution modelling', 'Google Analytics', 'Tableau', 'A/B testing'] },
-          { id: 'sg4', label: 'Leadership', tags: ['Team management', 'Agency management', 'Cross-functional collaboration'] },
-        ],
-        tags: [
-          'Brand positioning', 'Go-to-market planning', 'Campaign strategy', 'Budget ownership',
-          'Paid social', 'Programmatic', 'Email/CRM', 'Sponsorships & experiential',
-          'Attribution modelling', 'Google Analytics', 'Tableau', 'A/B testing',
-          'Team management', 'Agency management', 'Cross-functional collaboration',
-        ],
-      },
-      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (native)', 'Spanish (conversational)'] },
-      {
-        id: 's-edu', type: 'education', title: 'Education', kind: 'entries',
-        entries: [
-          {
-            id: 'ed1', heading: 'MBA, Marketing', subheading: 'Kellogg School of Management, Northwestern University',
-            location: '', start: '2020', end: '2021', description: '',
-          },
-          {
-            id: 'ed2', heading: 'BA, Communications', subheading: 'University of Wisconsin–Madison',
-            location: '', start: '2013', end: '2017', description: '',
-          },
-        ],
-      },
-      {
-        id: 's-why', type: 'custom', title: 'Why This Role', kind: 'text',
-        content: '<p>I want to bring brand discipline to a company scaling fast, where positioning decisions made today shape the next five years of growth. I care about campaigns that are both creatively sharp and provably tied to revenue.</p>',
-      },
-    ],
-  },
-
-  // ---------------------------------------------------------------------
-  // SLATE — Software engineering background
-  // ---------------------------------------------------------------------
-  slate: {
-    basics: {
-      name: 'Jae-won Kim',
-      title: 'Backend Software Engineer',
-      email: 'jaewon.kim@devmail.com',
-      phone: '+82 10-2345-6789',
-      address: 'Seoul, South Korea',
-      availability: 'Available for remote or hybrid roles',
-      photo: null,
-      visibleExtra: ['availability'],
-    },
-    sections: [
-      {
-        id: 's-summary', type: 'summary', title: 'Professional Summary', kind: 'text',
-        content: '<p>Backend engineer with 5 years building and scaling payment and logistics systems for high-growth startups. Strong in distributed systems, API design, and reliability engineering. Enjoys mentoring junior engineers and driving down on-call load through better tooling.</p>',
-      },
-      {
-        id: 's-exp', type: 'experience', title: 'Experience', kind: 'entries',
-        entries: [
-          {
-            id: 'e1', heading: 'Senior Backend Engineer', subheading: 'Coupang',
-            location: 'Seoul, South Korea', start: 'Feb 2022', end: 'Present',
-            description: bullets(
-              'Designed and shipped a new dispatch-matching service in Go, cutting average driver-assignment latency from 4.2s to 900ms.',
-              'Led migration of a monolithic order service to event-driven microservices using Kafka, improving system uptime to 99.95%.',
-              'Built internal tooling for on-call engineers that reduced mean-time-to-resolution for P1 incidents by 35%.',
-              'Mentored 3 junior engineers through structured code review and pairing, two of whom were promoted within a year.',
-              'Introduced contract testing between services, cutting integration-related production bugs by roughly half.'
-            ),
-          },
-          {
-            id: 'e2', heading: 'Software Engineer', subheading: 'Toss (Viva Republica)',
-            location: 'Seoul, South Korea', start: 'Jan 2020', end: 'Jan 2022',
-            description: bullets(
-              'Built REST and webhook APIs for a mobile payments platform processing 2M+ transactions monthly.',
-              'Implemented idempotency and retry logic that eliminated duplicate-charge incidents reported by merchants.',
-              'Wrote and maintained CI/CD pipelines (Jenkins, Docker) that cut deployment time from 40 minutes to under 10.'
-            ),
-          },
-          {
-            id: 'e3', heading: 'Junior Developer', subheading: 'Naver',
-            location: 'Seongnam, South Korea', start: 'Jul 2018', end: 'Dec 2019',
-            description: bullets(
-              'Worked within a distributed team building a Rails-based inventory management system for a global client.',
-              'Wrote unit and integration tests that raised project test coverage from 52% to 88%.'
-            ),
-          },
-        ],
-      },
-      {
-        id: 's-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
-        groups: [
-          { id: 'sg1', label: 'Languages', tags: ['Go', 'Python', 'Ruby', 'SQL'] },
-          { id: 'sg2', label: 'Infrastructure', tags: ['Kafka', 'Docker', 'Kubernetes', 'AWS'] },
-          { id: 'sg3', label: 'Practices', tags: ['Microservices', 'CI/CD', 'Contract testing', 'On-call/incident response'] },
-          { id: 'sg4', label: 'Databases', tags: ['PostgreSQL', 'Redis', 'DynamoDB'] },
-        ],
-        tags: [
-          'Go', 'Python', 'Ruby', 'SQL',
-          'Kafka', 'Docker', 'Kubernetes', 'AWS',
-          'Microservices', 'CI/CD', 'Contract testing', 'On-call/incident response',
-          'PostgreSQL', 'Redis', 'DynamoDB',
-        ],
-      },
-      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Korean (native)', 'English (fluent)'] },
-      {
-        id: 's-edu', type: 'education', title: 'Education', kind: 'entries',
-        entries: [
-          {
-            id: 'ed1', heading: 'BSc, Computer Science', subheading: 'Yonsei University',
-            location: '', start: '2014', end: '2018', description: '',
-          },
-        ],
-      },
-      {
-        id: 's-why', type: 'custom', title: 'Why This Role', kind: 'text',
-        content: '<p>I want to work on systems where reliability actually matters to people’s daily lives — payments, logistics, infrastructure. I like teams that treat on-call pain as a bug to fix, not a cost to accept.</p>',
-      },
-    ],
-  },
-
-  // ---------------------------------------------------------------------
-  // BLOOM — UX/product design background
-  // ---------------------------------------------------------------------
-  bloom: {
-    basics: {
-      name: 'Lucía Fernández',
-      title: 'Product Designer',
-      email: 'lucia.fernandez@designmail.com',
-      phone: '+34 611 223 344',
-      address: 'Barcelona, Spain',
-      availability: 'Freelance & full-time considered',
-      photo: null,
-      visibleExtra: ['availability'],
-    },
-    sections: [
-      {
-        id: 's-summary', type: 'summary', title: 'Professional Summary', kind: 'text',
-        content: '<p>Product designer with 4+ years designing consumer apps for fast-growing marketplaces, from early discovery through shipped features. Focused on accessible, mobile-first design and grounded in user research. Comfortable prototyping fast and defending decisions with data.</p>',
-      },
-      {
-        id: 's-exp', type: 'experience', title: 'Experience', kind: 'entries',
-        entries: [
-          {
-            id: 'e1', heading: 'Senior Product Designer', subheading: 'Glovo',
-            location: 'Barcelona, Spain', start: 'Apr 2023', end: 'Present',
-            description: bullets(
-              'Lead designer for the courier onboarding flow, redesigning it to cut drop-off by 27% across first-time users.',
-              'Ran and synthesized 40+ user interviews across Spain and Italy to inform a new order-tracking experience.',
-              'Built and maintain a shared design system used by 6 product squads, reducing design-to-dev handoff time by 30%.',
-              'Partnered with data science to design a clearer delivery-fee explainability screen, cutting related support tickets by 22%.'
-            ),
-          },
-          {
-            id: 'e2', heading: 'Product Designer', subheading: 'Typeform',
-            location: 'Barcelona, Spain', start: 'Jan 2021', end: 'Mar 2023',
-            description: bullets(
-              'Designed the form-builder editing experience for a SaaS product used by teams in 100+ countries.',
-              'Introduced a lightweight usability-testing process using recorded remote sessions, tripling monthly research throughput.',
-              'Redesigned the onboarding flow, contributing to a 12% lift in activation.'
-            ),
-          },
-          {
-            id: 'e3', heading: 'UX/UI Designer', subheading: 'Freelance',
-            location: 'Barcelona, Spain', start: 'Jun 2019', end: 'Dec 2020',
-            description: bullets(
-              'Designed websites and mobile app interfaces for 8 early-stage European startups.',
-              'Delivered end-to-end design work — research, wireframes, prototypes, final UI — on tight timelines and budgets.'
-            ),
-          },
-        ],
-      },
-      {
-        id: 's-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
-        groups: [
-          { id: 'sg1', label: 'Design', tags: ['Figma', 'Prototyping', 'Design systems', 'Interaction design'] },
-          { id: 'sg2', label: 'Research', tags: ['User interviews', 'Usability testing', 'Survey design', 'Journey mapping'] },
-          { id: 'sg3', label: 'Collaboration', tags: ['Cross-functional partnership', 'Design critique facilitation', 'Dev handoff'] },
-          { id: 'sg4', label: 'Focus Areas', tags: ['Mobile-first UX', 'Accessibility', 'Marketplace design'] },
-        ],
-        tags: [
-          'Figma', 'Prototyping', 'Design systems', 'Interaction design',
-          'User interviews', 'Usability testing', 'Survey design', 'Journey mapping',
-          'Cross-functional partnership', 'Design critique facilitation', 'Dev handoff',
-          'Mobile-first UX', 'Accessibility', 'Marketplace design',
-        ],
-      },
-      { id: 's-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Spanish (native)', 'Catalan (fluent)', 'English (fluent)'] },
-      {
-        id: 's-edu', type: 'education', title: 'Education', kind: 'entries',
-        entries: [
-          {
-            id: 'ed1', heading: 'BA, Design', subheading: 'Elisava Barcelona School of Design and Engineering',
-            location: '', start: '2015', end: '2019', description: '',
-          },
-        ],
-      },
-      {
-        id: 's-why', type: 'custom', title: 'Why This Role', kind: 'text',
-        content: '<p>I’m drawn to products where good design changes whether someone can access a service, a job, or an income at all — not just whether an app looks polished. I want to keep designing for the constraints real users actually face.</p>',
+        content: '<p>I thrive in exactly the environment Boom describes \u2014 fast-paced, high-ownership, and sports-obsessed. I don\u2019t wait to be told what\u2019s broken; I find it, flag it, and fix it. I\u2019ve grown up watching the rise of DFS in the US and I want to be part of the team that brings that energy to every fan. Boom\u2019s track record of nearly $100 million in player prizes tells me this product is real, and I want to help protect and grow the community behind it.</p>',
       },
     ],
   },
 };
+
+// Classic shows the same sample content as Simple — identical content next
+// to a different design makes the comparison honest in the picker.
+TEMPLATE_SAMPLES.classic = TEMPLATE_SAMPLES.simple;
+TEMPLATE_SAMPLES.slate = TEMPLATE_SAMPLES.simple;
+TEMPLATE_SAMPLES.bloom = TEMPLATE_SAMPLES.simple;
+
+// Portrait sample — its own persona, with a neutral silhouette avatar as
+// the photo placeholder (a shape, not a fabricated face).
+const PORTRAIT_AVATAR =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='300' viewBox='0 0 240 300'>" +
+  "<rect width='240' height='300' fill='%23e6ecf2'/>" +
+  "<path d='M62 152c0-48 26-80 58-80s58 32 58 80v70H62z' fill='%23241f26'/>" +
+  "<circle cx='120' cy='130' r='41' fill='%238a5a3c'/>" +
+  "<path d='M79 118c5-27 22-40 41-40s36 13 41 40c-10-15-24-23-41-23s-31 8-41 23z' fill='%23241f26'/>" +
+  "<path d='M36 300c0-48 38-79 84-79s84 31 84 79z' fill='%232b4a6f'/>" +
+  "<path d='M105 228l15 25 15-25-15-6z' fill='%23f4f2ee'/></svg>";
+
+TEMPLATE_SAMPLES.portrait = {
+  basics: {
+    name: 'Wanjiku Mwangi',
+    title: 'Finance Manager',
+    email: 'wanjiku.mwangi@email.com',
+    phone: '+254 712 345 678',
+    address: 'Nairobi, Kenya',
+    linkedin: 'linkedin.com/in/wanjikumwangi',
+    photo: PORTRAIT_AVATAR,
+    visibleExtra: ['linkedin'],
+  },
+  sections: [
+    {
+      id: 'p-summary', type: 'summary', title: 'Summary', kind: 'text',
+      content: '<p>Finance professional with 8 years of experience across budgeting, financial reporting, and business performance analysis in fast-paced corporate environments. Strong track record of improving reporting accuracy, supporting strategic planning, and partnering with cross-functional teams to guide sound financial decisions.</p><p>Brings a practical, data-driven approach suited to finance leadership roles with regional scope and operational responsibility.</p>',
+    },
+    {
+      id: 'p-skills', type: 'skills', title: 'Skills', kind: 'tags',
+      tags: ['Financial Planning & Analysis', 'Budget Management', 'Forecasting', 'Variance Analysis', 'Financial Reporting', 'Cost Control', 'SAP', 'Advanced Excel'],
+    },
+    {
+      id: 'p-langs', type: 'languages', title: 'Languages', kind: 'tags',
+      tags: ['English (Fluent)', 'Swahili (Native)', 'French (Intermediate)'],
+    },
+    {
+      id: 'p-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+      entries: [
+        {
+          id: 'pe1', heading: 'Twiga Foods', subheading: 'Finance Manager',
+          location: 'Nairobi, Kenya', start: '03/2022', end: 'Present',
+          description: bullets(
+            'Manage monthly budgeting cycles and variance analysis for two business units.',
+            'Lead reporting improvements that reduced closing timelines by three days.',
+            'Partner with operations and procurement teams to support cost control initiatives.'
+          ),
+        },
+        {
+          id: 'pe2', heading: 'KCB Group', subheading: 'Senior Financial Analyst',
+          location: 'Nairobi, Kenya', start: '01/2019', end: '02/2022',
+          description: bullets(
+            'Delivered monthly performance reports for leadership across revenue and expense lines.',
+            'Improved forecast models to support more accurate quarterly planning decisions.',
+            'Owned financial dashboards and presented insights during business review meetings.'
+          ),
+        },
+        {
+          id: 'pe3', heading: 'Deloitte East Africa', subheading: 'Financial Analyst',
+          location: 'Nairobi, Kenya', start: '06/2017', end: '12/2018',
+          description: bullets(
+            'Supported account reconciliations, reporting packs, and annual budget preparation.',
+            'Coordinated data validation activities to improve consistency across finance reports.'
+          ),
+        },
+        {
+          id: 'pe4', heading: 'Safaricom', subheading: 'Finance Intern',
+          location: 'Nairobi, Kenya', start: '05/2016', end: '04/2017',
+          description: bullets(
+            'Assisted with expense tracking and monthly reconciliation.',
+            'Prepared spreadsheet updates for budget monitoring.'
+          ),
+        },
+      ],
+    },
+    {
+      id: 'p-edu', type: 'education', title: 'Education', kind: 'entries',
+      entries: [
+        { id: 'ped1', heading: 'MBA in Finance', subheading: 'Strathmore Business School', location: 'Nairobi, Kenya', start: '2020', end: '2022', description: '' },
+        { id: 'ped2', heading: 'Bachelor of Commerce \u2013 Finance', subheading: 'University of Nairobi', location: 'Nairobi, Kenya', start: '2012', end: '2016', description: '' },
+      ],
+    },
+    {
+      id: 'p-certs', type: 'certificates', title: 'Certificates', kind: 'entries',
+      entries: [
+        { id: 'pc1', heading: 'CPA-K', subheading: 'ICPAK', location: '', start: '2018', end: '', description: '' },
+        { id: 'pc2', heading: 'Financial Modeling & Valuation Analyst (FMVA)', subheading: 'Corporate Finance Institute', location: '', start: '2021', end: '', description: '' },
+      ],
+    },
+  ],
+};
+TEMPLATE_SAMPLES.meridian = TEMPLATE_SAMPLES.simple;

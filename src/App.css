@@ -5625,3 +5625,438 @@ body.has-open-preview-modal {
 .bloom-bullets li {
   margin-bottom: 3px;
 }
+
+/* =========================================================================
+   PortraitTemplate — self-contained (.portrait-* namespace)
+   Framed two-column design with photo, badge headings, language bars.
+   ========================================================================= */
+
+.portrait-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #e9e7e2;
+  padding: 12px;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.5;
+  color: #2e3034;
+  text-align: left;
+}
+
+.portrait-card {
+  min-height: calc(1123px - 24px);
+  background: #fff;
+  border-radius: 8px;
+  display: flex;
+  gap: 26px;
+  padding: 38px 32px;
+  box-sizing: border-box;
+}
+
+.portrait-left {
+  flex: 0 0 200px;
+  min-width: 0;
+}
+
+.portrait-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.portrait-name {
+  margin: 0 0 2px;
+  font-size: 17pt;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #1a1a1c;
+}
+
+.portrait-title {
+  margin: 0 0 14px;
+  font-size: 10.5pt;
+  color: #2e3034;
+}
+
+.portrait-photo {
+  margin-bottom: 14px;
+}
+
+.portrait-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.portrait-contact {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 8.5pt;
+}
+
+.portrait-contact li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.portrait-contact li svg {
+  flex-shrink: 0;
+  color: var(--portrait-accent, #2b4a6f);
+}
+
+.portrait-contact a,
+.portrait-contact span {
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.portrait-badge {
+  margin: 0 0 10px;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #e7e5e1;
+  font-size: 8.5pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1a1a1c;
+}
+
+.portrait-left-section {
+  margin-bottom: 18px;
+}
+
+.portrait-text {
+  font-size: 8.5pt;
+  line-height: 1.55;
+}
+
+.portrait-text p {
+  margin: 0 0 7px;
+}
+
+.portrait-text p:last-child {
+  margin-bottom: 0;
+}
+
+.portrait-placeholder {
+  margin: 0;
+  font-size: 9pt;
+  font-style: italic;
+  color: #a3a3a8;
+}
+
+.portrait-tag-group {
+  margin-bottom: 8px;
+}
+
+.portrait-tag-group-label {
+  display: block;
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #1a1a1c;
+  margin-bottom: 3px;
+}
+
+.portrait-tag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 8.5pt;
+}
+
+.portrait-tag-list li {
+  position: relative;
+  padding-left: 11px;
+  margin-bottom: 4px;
+}
+
+.portrait-tag-list li::before {
+  content: '\2022';
+  position: absolute;
+  left: 0;
+  color: var(--portrait-accent, #2b4a6f);
+}
+
+.portrait-langs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.portrait-lang-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.portrait-lang-name {
+  flex: 0 0 62px;
+  font-size: 8.5pt;
+}
+
+.portrait-lang-track {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: #d9d7d3;
+  overflow: hidden;
+}
+
+.portrait-lang-track span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--portrait-accent, #2b4a6f);
+}
+
+.portrait-section {
+  margin-bottom: 18px;
+}
+
+.portrait-entry {
+  margin-bottom: 12px;
+}
+
+.portrait-entry-heading {
+  font-size: 10pt;
+  font-weight: 700;
+  color: #1a1a1c;
+}
+
+.portrait-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.portrait-entry-sub {
+  font-size: 9.5pt;
+  color: #2e3034;
+}
+
+.portrait-entry-meta {
+  font-size: 8.5pt;
+  color: #74767c;
+  margin-top: 1px;
+}
+
+.portrait-bullets {
+  margin-top: 5px;
+  font-size: 9pt;
+}
+
+.portrait-bullets ul {
+  margin: 0;
+  padding-left: 15px;
+}
+
+.portrait-bullets li {
+  margin-bottom: 3px;
+}
+
+/* =========================================================================
+   MeridianTemplate — self-contained (.meridian-* namespace)
+   Masthead header, left date gutter, continuous timeline with entry dots.
+   ========================================================================= */
+
+.meridian-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.5;
+  color: #2c2e32;
+  padding: 50px 52px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.meridian-masthead {
+  margin-bottom: 26px;
+}
+
+.meridian-name {
+  margin: 0 0 8px;
+  font-size: 26pt;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: #161618;
+}
+
+.meridian-masthead-rule {
+  height: 1.5px;
+  background: #161618;
+  margin-bottom: 10px;
+}
+
+.meridian-masthead-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.meridian-title {
+  font-size: 10pt;
+  font-weight: 700;
+  color: var(--meridian-accent, #d43d2a);
+}
+
+.meridian-contact {
+  font-size: 8.5pt;
+  color: #74767c;
+}
+
+.meridian-contact a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.meridian-tag-sep {
+  display: inline-block;
+  width: 1px;
+  height: 8px;
+  margin: 0 8px;
+  background: #c9c9cd;
+  vertical-align: middle;
+}
+
+.meridian-row {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 0 30px;
+}
+
+.meridian-gutter {
+  text-align: right;
+  padding-top: 1px;
+}
+
+.meridian-heading {
+  margin: 0;
+  font-size: 9pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--meridian-accent, #d43d2a);
+}
+
+.meridian-date {
+  font-size: 8.5pt;
+  color: #74767c;
+  white-space: nowrap;
+}
+
+.meridian-content {
+  position: relative;
+  border-left: 1px solid #d6d6d8;
+  padding-left: 22px;
+  padding-bottom: 12px;
+}
+
+.meridian-row-head .meridian-content-spacer {
+  padding-bottom: 14px;
+}
+
+.meridian-section:last-of-type .meridian-row:last-child .meridian-content {
+  padding-bottom: 4px;
+}
+
+.meridian-dot {
+  position: absolute;
+  left: -5px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--meridian-accent, #d43d2a);
+  border: 2px solid #fff;
+  box-sizing: border-box;
+}
+
+.meridian-text {
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+
+.meridian-text p {
+  margin: 0 0 7px;
+}
+
+.meridian-text p:last-child {
+  margin-bottom: 0;
+}
+
+.meridian-placeholder {
+  margin: 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  color: #a3a3a8;
+}
+
+.meridian-tags {
+  margin: 0;
+  font-size: 9.5pt;
+}
+
+.meridian-tag-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meridian-tag-group {
+  margin: 0;
+  font-size: 9.5pt;
+}
+
+.meridian-tag-group strong {
+  color: #161618;
+}
+
+.meridian-entry {
+  margin: 0;
+}
+
+.meridian-entry-heading {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #161618;
+}
+
+.meridian-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.meridian-entry-sub {
+  font-size: 9.5pt;
+  color: #74767c;
+  margin-top: 1px;
+}
+
+.meridian-bullets {
+  margin-top: 5px;
+  font-size: 9.5pt;
+}
+
+.meridian-bullets ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.meridian-bullets li {
+  margin-bottom: 3px;
+}

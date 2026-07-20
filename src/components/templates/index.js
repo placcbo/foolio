@@ -7,6 +7,8 @@ import SimpleTemplate from './SimpleTemplate';
 import ClassicTemplate from './ClassicTemplate';
 import SlateTemplate from './SlateTemplate';
 import BloomTemplate from './BloomTemplate';
+import PortraitTemplate from './PortraitTemplate';
+import MeridianTemplate from './MeridianTemplate';
 
 export const TEMPLATE_COMPONENTS = {
   onecolumn: OneColumnTemplate,
@@ -22,4 +24,6 @@ export const TEMPLATE_COMPONENTS = {
   classic: ClassicTemplate,
   slate: SlateTemplate,
   bloom: BloomTemplate,
+  portrait: PortraitTemplate,
+  meridian: MeridianTemplate,
 };
