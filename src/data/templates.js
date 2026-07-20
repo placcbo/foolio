@@ -77,6 +77,14 @@ export const TEMPLATES = [
     categories: ['professional', 'executive'],
     swatches: ['#1f3a5f', '#2f5d44', '#7b2d43', '#5b4bb5', '#8a6d1f', '#111111'],
   },
+  {
+    id: 'amber',
+    name: 'Amber',
+    layout: 'amber',
+    supportsPhoto: false,
+    categories: ['modern', 'professional'],
+    swatches: ['#eab308', '#e4570f', '#3aa7a3', '#5a8fd6', '#c96a8a', '#8a8f98'],
+  },
 ];
 
 export const FILTERS = [

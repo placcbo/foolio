@@ -8,6 +8,7 @@ import ClassicTemplate from './ClassicTemplate';
 import NovaTemplate from './NovaTemplate';
 import CodexTemplate from './CodexTemplate';
 import LedgerTemplate from './LedgerTemplate';
+import AmberTemplate from './AmberTemplate';
 import SlateTemplate from './SlateTemplate';
 import BloomTemplate from './BloomTemplate';
 import PortraitTemplate from './PortraitTemplate';
@@ -28,6 +29,7 @@ export const TEMPLATE_COMPONENTS = {
   nova: NovaTemplate,
   codex: CodexTemplate,
   ledger: LedgerTemplate,
+  amber: AmberTemplate,
   slate: SlateTemplate,
   bloom: BloomTemplate,
   portrait: PortraitTemplate,

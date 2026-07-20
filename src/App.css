@@ -6806,3 +6806,240 @@ body.has-open-preview-modal {
 .ledger-bullets li:last-child {
   margin-bottom: 0;
 }
+
+/* =========================================================================
+   AmberTemplate — self-contained (.amber-* namespace)
+   A full-width dark charcoal banner carries the name (in the accent color)
+   and an icon-led contact row; every section heading below gets a small
+   dark badge holding that section's icon plus a short accent underline.
+   ========================================================================= */
+
+.amber-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #262626;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.amber-header {
+  background: #242426;
+  color: #fff;
+  padding: 34px 52px;
+  box-sizing: border-box;
+}
+
+.amber-name {
+  margin: 0;
+  font-size: 26pt;
+  font-weight: 800;
+  color: var(--amber-accent, #eab308);
+}
+
+.amber-title {
+  margin: 6px 0 0;
+  font-size: 11pt;
+  font-weight: 500;
+  color: #d8d8da;
+}
+
+.amber-contact-row {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  font-size: 9.5pt;
+  color: #d8d8da;
+}
+
+.amber-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.amber-contact-item svg {
+  flex-shrink: 0;
+  color: var(--amber-accent, #eab308);
+}
+
+.amber-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.amber-body {
+  padding: 32px 52px 46px;
+  box-sizing: border-box;
+}
+
+.amber-section {
+  margin-bottom: 22px;
+}
+
+.amber-section:last-child {
+  margin-bottom: 0;
+}
+
+.amber-heading-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.amber-heading-badge {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #242426;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  line-height: 1;
+}
+
+.amber-heading-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 1px;
+}
+
+.amber-heading {
+  margin: 0;
+  font-size: 11pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #17171a;
+}
+
+.amber-heading-bar {
+  width: 32px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--amber-accent, #eab308);
+}
+
+.amber-text {
+  font-size: 10.5pt;
+  line-height: 1.55;
+}
+
+.amber-text p {
+  margin: 0 0 8px;
+}
+
+.amber-text p:last-child {
+  margin-bottom: 0;
+}
+
+.amber-placeholder {
+  margin: 0;
+  font-size: 10pt;
+  font-style: italic;
+  color: #a3a3a3;
+}
+
+.amber-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.amber-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--amber-accent, #eab308) 18%, white);
+  color: #262626;
+  font-size: 9pt;
+  font-weight: 700;
+}
+
+.amber-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10pt;
+}
+
+.amber-skill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.amber-skill-label {
+  flex: 0 0 150px;
+  font-weight: 700;
+  color: #14141a;
+}
+
+.amber-skill-values {
+  flex: 1;
+  color: #262626;
+}
+
+.amber-entry {
+  margin-bottom: 14px;
+}
+
+.amber-entry:last-child {
+  margin-bottom: 0;
+}
+
+.amber-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.amber-entry-heading {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #17171a;
+}
+
+.amber-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.amber-entry-date {
+  flex-shrink: 0;
+  font-size: 9.5pt;
+  color: #6b6b6b;
+  white-space: nowrap;
+}
+
+.amber-entry-sub {
+  font-size: 10pt;
+  color: #55555b;
+  margin-top: 1px;
+}
+
+.amber-bullets {
+  margin-top: 6px;
+  font-size: 10pt;
+  line-height: 1.55;
+}
+
+.amber-bullets ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.amber-bullets li {
+  margin-bottom: 3px;
+}
+
+.amber-bullets li:last-child {
+  margin-bottom: 0;
+}
