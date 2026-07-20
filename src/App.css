@@ -4773,3 +4773,338 @@ body.has-open-preview-modal {
 .swatch-row {
   grid-area: swatches;
 }
+
+/* =========================================================================
+   Job tracker
+   ========================================================================= */
+
+.jobs-page {
+  padding: 40px 48px 80px;
+  overflow-y: auto;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.jobs-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+  max-width: 860px;
+}
+
+.jobs-head h1 {
+  margin: 0 0 4px;
+  font-family: var(--heading);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-h);
+}
+
+.jobs-head p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.jobs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 520px;
+  padding: 36px;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--r-lg);
+  color: var(--ink-soft);
+}
+
+.jobs-empty h2 {
+  margin: 0;
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-h);
+}
+
+.jobs-empty p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 860px;
+}
+
+.job-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.job-card.expanded {
+  border-color: var(--ink);
+}
+
+.job-card-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.job-card-row:hover {
+  background: var(--surface-2);
+}
+
+.job-status-dot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+
+.status-saved { background: var(--text-dim); }
+.status-applied { background: #33546b; }
+.status-interviewing { background: #d9a30f; }
+.status-offer { background: #3f9b52; }
+.status-rejected { background: #c0392b; }
+
+.job-card-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.job-card-untitled {
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.job-card-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--r-chip);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.job-card-status-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.job-card-body {
+  padding: 4px 16px 18px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.job-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.job-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.job-field label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.job-field input,
+.job-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  font-size: 13.5px;
+  color: var(--text-h);
+}
+
+.job-field input:focus,
+.job-field select:focus,
+.job-jd-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--bg);
+}
+
+.job-jd-input {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-h);
+  font-family: inherit;
+}
+
+/* ---------- keyword match panel ---------- */
+
+.job-match {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  border: 1.5px solid var(--border-soft);
+}
+
+.job-match-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.job-match-score {
+  font-family: var(--heading);
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text-h);
+}
+
+.job-match-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.job-match-group-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 7px;
+}
+
+.job-match-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.job-chip {
+  padding: 4px 11px;
+  border-radius: var(--r-chip);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.job-chip-matched {
+  background: var(--ink);
+  color: var(--lime);
+}
+
+.job-chip-missing {
+  background: var(--bg);
+  border: 1.5px dashed var(--border);
+  color: var(--ink-soft);
+}
+
+.job-match-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.job-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.job-open-resume-btn {
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.job-open-resume-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.job-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid transparent;
+  background: none;
+  color: var(--text-dim);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.job-delete-btn:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+/* ---------- job chip on overview resume cards ---------- */
+
+.resume-card-jobchip {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 3px 10px;
+  border-radius: var(--r-chip);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}

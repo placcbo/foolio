@@ -1,10 +1,10 @@
-import { IconGrid, IconFileText, IconWand, IconSparkle } from './icons';
+import { IconGrid, IconFileText, IconWand, IconBriefcase } from './icons';
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: IconGrid },
   { id: 'content', label: 'Content', icon: IconFileText },
   { id: 'customize', label: 'Customize', icon: IconWand },
-  { id: 'ai', label: 'AI Tools', icon: IconSparkle },
+  { id: 'jobs', label: 'Jobs', icon: IconBriefcase },
 ];
 
 export default function NavRail({ activeTab, onTabChange }) {

@@ -4,6 +4,7 @@ import NavRail from './components/NavRail';
 import ContentPanel from './components/ContentPanel';
 import CustomizePanel from './components/CustomizePanel';
 import ResumeLibrary from './components/ResumeLibrary';
+import JobTracker from './components/JobTracker';
 import ResumePreview from './components/ResumePreview';
 import TemplatePicker from './components/TemplatePicker';
 import { resumeReducer, initialResumeState } from './state/resumeReducer';
@@ -12,6 +13,7 @@ import './App.css';
 const LIBRARY_KEY = 'candidly:library';
 const ACTIVE_RESUME_KEY = 'candidly:activeResumeId';
 const PAGE_STORAGE_KEY = 'candidly:page';
+const JOBS_KEY = 'candidly:jobs';
 // Pre-multi-resume save location — only ever read once, to migrate an
 // existing single resume into the new library on someone's first load
 // after this update. Never written to again after that.
@@ -156,6 +158,15 @@ function ComingSoon({ label }) {
 
 function App() {
   const [library, setLibrary] = useState(loadLibrary);
+  const [jobs, setJobs] = useState(() => {
+    try {
+      const raw = localStorage.getItem(JOBS_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
   const [activeResumeId, setActiveResumeId] = useState(() => loadInitialActiveId(library));
   const [resume, dispatch] = useReducer(
     resumeReducer,
@@ -235,6 +246,14 @@ function App() {
       // non-critical — worst case the dashboard is stale until next save
     }
   }, [library]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(JOBS_KEY, JSON.stringify(jobs));
+    } catch {
+      // non-critical — the tracker is stale until the next successful save
+    }
+  }, [jobs]);
 
   useEffect(() => {
     try {
@@ -334,6 +353,33 @@ function App() {
     setLibrary((lib) => lib.map((r) => (r.id === id ? { ...r, name: trimmed, nameManuallySet: true } : r)));
   }
 
+  function handleAddJob() {
+    const id = `job-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+    setJobs((js) => [
+      {
+        id,
+        company: '',
+        role: '',
+        status: 'Saved',
+        jdText: '',
+        // Default the link to whatever resume is open — usually the one
+        // being tailored for this application; changeable in the card.
+        resumeId: activeResumeId || null,
+        createdAt: Date.now(),
+      },
+      ...js,
+    ]);
+    return id;
+  }
+
+  function handleUpdateJob(id, patch) {
+    setJobs((js) => js.map((j) => (j.id === id ? { ...j, ...patch, updatedAt: Date.now() } : j)));
+  }
+
+  function handleDeleteJob(id) {
+    setJobs((js) => js.filter((j) => j.id !== id));
+  }
+
   if (page === 'picker') {
     return (
       <TemplatePicker
@@ -385,6 +431,7 @@ function App() {
         ) : activeTab === 'overview' ? (
           <ResumeLibrary
             library={library}
+            jobs={jobs}
             activeResumeId={activeResumeId}
             onSwitch={handleSwitchResume}
             onCreate={handleStartNewResume}
@@ -393,7 +440,15 @@ function App() {
             onRename={handleRenameResume}
           />
         ) : (
-          <ComingSoon label="AI Tools" />
+          <JobTracker
+            jobs={jobs}
+            library={library}
+            loadResume={loadResumeById}
+            onAdd={handleAddJob}
+            onUpdate={handleUpdateJob}
+            onDelete={handleDeleteJob}
+            onOpenResume={handleSwitchResume}
+          />
         )}
       </div>
     </div>
