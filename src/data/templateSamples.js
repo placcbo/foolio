@@ -70,6 +70,13 @@ export const TEMPLATE_SAMPLES = {
       },
       {
         id: 's-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
+        groups: [
+          { id: 'sg1', label: 'Support Tools', tags: ['Zendesk', 'Intercom', 'Freshdesk', 'Salesforce Service Cloud'] },
+          { id: 'sg2', label: 'Sports Knowledge', tags: ['Football (EPL, UCL)', 'Basketball (NBA)', 'American Football (NFL)', 'Daily Fantasy Sports mechanics'] },
+          { id: 'sg3', label: 'Payments & Fraud', tags: ['KYC/AML compliance', 'Chargeback management', 'Mobile money', 'PCI-DSS basics'] },
+          { id: 'sg4', label: 'AI & Productivity', tags: ['ChatGPT', 'Claude', 'Notion AI'] },
+          { id: 'sg5', label: 'Core Competencies', tags: ['High-volume live chat', 'Escalation management', 'CSAT optimisation', 'Remote async work'] },
+        ],
         tags: [
           'Zendesk', 'Intercom', 'Freshdesk', 'Salesforce Service Cloud',
           'Football (EPL, UCL)', 'Basketball (NBA)', 'American Football (NFL)', 'Daily Fantasy Sports mechanics',
@@ -1536,3 +1543,9 @@ export const TEMPLATE_SAMPLES = {
     ],
   },
 };
+
+// Classic shows the same sample content as Simple — identical content next
+// to a different design makes the comparison honest in the picker.
+TEMPLATE_SAMPLES.classic = TEMPLATE_SAMPLES.simple;
+TEMPLATE_SAMPLES.slate = TEMPLATE_SAMPLES.simple;
+TEMPLATE_SAMPLES.bloom = TEMPLATE_SAMPLES.simple;

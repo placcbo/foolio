@@ -4,6 +4,9 @@ import BannerTemplate from './BannerTemplate';
 import HeaderTemplate from './HeaderTemplate';
 import CleanTemplate from './CleanTemplate';
 import SimpleTemplate from './SimpleTemplate';
+import ClassicTemplate from './ClassicTemplate';
+import SlateTemplate from './SlateTemplate';
+import BloomTemplate from './BloomTemplate';
 
 export const TEMPLATE_COMPONENTS = {
   onecolumn: OneColumnTemplate,
@@ -16,4 +19,7 @@ export const TEMPLATE_COMPONENTS = {
   // them outright — existing resumes already using onecolumn/sidebar/etc.
   // keep working exactly as before.
   simple: SimpleTemplate,
+  classic: ClassicTemplate,
+  slate: SlateTemplate,
+  bloom: BloomTemplate,
 };

@@ -13,6 +13,30 @@ export const TEMPLATES = [
     categories: ['simple', 'popular'],
     swatches: ['#e4570f', '#d9622b', '#000000', '#3f4b54', '#2a8fbd', '#c23b83'],
   },
+  {
+    id: 'classic',
+    name: 'Classic',
+    layout: 'classic',
+    supportsPhoto: false,
+    categories: ['simple'],
+    swatches: ['#1f3a5f', '#000000', '#7b2d43', '#2f5d44', '#3f4b54', '#b3541e'],
+  },
+  {
+    id: 'slate',
+    name: 'Slate',
+    layout: 'slate',
+    supportsPhoto: false,
+    categories: ['creative', 'professional'],
+    swatches: ['#3aa7a3', '#e4570f', '#5a8fd6', '#c2a24b', '#c96a8a', '#8a8f98'],
+  },
+  {
+    id: 'bloom',
+    name: 'Bloom',
+    layout: 'bloom',
+    supportsPhoto: false,
+    categories: ['creative', 'modern'],
+    swatches: ['#c85a54', '#3aa7a3', '#5a8fd6', '#7b5cb8', '#2f5d44', '#1f3a5f'],
+  },
 ];
 
 export const FILTERS = [

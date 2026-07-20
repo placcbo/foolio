@@ -28,15 +28,15 @@ const ENTITIES = {
   '&mdash;': '\u2014',
 };
 
-function decodeEntities(s) {
+export function decodeEntities(s) {
   return s.replace(/&[a-z#0-9]+;/gi, (m) => ENTITIES[m.toLowerCase()] ?? m);
 }
 
-function stripTags(s) {
+export function stripTags(s) {
   return decodeEntities(String(s || '').replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
 }
 
-function htmlListItems(html) {
+export function htmlListItems(html) {
   const items = [];
   const re = /<li[^>]*>([\s\S]*?)<\/li>/gi;
   let m;
@@ -47,20 +47,20 @@ function htmlListItems(html) {
   return items;
 }
 
-function htmlParagraphs(html) {
+export function htmlParagraphs(html) {
   return String(html || '')
     .split(/<\/p>|<br\s*\/?>/i)
     .map(stripTags)
     .filter(Boolean);
 }
 
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
   const h = String(hex || '#e4570f').replace('#', '');
   const f = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
   return [parseInt(f.slice(0, 2), 16) || 0, parseInt(f.slice(2, 4), 16) || 0, parseInt(f.slice(4, 6), 16) || 0];
 }
 
-function contactLine(basics) {
+export function contactLine(basics) {
   const parts = [];
   if (basics.email) parts.push(basics.email);
   if (basics.phone) parts.push(basics.phone);

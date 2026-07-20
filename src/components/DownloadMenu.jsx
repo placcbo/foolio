@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { IconDownload, IconFileText } from './icons';
 import { printResumeAsPdf, exportResumeAsDocx } from '../utils/resumeExport';
 import { exportSimpleTemplatePdf } from '../utils/simplePdf';
+import { exportClassicTemplatePdf } from '../utils/classicPdf';
+import { exportSlateTemplatePdf } from '../utils/slatePdf';
+import { exportBloomTemplatePdf } from '../utils/bloomPdf';
 
 export default function DownloadMenu({ resume, paperRef, className = 'btn-download' }) {
   const [open, setOpen] = useState(false);
@@ -27,8 +30,15 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
       // exact fixed design straight into the PDF from resume data —
       // instant download, real selectable text, nothing rendered from the
       // DOM at all. Everything else falls back to the native print path.
-      if (resume.templateId === 'simple') {
-        exportSimpleTemplatePdf(resume, fileBaseName());
+      const exporters = {
+        simple: exportSimpleTemplatePdf,
+        classic: exportClassicTemplatePdf,
+        slate: exportSlateTemplatePdf,
+        bloom: exportBloomTemplatePdf,
+      };
+      const dedicated = exporters[resume.templateId];
+      if (dedicated) {
+        dedicated(resume, fileBaseName());
         return;
       }
       const container = paperRef?.current;
