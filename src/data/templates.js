@@ -14,6 +14,14 @@ export const TEMPLATES = [
     swatches: ['#e4570f', '#d9622b', '#000000', '#3f4b54', '#2a8fbd', '#c23b83'],
   },
   {
+    id: 'chronicle',
+    name: 'Chronicle',
+    layout: 'chronicle',
+    supportsPhoto: false,
+    categories: ['professional', 'popular'],
+    swatches: ['#1a1a1c', '#1f3a5f', '#7b2d43', '#2f5d44', '#8a6d1f', '#5b4bb5'],
+  },
+  {
     id: 'classic',
     name: 'Classic',
     layout: 'classic',
@@ -84,6 +92,22 @@ export const TEMPLATES = [
     supportsPhoto: false,
     categories: ['modern', 'professional'],
     swatches: ['#eab308', '#e4570f', '#3aa7a3', '#5a8fd6', '#c96a8a', '#8a8f98'],
+  },
+  {
+    id: 'willow',
+    name: 'Willow',
+    layout: 'willow',
+    supportsPhoto: false,
+    categories: ['professional', 'creative'],
+    swatches: ['#b7c4b4', '#d9c2c2', '#c3d1dc', '#e0d5bd', '#cec3db', '#d6cec2'],
+  },
+  {
+    id: 'clover',
+    name: 'Clover',
+    layout: 'clover',
+    supportsPhoto: false,
+    categories: ['simple', 'modern'],
+    swatches: ['#15803d', '#2a6f97', '#5b4bb5', '#c85a54', '#b3541e', '#0f6e5c'],
   },
 ];
 

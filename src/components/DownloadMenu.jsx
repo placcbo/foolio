@@ -11,6 +11,9 @@ import { exportNovaTemplatePdf } from '../utils/novaPdf';
 import { exportCodexTemplatePdf } from '../utils/codexPdf';
 import { exportLedgerTemplatePdf } from '../utils/ledgerPdf';
 import { exportAmberTemplatePdf } from '../utils/amberPdf';
+import { exportWillowTemplatePdf } from '../utils/willowPdf';
+import { exportCloverTemplatePdf } from '../utils/cloverPdf';
+import { exportChronicleTemplatePdf } from '../utils/chroniclePdf';
 
 export default function DownloadMenu({ resume, paperRef, className = 'btn-download' }) {
   const [open, setOpen] = useState(false);
@@ -47,6 +50,9 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
         codex: exportCodexTemplatePdf,
         ledger: exportLedgerTemplatePdf,
         amber: exportAmberTemplatePdf,
+        willow: exportWillowTemplatePdf,
+        clover: exportCloverTemplatePdf,
+        chronicle: exportChronicleTemplatePdf,
       };
       const dedicated = exporters[resume.templateId];
       if (dedicated) {

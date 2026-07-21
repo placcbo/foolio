@@ -9,6 +9,9 @@ import NovaTemplate from './NovaTemplate';
 import CodexTemplate from './CodexTemplate';
 import LedgerTemplate from './LedgerTemplate';
 import AmberTemplate from './AmberTemplate';
+import WillowTemplate from './WillowTemplate';
+import CloverTemplate from './CloverTemplate';
+import ChronicleTemplate from './ChronicleTemplate';
 import SlateTemplate from './SlateTemplate';
 import BloomTemplate from './BloomTemplate';
 import PortraitTemplate from './PortraitTemplate';
@@ -30,6 +33,9 @@ export const TEMPLATE_COMPONENTS = {
   codex: CodexTemplate,
   ledger: LedgerTemplate,
   amber: AmberTemplate,
+  willow: WillowTemplate,
+  clover: CloverTemplate,
+  chronicle: ChronicleTemplate,
   slate: SlateTemplate,
   bloom: BloomTemplate,
   portrait: PortraitTemplate,

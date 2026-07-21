@@ -3,10 +3,11 @@ import TemplateCard from './TemplateCard';
 import { TEMPLATES, FILTERS } from '../data/templates';
 import { IconChevronDown, IconX, IconGrid, IconStar, IconBox, IconHexagon, IconPalette, IconUser, IconFlag } from './icons';
 
-// Roughly two rows at the grid's typical column count — exact row count
-// varies with viewport width since the grid is responsive, but this keeps
-// the initial view short with "See more" revealing the rest.
-const INITIAL_VISIBLE_COUNT = 10;
+// The grid's container caps at 1280px, which fits exactly three 300px
+// cards per row (a fourth would need 1296px) — so this must stay a
+// multiple of 3, or the row right before "See more" ends with a single
+// orphaned card instead of a full row.
+const INITIAL_VISIBLE_COUNT = 9;
 
 const FILTER_ICONS = {
   all: IconGrid,

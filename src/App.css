@@ -7043,3 +7043,617 @@ body.has-open-preview-modal {
 .amber-bullets li:last-child {
   margin-bottom: 0;
 }
+
+/* =========================================================================
+   WillowTemplate — self-contained (.willow-* namespace)
+   Serif editorial sidebar: the accent color fills a muted panel carrying
+   identity, contact, and quick-reference content; the career story flows
+   in the white main column.
+   ========================================================================= */
+
+.willow-template {
+  display: flex;
+  align-items: stretch;
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.willow-aside {
+  flex: 0 0 42%;
+  min-width: 0;
+  padding: 44px 32px;
+  box-sizing: border-box;
+  color: #22261f;
+}
+
+.willow-main {
+  flex: 1;
+  min-width: 0;
+  padding: 44px 40px;
+  box-sizing: border-box;
+  color: #2a2a2e;
+}
+
+.willow-name {
+  margin: 0 0 16px;
+  font-size: 21pt;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1c1f1a;
+}
+
+.willow-title {
+  margin: -12px 0 16px;
+  font-size: 10.5pt;
+  font-style: italic;
+  color: #3c4137;
+}
+
+.willow-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 26px;
+  font-size: 9.5pt;
+}
+
+.willow-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.willow-contact-item svg {
+  flex-shrink: 0;
+  color: #2d332c;
+  opacity: 0.8;
+}
+
+.willow-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.willow-section {
+  margin-bottom: 22px;
+}
+
+.willow-section:last-child {
+  margin-bottom: 0;
+}
+
+.willow-heading-wrap {
+  margin-bottom: 12px;
+}
+
+.willow-heading {
+  margin: 0 0 7px;
+  font-size: 12pt;
+  font-weight: 700;
+  color: #1c1f1a;
+}
+
+.willow-heading-rule {
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: currentColor;
+  color: #1c1f1a;
+  opacity: 0.55;
+}
+
+.willow-text {
+  font-size: 10pt;
+  line-height: 1.55;
+}
+
+.willow-text p {
+  margin: 0 0 8px;
+}
+
+.willow-text p:last-child {
+  margin-bottom: 0;
+}
+
+.willow-placeholder {
+  margin: 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.willow-tag-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.willow-tag-group-label {
+  display: block;
+  font-size: 9pt;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.willow-tag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 9.5pt;
+}
+
+.willow-aside-entry {
+  margin-bottom: 12px;
+}
+
+.willow-aside-entry:last-child {
+  margin-bottom: 0;
+}
+
+.willow-aside-entry-heading {
+  font-size: 10pt;
+  font-weight: 700;
+  color: #1c1f1a;
+}
+
+.willow-aside-entry-sub {
+  font-size: 9pt;
+  color: #3c4137;
+  margin-top: 1px;
+}
+
+.willow-entry {
+  margin-bottom: 15px;
+}
+
+.willow-entry:last-child {
+  margin-bottom: 0;
+}
+
+.willow-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.willow-entry-heading {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #17171a;
+}
+
+.willow-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.willow-entry-date {
+  flex-shrink: 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  color: #6b6b6b;
+  white-space: nowrap;
+}
+
+.willow-entry-sub {
+  font-size: 10pt;
+  font-style: italic;
+  color: #55555b;
+  margin-top: 1px;
+}
+
+.willow-bullets {
+  margin-top: 6px;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+
+.willow-bullets ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.willow-bullets li {
+  margin-bottom: 3px;
+}
+
+.willow-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================================
+   CloverTemplate — self-contained (.clover-* namespace)
+   Plain and minimal, no banner or sidebar, but the name/headings carry the
+   accent color and the contact row is a two-column grid of icon + text
+   pairs rather than an inline row.
+   ========================================================================= */
+
+.clover-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #262626;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  padding: 48px 54px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.clover-header {
+  margin-bottom: 24px;
+}
+
+.clover-name {
+  margin: 0;
+  font-size: 25pt;
+  font-weight: 800;
+  color: var(--clover-accent, #15803d);
+}
+
+.clover-title {
+  margin: 6px 0 0;
+  font-size: 11pt;
+  color: #55555b;
+}
+
+.clover-contact-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 8px 34px;
+  font-size: 9.5pt;
+  color: #3a3a3e;
+}
+
+.clover-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clover-contact-item svg {
+  flex-shrink: 0;
+  color: var(--clover-accent, #15803d);
+}
+
+.clover-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.clover-section {
+  margin-bottom: 20px;
+}
+
+.clover-section:last-child {
+  margin-bottom: 0;
+}
+
+.clover-heading-wrap {
+  margin-bottom: 12px;
+}
+
+.clover-heading {
+  margin: 0 0 6px;
+  font-size: 12pt;
+  font-weight: 800;
+  color: var(--clover-accent, #15803d);
+}
+
+.clover-heading-bar {
+  display: block;
+  width: 38px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--clover-accent, #15803d);
+}
+
+.clover-text {
+  font-size: 10.5pt;
+  line-height: 1.55;
+}
+
+.clover-text p {
+  margin: 0 0 8px;
+}
+
+.clover-text p:last-child {
+  margin-bottom: 0;
+}
+
+.clover-placeholder {
+  margin: 0;
+  font-size: 10pt;
+  font-style: italic;
+  color: #a3a3a3;
+}
+
+.clover-tags {
+  margin: 0;
+  font-size: 10pt;
+  color: #262626;
+}
+
+.clover-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10pt;
+}
+
+.clover-skill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.clover-skill-label {
+  flex: 0 0 150px;
+  font-weight: 700;
+  color: #14141a;
+}
+
+.clover-skill-values {
+  flex: 1;
+  color: #262626;
+}
+
+.clover-entry {
+  margin-bottom: 14px;
+}
+
+.clover-entry:last-child {
+  margin-bottom: 0;
+}
+
+.clover-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.clover-entry-heading {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #17171a;
+}
+
+.clover-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.clover-entry-date {
+  flex-shrink: 0;
+  font-size: 9.5pt;
+  color: #6b6b6b;
+  white-space: nowrap;
+}
+
+.clover-entry-sub {
+  font-size: 10pt;
+  color: #55555b;
+  margin-top: 1px;
+}
+
+.clover-bullets {
+  margin-top: 6px;
+  font-size: 10pt;
+  line-height: 1.55;
+}
+
+.clover-bullets ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.clover-bullets li {
+  margin-bottom: 3px;
+}
+
+.clover-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================================
+   ChronicleTemplate — self-contained (.chronicle-* namespace)
+   Formal letterpress-editorial look: centered serif header with an icon
+   contact row; every section heading sits left-aligned on top of a thick
+   full-width rule, like a newspaper section divider.
+   ========================================================================= */
+
+.chronicle-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #2a2a2e;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  padding: 52px 60px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.chronicle-header {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.chronicle-name {
+  margin: 0;
+  font-size: 25pt;
+  font-weight: 700;
+  color: #1a1a1c;
+}
+
+.chronicle-title {
+  margin: 4px 0 0;
+  font-size: 11.5pt;
+  font-style: italic;
+  color: #5a5a60;
+}
+
+.chronicle-contact-row {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 9.5pt;
+  color: #5a5a60;
+}
+
+.chronicle-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.chronicle-contact-item svg {
+  flex-shrink: 0;
+  color: var(--chronicle-accent, #1a1a1c);
+}
+
+.chronicle-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.chronicle-section {
+  margin-bottom: 22px;
+}
+
+.chronicle-section:last-child {
+  margin-bottom: 0;
+}
+
+.chronicle-heading-wrap {
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2.5px solid var(--chronicle-accent, #1a1a1c);
+}
+
+.chronicle-heading {
+  margin: 0;
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1a1a1c;
+}
+
+.chronicle-text {
+  font-size: 10.5pt;
+  line-height: 1.55;
+}
+
+.chronicle-text p {
+  margin: 0 0 8px;
+}
+
+.chronicle-text p:last-child {
+  margin-bottom: 0;
+}
+
+.chronicle-placeholder {
+  margin: 0;
+  font-size: 10pt;
+  font-style: italic;
+  color: #a3a3a8;
+}
+
+.chronicle-tags {
+  margin: 0;
+  font-size: 10.5pt;
+}
+
+.chronicle-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10.5pt;
+}
+
+.chronicle-skill-row {
+  display: flex;
+  gap: 12px;
+}
+
+.chronicle-skill-label {
+  flex: 0 0 150px;
+  font-weight: 700;
+  color: #1a1a1c;
+}
+
+.chronicle-skill-values {
+  flex: 1;
+}
+
+.chronicle-entry {
+  margin-bottom: 13px;
+}
+
+.chronicle-entry:last-child {
+  margin-bottom: 0;
+}
+
+.chronicle-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.chronicle-entry-heading {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #1a1a1c;
+}
+
+.chronicle-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.chronicle-entry-date {
+  flex-shrink: 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  color: #7a7a80;
+  white-space: nowrap;
+}
+
+.chronicle-entry-sub {
+  font-size: 10pt;
+  font-style: italic;
+  color: #5a5a60;
+  margin-top: 1px;
+}
+
+.chronicle-bullets {
+  margin-top: 5px;
+  font-size: 10.5pt;
+}
+
+.chronicle-bullets ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.chronicle-bullets li {
+  margin-bottom: 3px;
+}
+
+.chronicle-bullets li:last-child {
+  margin-bottom: 0;
+}
