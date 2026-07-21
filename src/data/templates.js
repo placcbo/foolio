@@ -117,6 +117,14 @@ export const TEMPLATES = [
     categories: ['professional', 'modern'],
     swatches: ['#2b4a6f', '#1a5c50', '#7b2d43', '#5b4bb5', '#b3541e', '#000000'],
   },
+  {
+    id: 'mosaic',
+    name: 'Mosaic',
+    layout: 'mosaic',
+    supportsPhoto: false,
+    categories: ['creative', 'modern'],
+    swatches: ['#5b4bb5', '#c85a54', '#0f6e5c', '#2a6f97', '#b3541e', '#c96a8a'],
+  },
 ];
 
 export const FILTERS = [

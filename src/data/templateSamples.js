@@ -727,7 +727,7 @@ TEMPLATE_SAMPLES.clover = {
           description: bullets(
             'Own a portfolio of 60+ mid-market accounts, maintaining a 94% annual renewal rate.',
             'Run onboarding programs that cut average time-to-value from 6 weeks to 3 weeks.',
-            'Identify upsell opportunities that contributed ₦12M in expansion revenue last year.',
+            'Identify upsell opportunities that contributed NGN 12M in expansion revenue last year.',
             'Partner with product to prioritise a quarterly customer-feedback roadmap review.'
           ),
         },
@@ -911,6 +911,72 @@ TEMPLATE_SAMPLES.lens = {
       tags: ['Account Management', 'CRM Management', 'Sales Forecasting', 'Negotiation', 'Client Retention', 'Pipeline Development'],
     },
     { id: 'ls-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (native)', 'Spanish (fluent)'] },
+  ],
+};
+
+TEMPLATE_SAMPLES.mosaic = {
+  basics: {
+    name: 'Ji-woo Kang',
+    title: 'Brand & Creative Director',
+    email: 'jiwoo.kang@creativemail.co.kr',
+    phone: '+82 10-2345-6789',
+    address: 'Seoul, South Korea',
+    visibleExtra: [],
+  },
+  sections: [
+    {
+      id: 'ms-summary', type: 'summary', title: 'Profile', kind: 'text',
+      content: '<p>Brand and creative director with 7 years leading identity, campaign, and packaging work for consumer brands across South Korea and wider Asia. Comfortable moving between the big creative idea and the production detail that makes it actually ship on brand and on deadline. Builds creative teams that push for stronger work in review rather than settling on the first safe option, while still respecting a client’s risk tolerance. Believes the best creative direction is mostly about asking better questions earlier.</p>',
+    },
+    {
+      id: 'ms-exp', type: 'experience', title: 'Experience', kind: 'entries',
+      entries: [
+        {
+          id: 'ms-e1', heading: 'Creative Director', subheading: 'Cheil Worldwide',
+          location: 'Seoul, South Korea', start: 'Mar 2022', end: 'Present',
+          description: bullets(
+            'Lead creative direction for three consumer accounts spanning beauty, F&B, and mobile.',
+            'Built and mentor a creative team of six across art direction and copy.',
+            'Pitched and won two new accounts with a combined annual billing of KRW 4.2 billion.',
+            'Introduced a structured concept-review process that cut revision cycles by a third.'
+          ),
+        },
+        {
+          id: 'ms-e2', heading: 'Senior Art Director', subheading: 'Innocean Worldwide',
+          location: 'Seoul, South Korea', start: 'Feb 2019', end: 'Feb 2022',
+          description: bullets(
+            'Art directed campaign work across print, digital, and out-of-home for automotive clients.',
+            'Partnered with strategy and copy leads from brief through final production.',
+            'Directed two photo and video shoots end-to-end, including talent and location scouting.',
+            'Mentored two junior designers on portfolio development and client presentation skills.'
+          ),
+        },
+        {
+          id: 'ms-e3', heading: 'Graphic Designer', subheading: 'HS Ad',
+          location: 'Seoul, South Korea', start: 'Jan 2017', end: 'Jan 2019',
+          description: bullets(
+            'Designed packaging and point-of-sale materials for retail and F&B clients.',
+            'Prepared print-ready files and liaised directly with production vendors.',
+            'Supported senior art directors on pitch decks and concept boards.'
+          ),
+        },
+      ],
+    },
+    {
+      id: 'ms-skills', type: 'skills', title: 'Skills', kind: 'tags',
+      groups: [
+        { id: 'ms-sg1', label: 'Creative', tags: ['Brand Identity', 'Art Direction', 'Campaign Strategy', 'Packaging Design'] },
+        { id: 'ms-sg2', label: 'Tools', tags: ['Adobe Creative Suite', 'Figma', 'Keynote'] },
+      ],
+      tags: ['Brand Identity', 'Art Direction', 'Campaign Strategy', 'Packaging Design', 'Adobe Creative Suite', 'Figma', 'Keynote'],
+    },
+    { id: 'ms-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Korean (native)', 'English (fluent)'] },
+    {
+      id: 'ms-edu', type: 'education', title: 'Education', kind: 'entries',
+      entries: [
+        { id: 'ms-ed1', heading: 'Bachelor of Fine Arts – Visual Communication Design', subheading: 'Hongik University', location: '', start: '2013', end: '2017', description: '' },
+      ],
+    },
   ],
 };
 

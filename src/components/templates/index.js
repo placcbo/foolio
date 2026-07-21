@@ -13,6 +13,7 @@ import WillowTemplate from './WillowTemplate';
 import CloverTemplate from './CloverTemplate';
 import ChronicleTemplate from './ChronicleTemplate';
 import LensTemplate from './LensTemplate';
+import MosaicTemplate from './MosaicTemplate';
 import SlateTemplate from './SlateTemplate';
 import BloomTemplate from './BloomTemplate';
 import PortraitTemplate from './PortraitTemplate';
@@ -38,6 +39,7 @@ export const TEMPLATE_COMPONENTS = {
   clover: CloverTemplate,
   chronicle: ChronicleTemplate,
   lens: LensTemplate,
+  mosaic: MosaicTemplate,
   slate: SlateTemplate,
   bloom: BloomTemplate,
   portrait: PortraitTemplate,

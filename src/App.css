@@ -7994,3 +7994,204 @@ body.has-open-preview-modal {
 .lens-bullets li:last-child {
   margin-bottom: 0;
 }
+
+/* =========================================================================
+   MosaicTemplate — self-contained (.mosaic-* namespace)
+   Card-grid "dashboard" look: every section is its own bordered card with
+   an accent stripe across the top, laid out in a two-column grid. Text and
+   entries cards span full width; tags cards (skills, languages…) stay
+   half-width so two of them sit side by side as tiles.
+   ========================================================================= */
+
+.mosaic-template {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #262626;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.5;
+  padding: 44px 48px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.mosaic-header {
+  margin-bottom: 24px;
+}
+
+.mosaic-name {
+  margin: 0;
+  font-size: 24pt;
+  font-weight: 800;
+  color: #14141a;
+}
+
+.mosaic-title {
+  margin: 4px 0 0;
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--mosaic-accent, #5b4bb5);
+}
+
+.mosaic-contact-row {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 9pt;
+  color: #4a4a4a;
+}
+
+.mosaic-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mosaic-contact-item svg {
+  flex-shrink: 0;
+  color: var(--mosaic-accent, #5b4bb5);
+}
+
+.mosaic-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mosaic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.mosaic-card {
+  min-width: 0;
+  border: 1px solid #e4e4e8;
+  border-top: 3px solid var(--mosaic-accent, #5b4bb5);
+  border-radius: 10px;
+  padding: 16px 18px;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 1px 2px rgba(20, 20, 26, 0.05);
+}
+
+.mosaic-card-full {
+  grid-column: 1 / -1;
+}
+
+.mosaic-card-heading {
+  margin: 0 0 10px;
+  font-size: 9.5pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mosaic-accent, #5b4bb5);
+}
+
+.mosaic-text {
+  font-size: 10pt;
+  line-height: 1.55;
+}
+
+.mosaic-text p {
+  margin: 0 0 8px;
+}
+
+.mosaic-text p:last-child {
+  margin-bottom: 0;
+}
+
+.mosaic-placeholder {
+  margin: 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  color: #a3a3a3;
+}
+
+.mosaic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mosaic-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mosaic-accent, #5b4bb5) 12%, white);
+  color: var(--mosaic-accent, #5b4bb5);
+  font-size: 8.5pt;
+  font-weight: 700;
+}
+
+.mosaic-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mosaic-skill-group-label {
+  display: block;
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #14141a;
+  margin-bottom: 5px;
+}
+
+.mosaic-entry {
+  margin-bottom: 12px;
+}
+
+.mosaic-entry:last-child {
+  margin-bottom: 0;
+}
+
+.mosaic-entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mosaic-entry-heading {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #14141a;
+}
+
+.mosaic-entry-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mosaic-entry-date {
+  flex-shrink: 0;
+  font-size: 9pt;
+  color: #6b6b6b;
+  white-space: nowrap;
+}
+
+.mosaic-entry-sub {
+  font-size: 9.5pt;
+  color: #55555b;
+  margin-top: 1px;
+}
+
+.mosaic-bullets {
+  margin-top: 5px;
+  font-size: 9.5pt;
+  line-height: 1.5;
+}
+
+.mosaic-bullets ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.mosaic-bullets li {
+  margin-bottom: 3px;
+}
+
+.mosaic-bullets li:last-child {
+  margin-bottom: 0;
+}
