@@ -105,24 +105,24 @@ export const TEMPLATE_SAMPLES = {
 
 TEMPLATE_SAMPLES.chronicle = {
   basics: {
-    name: 'Elizabeth Wambui',
+    name: 'Charlotte Bennett',
     title: 'Communications & PR Manager',
-    email: 'elizabeth.wambui@email.com',
-    phone: '+254 722 456 789',
-    address: 'Nairobi, Kenya',
+    email: 'charlotte.bennett@mailbox.co.uk',
+    phone: '+44 7700 900123',
+    address: 'London, United Kingdom',
     visibleExtra: [],
   },
   sections: [
     {
       id: 'ch-summary', type: 'summary', title: 'Summary', kind: 'text',
-      content: '<p>Communications professional with 6+ years leading media relations, brand storytelling, and crisis response for consumer-facing organisations. Skilled at translating complex corporate narratives into clear, credible public messaging and building relationships with press and stakeholders across East Africa.</p>',
+      content: '<p>Communications professional with 6+ years leading media relations, brand storytelling, and crisis response for consumer-facing organisations. Skilled at translating complex corporate narratives into clear, credible public messaging and building relationships with press and stakeholders across the UK and Europe.</p>',
     },
     {
       id: 'ch-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'ch-e1', heading: 'Senior Communications Manager', subheading: 'Nation Media Group',
-          location: 'Nairobi, Kenya', start: 'Mar 2021', end: 'Present',
+          id: 'ch-e1', heading: 'Senior Communications Manager', subheading: 'BBC Studios',
+          location: 'London, United Kingdom', start: 'Mar 2021', end: 'Present',
           description: bullets(
             'Lead media strategy and press relations for group-wide corporate announcements and product launches.',
             'Serve as primary spokesperson liaison, briefing executives ahead of high-stakes interviews and public appearances.',
@@ -131,8 +131,8 @@ TEMPLATE_SAMPLES.chronicle = {
           ),
         },
         {
-          id: 'ch-e2', heading: 'Public Relations Officer', subheading: 'Ogilvy Africa',
-          location: 'Nairobi, Kenya', start: 'Jun 2018', end: 'Feb 2021',
+          id: 'ch-e2', heading: 'Public Relations Officer', subheading: 'Ogilvy UK',
+          location: 'London, United Kingdom', start: 'Jun 2018', end: 'Feb 2021',
           description: bullets(
             'Ran integrated PR campaigns for FMCG and telecom clients, coordinating press days and launch events.',
             'Tracked and reported media coverage sentiment across five client accounts on a monthly basis.',
@@ -149,11 +149,11 @@ TEMPLATE_SAMPLES.chronicle = {
       ],
       tags: ['Media Relations', 'Crisis Communications', 'Executive Messaging', 'Content Strategy', 'Meltwater', 'WordPress', 'Canva', 'Google Analytics'],
     },
-    { id: 'ch-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)', 'French (basic)'] },
+    { id: 'ch-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (native)', 'French (conversational)'] },
     {
       id: 'ch-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'ch-ed1', heading: 'Bachelor of Arts – Communication & Media Studies', subheading: 'University of Nairobi', location: '', start: '2013', end: '2017', description: '' },
+        { id: 'ch-ed1', heading: 'Bachelor of Arts – Communication & Media Studies', subheading: 'University of Leeds', location: '', start: '2013', end: '2017', description: '' },
       ],
     },
   ],
@@ -161,33 +161,33 @@ TEMPLATE_SAMPLES.chronicle = {
 
 TEMPLATE_SAMPLES.classic = {
   basics: {
-    name: 'James Kariuki',
-    title: 'Advocate & Legal Counsel',
-    email: 'james.kariuki@lawmail.com',
-    phone: '+254 733 221 004',
-    address: 'Nairobi, Kenya',
+    name: 'Michael Reynolds',
+    title: 'Attorney & Legal Counsel',
+    email: 'michael.reynolds@lawmail.com',
+    phone: '+1 (212) 555-0148',
+    address: 'New York, NY, USA',
     visibleExtra: [],
   },
   sections: [
     {
       id: 'cl-summary', type: 'summary', title: 'Profile', kind: 'text',
-      content: '<p>Advocate of the High Court of Kenya with 7 years of experience in corporate and commercial law. Advises on mergers and acquisitions, contract negotiation, and regulatory compliance for clients across banking, telecoms, and manufacturing sectors.</p>',
+      content: '<p>Attorney admitted to the New York State Bar with 7 years of experience in corporate and commercial law. Advises on mergers and acquisitions, contract negotiation, and regulatory compliance for clients across banking, telecoms, and manufacturing sectors.</p>',
     },
     {
       id: 'cl-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'cl-e1', heading: 'Senior Associate', subheading: 'Kaplan & Stratton Advocates',
-          location: 'Nairobi, Kenya', start: 'Jan 2020', end: 'Present',
+          id: 'cl-e1', heading: 'Senior Associate', subheading: 'Skadden, Arps, Slate, Meagher & Flom LLP',
+          location: 'New York, NY, USA', start: 'Jan 2020', end: 'Present',
           description: bullets(
             'Lead legal due diligence for cross-border M&A transactions valued at over $40 million combined.',
             'Draft and negotiate commercial contracts, joint venture agreements, and shareholder agreements.',
-            'Advise clients on compliance with Capital Markets Authority and Competition Authority regulations.'
+            'Advise clients on compliance with SEC and FTC regulations.'
           ),
         },
         {
-          id: 'cl-e2', heading: 'Associate', subheading: 'Anjarwalla & Khanna',
-          location: 'Nairobi, Kenya', start: 'Sep 2016', end: 'Dec 2019',
+          id: 'cl-e2', heading: 'Associate', subheading: 'Latham & Watkins LLP',
+          location: 'New York, NY, USA', start: 'Sep 2016', end: 'Dec 2019',
           description: bullets(
             'Supported corporate transactions, including company incorporations and share transfers.',
             'Conducted legal research and prepared opinions on employment and regulatory matters.',
@@ -200,12 +200,12 @@ TEMPLATE_SAMPLES.classic = {
       id: 'cl-skills', type: 'skills', title: 'Skills', kind: 'tags',
       tags: ['Corporate Law', 'Contract Negotiation', 'Mergers & Acquisitions', 'Regulatory Compliance', 'Legal Research'],
     },
-    { id: 'cl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+    { id: 'cl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (native)', 'Spanish (conversational)'] },
     {
       id: 'cl-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'cl-ed1', heading: 'Postgraduate Diploma in Law', subheading: 'Kenya School of Law', location: '', start: '2015', end: '2016', description: '' },
-        { id: 'cl-ed2', heading: 'Bachelor of Laws (LLB)', subheading: 'University of Nairobi', location: '', start: '2011', end: '2015', description: '' },
+        { id: 'cl-ed1', heading: 'Juris Doctor (J.D.)', subheading: 'Columbia Law School', location: '', start: '2013', end: '2016', description: '' },
+        { id: 'cl-ed2', heading: 'Bachelor of Arts – Political Science', subheading: 'University of Michigan', location: '', start: '2009', end: '2013', description: '' },
       ],
     },
   ],
@@ -213,40 +213,40 @@ TEMPLATE_SAMPLES.classic = {
 
 TEMPLATE_SAMPLES.slate = {
   basics: {
-    name: 'Brian Otieno',
+    name: 'Lukas Hoffmann',
     title: 'Product Designer',
-    email: 'brian.otieno@designmail.com',
-    phone: '+254 700 112 233',
-    address: 'Nairobi, Kenya',
+    email: 'lukas.hoffmann@designmail.de',
+    phone: '+49 30 1234 5678',
+    address: 'Berlin, Germany',
     visibleExtra: [],
   },
   sections: [
     {
       id: 'sl-summary', type: 'summary', title: 'Summary', kind: 'text',
-      content: '<p>Product designer with 5 years of experience shaping fintech and e-commerce products used across East Africa. Focused on turning ambiguous problems into clear, testable interfaces backed by user research and a strong design system.</p>',
+      content: '<p>Product designer with 5 years of experience shaping fintech and e-commerce products used across Europe. Focused on turning ambiguous problems into clear, testable interfaces backed by user research and a strong design system.</p>',
     },
     {
       id: 'sl-skills', type: 'skills', title: 'Skills', kind: 'tags',
       tags: ['Figma', 'User Research', 'Design Systems', 'Prototyping', 'Adobe XD', 'Usability Testing'],
     },
-    { id: 'sl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)', 'Luo (native)'] },
+    { id: 'sl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['German (native)', 'English (fluent)'] },
     {
       id: 'sl-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'sl-e1', heading: 'Senior Product Designer', subheading: 'Wasoko',
-          location: 'Nairobi, Kenya', start: 'Feb 2022', end: 'Present',
+          id: 'sl-e1', heading: 'Senior Product Designer', subheading: 'N26',
+          location: 'Berlin, Germany', start: 'Feb 2022', end: 'Present',
           description: bullets(
-            'Own end-to-end design for the retailer ordering app used by 50,000+ merchants across five countries.',
+            'Own end-to-end design for the mobile banking app used by millions of customers across Europe.',
             'Built and maintain the company-wide design system, cutting new-feature design time by 30%.',
-            'Run monthly usability studies with merchants to validate flows before engineering handoff.'
+            'Run monthly usability studies with customers to validate flows before engineering handoff.'
           ),
         },
         {
-          id: 'sl-e2', heading: 'Product Designer', subheading: 'Cellulant',
-          location: 'Nairobi, Kenya', start: 'Jul 2019', end: 'Jan 2022',
+          id: 'sl-e2', heading: 'Product Designer', subheading: 'SAP',
+          location: 'Berlin, Germany', start: 'Jul 2019', end: 'Jan 2022',
           description: bullets(
-            'Designed merchant-facing dashboards for a payments platform processing transactions across 18 markets.',
+            'Designed enterprise dashboards for a cloud platform used by clients across 18 markets.',
             'Partnered with PMs and engineers in weekly critiques to ship two major releases per quarter.',
             'Introduced a component library that reduced UI inconsistencies across three product teams.'
           ),
@@ -256,7 +256,7 @@ TEMPLATE_SAMPLES.slate = {
     {
       id: 'sl-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'sl-ed1', heading: 'Bachelor of Design', subheading: 'Jomo Kenyatta University of Agriculture and Technology', location: '', start: '2015', end: '2019', description: '' },
+        { id: 'sl-ed1', heading: 'Bachelor of Design', subheading: 'Berlin University of the Arts', location: '', start: '2015', end: '2019', description: '' },
       ],
     },
   ],
@@ -264,11 +264,11 @@ TEMPLATE_SAMPLES.slate = {
 
 TEMPLATE_SAMPLES.bloom = {
   basics: {
-    name: 'Amina Hassan',
+    name: 'Isabela Rocha',
     title: 'Marketing Manager',
-    email: 'amina.hassan@brandmail.com',
-    phone: '+254 711 998 776',
-    address: 'Mombasa, Kenya',
+    email: 'isabela.rocha@brandmail.com.br',
+    phone: '+55 11 98765-4321',
+    address: 'São Paulo, Brazil',
     visibleExtra: [],
   },
   sections: [
@@ -280,17 +280,17 @@ TEMPLATE_SAMPLES.bloom = {
       id: 'bl-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'bl-e1', heading: 'Marketing Manager', subheading: 'Jumia Kenya',
-          location: 'Nairobi, Kenya', start: 'Apr 2021', end: 'Present',
+          id: 'bl-e1', heading: 'Marketing Manager', subheading: 'Nubank',
+          location: 'São Paulo, Brazil', start: 'Apr 2021', end: 'Present',
           description: bullets(
-            'Lead a team of five running paid social, SEO, and lifecycle email campaigns across the marketplace.',
+            'Lead a team of five running paid social, SEO, and lifecycle email campaigns across the app.',
             'Grew organic traffic by 42% year-over-year through content and SEO investment.',
-            'Managed a KES 30M annual marketing budget across digital and offline channels.'
+            'Managed an annual marketing budget of R$ 6M across digital and offline channels.'
           ),
         },
         {
-          id: 'bl-e2', heading: 'Brand Executive', subheading: 'Coca-Cola Africa',
-          location: 'Nairobi, Kenya', start: 'Jan 2018', end: 'Mar 2021',
+          id: 'bl-e2', heading: 'Brand Executive', subheading: 'Magazine Luiza',
+          location: 'São Paulo, Brazil', start: 'Jan 2018', end: 'Mar 2021',
           description: bullets(
             'Executed regional brand campaigns across TV, radio, and social media for two core product lines.',
             'Coordinated with agencies on creative production, from brief to final delivery.',
@@ -307,11 +307,11 @@ TEMPLATE_SAMPLES.bloom = {
       ],
       tags: ['SEO', 'Google Ads', 'Meta Ads', 'Email Marketing', 'Brand Strategy', 'Content Creation', 'Campaign Management'],
     },
-    { id: 'bl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)', 'Arabic (conversational)'] },
+    { id: 'bl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Portuguese (native)', 'English (fluent)', 'Spanish (conversational)'] },
     {
       id: 'bl-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'bl-ed1', heading: 'Bachelor of Commerce – Marketing', subheading: 'Kenyatta University', location: '', start: '2013', end: '2017', description: '' },
+        { id: 'bl-ed1', heading: 'Bachelor of Business Administration – Marketing', subheading: 'University of São Paulo', location: '', start: '2013', end: '2017', description: '' },
       ],
     },
   ],
@@ -319,11 +319,11 @@ TEMPLATE_SAMPLES.bloom = {
 
 TEMPLATE_SAMPLES.nova = {
   basics: {
-    name: 'Faith Achieng',
+    name: 'Ananya Sharma',
     title: 'Data Analyst',
-    email: 'faith.achieng@datamail.com',
-    phone: '+254 715 667 889',
-    address: 'Kisumu, Kenya',
+    email: 'ananya.sharma@datamail.in',
+    phone: '+91 98765 43210',
+    address: 'Bengaluru, India',
     visibleExtra: [],
   },
   sections: [
@@ -335,21 +335,21 @@ TEMPLATE_SAMPLES.nova = {
       id: 'nv-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'nv-e1', heading: 'Senior Data Analyst', subheading: 'Kenya Revenue Authority',
-          location: 'Nairobi, Kenya', start: 'Jun 2022', end: 'Present',
+          id: 'nv-e1', heading: 'Senior Data Analyst', subheading: 'Flipkart',
+          location: 'Bengaluru, India', start: 'Jun 2022', end: 'Present',
           description: bullets(
-            'Build and maintain Power BI dashboards tracking revenue collection trends across regional offices.',
+            'Build and maintain Power BI dashboards tracking sales and fulfilment trends across regional hubs.',
             'Automated a monthly reporting pipeline in Python, cutting report turnaround from 3 days to 4 hours.',
-            'Partner with policy teams to model the projected impact of proposed tax changes.'
+            'Partner with category teams to model the projected impact of proposed pricing changes.'
           ),
         },
         {
-          id: 'nv-e2', heading: 'Data Analyst', subheading: 'iHub',
-          location: 'Nairobi, Kenya', start: 'Aug 2020', end: 'May 2022',
+          id: 'nv-e2', heading: 'Data Analyst', subheading: 'Swiggy',
+          location: 'Bengaluru, India', start: 'Aug 2020', end: 'May 2022',
           description: bullets(
-            'Analysed program outcomes data for 15+ startup cohorts to inform funding recommendations.',
+            'Analysed delivery performance data across 15+ cities to inform operational decisions.',
             'Wrote SQL queries against a growing internal database to support ad-hoc leadership requests.',
-            'Presented quarterly insights reports to the program management team.'
+            'Presented quarterly insights reports to the operations leadership team.'
           ),
         },
       ],
@@ -362,11 +362,11 @@ TEMPLATE_SAMPLES.nova = {
       ],
       tags: ['SQL', 'Python', 'Power BI', 'Excel', 'Tableau', 'Google Sheets'],
     },
-    { id: 'nv-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+    { id: 'nv-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Hindi (native)', 'Kannada (conversational)'] },
     {
       id: 'nv-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'nv-ed1', heading: 'Bachelor of Science – Statistics', subheading: 'University of Nairobi', location: '', start: '2016', end: '2020', description: '' },
+        { id: 'nv-ed1', heading: 'Bachelor of Science – Statistics', subheading: 'Indian Statistical Institute', location: '', start: '2016', end: '2020', description: '' },
       ],
     },
   ],
@@ -374,11 +374,11 @@ TEMPLATE_SAMPLES.nova = {
 
 TEMPLATE_SAMPLES.codex = {
   basics: {
-    name: 'Peter Mwangi',
+    name: 'Daniel Kim',
     title: 'Software Engineer',
-    email: 'peter.mwangi@devmail.com',
-    phone: '+254 708 445 990',
-    address: 'Nairobi, Kenya',
+    email: 'daniel.kim@devmail.ca',
+    phone: '+1 (416) 555-0192',
+    address: 'Toronto, ON, Canada',
     visibleExtra: [],
   },
   sections: [
@@ -390,8 +390,8 @@ TEMPLATE_SAMPLES.codex = {
       id: 'cx-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'cx-e1', heading: 'Senior Software Engineer', subheading: 'Flutterwave',
-          location: 'Nairobi, Kenya', start: 'Mar 2022', end: 'Present',
+          id: 'cx-e1', heading: 'Senior Software Engineer', subheading: 'Shopify',
+          location: 'Toronto, ON, Canada', start: 'Mar 2022', end: 'Present',
           description: bullets(
             'Built and maintain payment settlement APIs processing over 500,000 transactions daily.',
             'Led migration of a core service from a monolith to Go microservices, cutting p99 latency by 35%.',
@@ -399,10 +399,10 @@ TEMPLATE_SAMPLES.codex = {
           ),
         },
         {
-          id: 'cx-e2', heading: 'Software Engineer', subheading: 'Craft Silicon',
-          location: 'Nairobi, Kenya', start: 'Jan 2019', end: 'Feb 2022',
+          id: 'cx-e2', heading: 'Software Engineer', subheading: 'Wealthsimple',
+          location: 'Toronto, ON, Canada', start: 'Jan 2019', end: 'Feb 2022',
           description: bullets(
-            'Developed React front-ends and REST APIs for core banking software used by 30+ bank clients.',
+            'Developed React front-ends and REST APIs for investing products used by over a million clients.',
             'Wrote automated test suites that raised backend coverage from 40% to 85%.',
             'Fixed production incidents as part of a rotating on-call schedule.'
           ),
@@ -417,11 +417,11 @@ TEMPLATE_SAMPLES.codex = {
       ],
       tags: ['JavaScript', 'Go', 'Python', 'React', 'Node.js', 'Django'],
     },
-    { id: 'cx-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+    { id: 'cx-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Korean (native)'] },
     {
       id: 'cx-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'cx-ed1', heading: 'Bachelor of Science – Computer Science', subheading: 'Jomo Kenyatta University of Agriculture and Technology', location: '', start: '2014', end: '2018', description: '' },
+        { id: 'cx-ed1', heading: 'Bachelor of Science – Computer Science', subheading: 'University of Waterloo', location: '', start: '2014', end: '2018', description: '' },
       ],
     },
   ],
@@ -429,11 +429,11 @@ TEMPLATE_SAMPLES.codex = {
 
 TEMPLATE_SAMPLES.ledger = {
   basics: {
-    name: 'Susan Njeri',
+    name: 'Fatima Al-Sayed',
     title: 'Chief Financial Officer',
-    email: 'susan.njeri@financemail.com',
-    phone: '+254 720 556 112',
-    address: 'Nairobi, Kenya',
+    email: 'fatima.alsayed@financemail.com',
+    phone: '+971 50 123 4567',
+    address: 'Dubai, United Arab Emirates',
     visibleExtra: [],
   },
   sections: [
@@ -445,17 +445,17 @@ TEMPLATE_SAMPLES.ledger = {
       id: 'lg-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'lg-e1', heading: 'Chief Financial Officer', subheading: 'British American Tobacco Kenya',
-          location: 'Nairobi, Kenya', start: 'Jan 2021', end: 'Present',
+          id: 'lg-e1', heading: 'Chief Financial Officer', subheading: 'Emirates NBD',
+          location: 'Dubai, United Arab Emirates', start: 'Jan 2021', end: 'Present',
           description: bullets(
-            'Own financial strategy and reporting for a business with over KES 20 billion in annual revenue.',
+            'Own financial strategy and reporting for a business unit with over AED 2 billion in annual revenue.',
             'Led a treasury restructuring that reduced foreign exchange exposure by 25%.',
             'Present quarterly financial performance to the board and regional leadership team.'
           ),
         },
         {
-          id: 'lg-e2', heading: 'Finance Manager', subheading: 'Equity Bank',
-          location: 'Nairobi, Kenya', start: 'Jun 2015', end: 'Dec 2020',
+          id: 'lg-e2', heading: 'Finance Manager', subheading: 'PwC Middle East',
+          location: 'Dubai, United Arab Emirates', start: 'Jun 2015', end: 'Dec 2020',
           description: bullets(
             'Managed financial reporting and budget consolidation across six regional business units.',
             'Led IFRS 9 implementation ahead of the regulatory deadline.',
@@ -468,12 +468,12 @@ TEMPLATE_SAMPLES.ledger = {
       id: 'lg-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
       tags: ['Financial Strategy', 'Audit & Compliance', 'Treasury Management', 'IFRS Reporting', 'Team Leadership'],
     },
-    { id: 'lg-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+    { id: 'lg-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Arabic (native)', 'English (fluent)'] },
     {
       id: 'lg-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'lg-ed1', heading: 'MBA – Finance', subheading: 'University of Nairobi', location: '', start: '2013', end: '2015', description: '' },
-        { id: 'lg-ed2', heading: 'Bachelor of Commerce – Accounting', subheading: 'Egerton University', location: '', start: '2005', end: '2009', description: '' },
+        { id: 'lg-ed1', heading: 'MBA – Finance', subheading: 'London Business School', location: '', start: '2013', end: '2015', description: '' },
+        { id: 'lg-ed2', heading: 'Bachelor of Commerce – Accounting', subheading: 'American University of Sharjah', location: '', start: '2005', end: '2009', description: '' },
       ],
     },
   ],
@@ -481,11 +481,11 @@ TEMPLATE_SAMPLES.ledger = {
 
 TEMPLATE_SAMPLES.amber = {
   basics: {
-    name: 'James Mutua',
+    name: "Liam O'Connor",
     title: 'IT Project Manager',
-    email: 'james.mutua@consultmail.com',
-    phone: '+254 733 887 220',
-    address: 'Nairobi, Kenya',
+    email: 'liam.oconnor@consultmail.com.au',
+    phone: '+61 4 1234 5678',
+    address: 'Sydney, Australia',
     availability: 'Open to hybrid and remote roles',
     visibleExtra: ['availability'],
   },
@@ -498,8 +498,8 @@ TEMPLATE_SAMPLES.amber = {
       id: 'am-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'am-e1', heading: 'Senior Project Manager', subheading: 'Deloitte Consulting',
-          location: 'Nairobi, Kenya', start: 'Sep 2021', end: 'Present',
+          id: 'am-e1', heading: 'Senior Project Manager', subheading: 'Deloitte Australia',
+          location: 'Sydney, Australia', start: 'Sep 2021', end: 'Present',
           description: bullets(
             'Lead delivery of core banking system upgrades for three regional bank clients.',
             'Manage cross-functional teams of up to 20 people across engineering, QA, and change management.',
@@ -507,8 +507,8 @@ TEMPLATE_SAMPLES.amber = {
           ),
         },
         {
-          id: 'am-e2', heading: 'IT Project Manager', subheading: 'Safaricom PLC',
-          location: 'Nairobi, Kenya', start: 'Mar 2018', end: 'Aug 2021',
+          id: 'am-e2', heading: 'IT Project Manager', subheading: 'Telstra',
+          location: 'Sydney, Australia', start: 'Mar 2018', end: 'Aug 2021',
           description: bullets(
             'Delivered internal tooling projects supporting customer care and network operations teams.',
             'Ran sprint planning and stand-ups for two scrum teams totaling 14 engineers.',
@@ -525,11 +525,11 @@ TEMPLATE_SAMPLES.amber = {
       ],
       tags: ['Agile', 'Scrum', 'PMP', 'Change Management', 'Jira', 'MS Project', 'Confluence'],
     },
-    { id: 'am-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)', 'Kamba (native)'] },
+    { id: 'am-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (native)'] },
     {
       id: 'am-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'am-ed1', heading: 'Bachelor of Science – Information Technology', subheading: 'Strathmore University', location: '', start: '2011', end: '2015', description: '' },
+        { id: 'am-ed1', heading: 'Bachelor of Science – Information Technology', subheading: 'University of New South Wales', location: '', start: '2011', end: '2015', description: '' },
       ],
     },
   ],
@@ -537,11 +537,11 @@ TEMPLATE_SAMPLES.amber = {
 
 TEMPLATE_SAMPLES.willow = {
   basics: {
-    name: 'Naomi Wangari',
+    name: 'Sophie van der Berg',
     title: 'People & Culture Manager',
-    email: 'naomi.wangari@peoplemail.com',
-    phone: '+254 706 223 448',
-    address: 'Nairobi, Kenya',
+    email: 'sophie.vandenberg@peoplemail.nl',
+    phone: '+31 6 1234 5678',
+    address: 'Amsterdam, Netherlands',
     visibleExtra: [],
   },
   sections: [
@@ -557,20 +557,20 @@ TEMPLATE_SAMPLES.willow = {
       ],
       tags: ['Talent Acquisition', 'Performance Management', 'Succession Planning', 'Employee Engagement', 'DEI Programs', 'Onboarding Design'],
     },
-    { id: 'wl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)', 'Kikuyu (native)'] },
+    { id: 'wl-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['Dutch (native)', 'English (fluent)', 'German (conversational)'] },
     {
       id: 'wl-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'wl-ed1', heading: 'MSc – Human Resource Management', subheading: 'University of Nairobi', location: '', start: '2016', end: '2018', description: '' },
-        { id: 'wl-ed2', heading: 'Bachelor of Commerce', subheading: 'Moi University', location: '', start: '2010', end: '2014', description: '' },
+        { id: 'wl-ed1', heading: 'MSc – Human Resource Management', subheading: 'University of Amsterdam', location: '', start: '2016', end: '2018', description: '' },
+        { id: 'wl-ed2', heading: 'Bachelor of Business Administration', subheading: 'Erasmus University Rotterdam', location: '', start: '2010', end: '2014', description: '' },
       ],
     },
     {
       id: 'wl-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'wl-e1', heading: 'Head of People & Culture', subheading: 'Tala',
-          location: 'Nairobi, Kenya', start: 'Jan 2021', end: 'Present',
+          id: 'wl-e1', heading: 'Head of People & Culture', subheading: 'Booking.com',
+          location: 'Amsterdam, Netherlands', start: 'Jan 2021', end: 'Present',
           description: bullets(
             'Built the company’s first structured performance review cycle, adopted across 4 country offices.',
             'Lead talent acquisition for engineering and product roles, cutting time-to-hire by 35%.',
@@ -578,12 +578,12 @@ TEMPLATE_SAMPLES.willow = {
           ),
         },
         {
-          id: 'wl-e2', heading: 'HR Business Partner', subheading: 'Sendy',
-          location: 'Nairobi, Kenya', start: 'Apr 2017', end: 'Dec 2020',
+          id: 'wl-e2', heading: 'HR Business Partner', subheading: 'Adyen',
+          location: 'Amsterdam, Netherlands', start: 'Apr 2017', end: 'Dec 2020',
           description: bullets(
             'Partnered with department heads on org design as headcount grew from 60 to 200.',
             'Redesigned the onboarding program, improving new-hire 90-day retention by 20%.',
-            'Managed employee relations casework across the Nairobi and Lagos offices.'
+            'Managed employee relations casework across the Amsterdam and Berlin offices.'
           ),
         },
       ],
@@ -593,11 +593,11 @@ TEMPLATE_SAMPLES.willow = {
 
 TEMPLATE_SAMPLES.clover = {
   basics: {
-    name: 'Grace Chebet',
+    name: 'Chioma Eze',
     title: 'Customer Success Manager',
-    email: 'grace.chebet@growthmail.com',
-    phone: '+254 712 998 001',
-    address: 'Eldoret, Kenya',
+    email: 'chioma.eze@growthmail.com',
+    phone: '+234 802 345 6789',
+    address: 'Lagos, Nigeria',
     visibleExtra: [],
   },
   sections: [
@@ -609,17 +609,17 @@ TEMPLATE_SAMPLES.clover = {
       id: 'cv-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'cv-e1', heading: 'Customer Success Manager', subheading: 'Zoho Corporation (Africa)',
-          location: 'Nairobi, Kenya', start: 'Feb 2022', end: 'Present',
+          id: 'cv-e1', heading: 'Customer Success Manager', subheading: 'Paystack',
+          location: 'Lagos, Nigeria', start: 'Feb 2022', end: 'Present',
           description: bullets(
             'Own a portfolio of 60+ mid-market accounts, maintaining a 94% annual renewal rate.',
             'Run onboarding programs that cut average time-to-value from 6 weeks to 3 weeks.',
-            'Identify upsell opportunities that contributed KES 4.2M in expansion revenue last year.'
+            'Identify upsell opportunities that contributed ₦12M in expansion revenue last year.'
           ),
         },
         {
-          id: 'cv-e2', heading: 'Customer Success Associate', subheading: 'HubSpot (Remote)',
-          location: 'Nairobi, Kenya', start: 'Jun 2019', end: 'Jan 2022',
+          id: 'cv-e2', heading: 'Customer Success Associate', subheading: 'Interswitch',
+          location: 'Lagos, Nigeria', start: 'Jun 2019', end: 'Jan 2022',
           description: bullets(
             'Supported 100+ small-business customers through onboarding, training, and renewal conversations.',
             'Maintained a customer satisfaction score above 90% across two consecutive years.',
@@ -632,11 +632,11 @@ TEMPLATE_SAMPLES.clover = {
       id: 'cv-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
       tags: ['Customer Onboarding', 'Account Management', 'Retention Strategy', 'HubSpot', 'Zoho CRM'],
     },
-    { id: 'cv-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+    { id: 'cv-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Yoruba (native)', 'Igbo (conversational)'] },
     {
       id: 'cv-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'cv-ed1', heading: 'Bachelor of Commerce', subheading: 'Moi University', location: '', start: '2015', end: '2019', description: '' },
+        { id: 'cv-ed1', heading: 'Bachelor of Science – Business Administration', subheading: 'University of Lagos', location: '', start: '2015', end: '2019', description: '' },
       ],
     },
   ],
@@ -734,36 +734,36 @@ TEMPLATE_SAMPLES.portrait = {
 };
 TEMPLATE_SAMPLES.meridian = {
   basics: {
-    name: 'David Kimani',
+    name: 'Wei Ling Tan',
     title: 'Operations Director',
-    email: 'david.kimani@opsmail.com',
-    phone: '+254 722 334 556',
-    address: 'Nairobi, Kenya',
+    email: 'weiling.tan@opsmail.com',
+    phone: '+65 8123 4567',
+    address: 'Singapore',
     visibleExtra: [],
   },
   sections: [
     {
       id: 'md-summary', type: 'summary', title: 'Profile', kind: 'text',
-      content: '<p>Operations executive with over 10 years scaling logistics and mobility businesses across East Africa. Known for building operational discipline into fast-growing teams without slowing down the pace of growth.</p>',
+      content: '<p>Operations executive with over 10 years scaling logistics and mobility businesses across Southeast Asia. Known for building operational discipline into fast-growing teams without slowing down the pace of growth.</p>',
     },
     {
       id: 'md-exp', type: 'experience', title: 'Experience', kind: 'entries',
       entries: [
         {
-          id: 'md-e1', heading: 'Operations Director', subheading: 'Bolt Kenya',
-          location: 'Nairobi, Kenya', start: 'May 2020', end: 'Present',
+          id: 'md-e1', heading: 'Operations Director', subheading: 'Grab',
+          location: 'Singapore', start: 'May 2020', end: 'Present',
           description: bullets(
             'Oversee daily operations across four regional hubs serving over 2 million monthly rides.',
             'Redesigned driver onboarding, cutting average activation time from 9 days to 3 days.',
-            'Own the annual operations budget of KES 450M and report performance directly to the country GM.',
+            'Own the annual operations budget of SGD 12M and report performance directly to the country GM.',
             'Built a data-driven incident response process that reduced service downtime by 40%.'
           ),
         },
         {
-          id: 'md-e2', heading: 'Regional Operations Manager', subheading: 'Twiga Foods',
-          location: 'Nairobi, Kenya', start: 'Feb 2016', end: 'Apr 2020',
+          id: 'md-e2', heading: 'Regional Operations Manager', subheading: 'DHL Express',
+          location: 'Singapore', start: 'Feb 2016', end: 'Apr 2020',
           description: bullets(
-            'Managed warehouse and last-mile delivery operations across three counties.',
+            'Managed warehouse and last-mile delivery operations across the region.',
             'Led a team of 45 field staff and drivers through a period of 3x volume growth.',
             'Implemented route optimisation that cut average delivery cost per order by 22%.'
           ),
@@ -774,12 +774,12 @@ TEMPLATE_SAMPLES.meridian = {
       id: 'md-skills', type: 'skills', title: 'Key Skills', kind: 'tags',
       tags: ['Operations Strategy', 'Supply Chain Management', 'P&L Management', 'Team Leadership', 'Process Improvement'],
     },
-    { id: 'md-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Swahili (native)'] },
+    { id: 'md-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (fluent)', 'Mandarin (native)'] },
     {
       id: 'md-edu', type: 'education', title: 'Education', kind: 'entries',
       entries: [
-        { id: 'md-ed1', heading: 'MBA', subheading: 'Strathmore Business School', location: '', start: '2018', end: '2020', description: '' },
-        { id: 'md-ed2', heading: 'Bachelor of Business Administration', subheading: 'USIU-Africa', location: '', start: '2008', end: '2012', description: '' },
+        { id: 'md-ed1', heading: 'MBA', subheading: 'National University of Singapore', location: '', start: '2018', end: '2020', description: '' },
+        { id: 'md-ed2', heading: 'Bachelor of Business Administration', subheading: 'Nanyang Technological University', location: '', start: '2008', end: '2012', description: '' },
       ],
     },
   ],
