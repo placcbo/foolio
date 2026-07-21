@@ -76,7 +76,7 @@ const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items);
 // as the app being broken. These layouts get a reduced nav with only the
 // controls that genuinely apply: document settings (date/page format feed
 // the exporter), switching templates, and the accent color.
-const SELF_CONTAINED_LAYOUTS = new Set(['simple', 'classic', 'slate', 'bloom', 'portrait', 'meridian', 'nova', 'codex', 'ledger', 'amber', 'willow', 'clover', 'chronicle']);
+const SELF_CONTAINED_LAYOUTS = new Set(['simple', 'classic', 'slate', 'bloom', 'portrait', 'meridian', 'nova', 'codex', 'ledger', 'amber', 'willow', 'clover', 'chronicle', 'lens']);
 
 const LANGUAGES = ['English (UK)', 'English (US)', 'Spanish', 'French', 'German', 'Portuguese'];
 const PAGE_FORMATS = ['A4', 'US Letter'];

@@ -109,6 +109,14 @@ export const TEMPLATES = [
     categories: ['simple', 'modern'],
     swatches: ['#15803d', '#2a6f97', '#5b4bb5', '#c85a54', '#b3541e', '#0f6e5c'],
   },
+  {
+    id: 'lens',
+    name: 'Lens',
+    layout: 'lens',
+    supportsPhoto: true,
+    categories: ['professional', 'modern'],
+    swatches: ['#2b4a6f', '#1a5c50', '#7b2d43', '#5b4bb5', '#b3541e', '#000000'],
+  },
 ];
 
 export const FILTERS = [

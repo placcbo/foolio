@@ -14,6 +14,7 @@ import { exportAmberTemplatePdf } from '../utils/amberPdf';
 import { exportWillowTemplatePdf } from '../utils/willowPdf';
 import { exportCloverTemplatePdf } from '../utils/cloverPdf';
 import { exportChronicleTemplatePdf } from '../utils/chroniclePdf';
+import { exportLensTemplatePdf } from '../utils/lensPdf';
 
 export default function DownloadMenu({ resume, paperRef, className = 'btn-download' }) {
   const [open, setOpen] = useState(false);
@@ -53,6 +54,7 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
         willow: exportWillowTemplatePdf,
         clover: exportCloverTemplatePdf,
         chronicle: exportChronicleTemplatePdf,
+        lens: exportLensTemplatePdf,
       };
       const dedicated = exporters[resume.templateId];
       if (dedicated) {

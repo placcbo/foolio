@@ -3,6 +3,8 @@
 // the exact same person — just recolored — which made 21 templates feel
 // like one template in 21 colors. Descriptions use real markup (<ul><li>)
 // since entry descriptions render as rich text, not line-split plain text.
+import { DANIEL_AVATAR, CAMILA_AVATAR } from './sampleAvatars';
+
 function bullets(...points) {
   return `<ul>${points.map((p) => `<li>${p}</li>`).join('')}</ul>`;
 }
@@ -642,11 +644,6 @@ TEMPLATE_SAMPLES.clover = {
   ],
 };
 
-// Portrait sample — its own persona. The photo is an AI-generated headshot
-// (not a real person), saved at public/samples/portrait-daniel.png, so the
-// preview shows the photo slot actually populated instead of skipping it.
-const PORTRAIT_AVATAR = '/samples/portrait-daniel.png';
-
 TEMPLATE_SAMPLES.portrait = {
   basics: {
     name: 'Daniel Mwangi',
@@ -655,7 +652,7 @@ TEMPLATE_SAMPLES.portrait = {
     phone: '+254 712 345 678',
     address: 'Nairobi, Kenya',
     linkedin: 'linkedin.com/in/danielmwangi',
-    photo: PORTRAIT_AVATAR,
+    photo: DANIEL_AVATAR,
     visibleExtra: ['linkedin'],
   },
   sections: [
@@ -726,6 +723,68 @@ TEMPLATE_SAMPLES.portrait = {
     },
   ],
 };
+TEMPLATE_SAMPLES.lens = {
+  basics: {
+    name: 'Camila Rivera',
+    title: 'Sales Manager',
+    email: 'camila.rivera@email.com',
+    phone: '+1 305 555 0184',
+    address: 'Miami, United States',
+    linkedin: 'linkedin.com/in/camila-rivera',
+    photo: CAMILA_AVATAR,
+    visibleExtra: ['linkedin'],
+  },
+  sections: [
+    {
+      id: 'ls-summary', type: 'summary', title: 'Summary', kind: 'text',
+      content: '<p>Results-driven sales professional with 6+ years of experience in account growth, client relationship management, and pipeline development across B2B environments. Strong track record of improving conversion rates, supporting revenue targets, and building trust with diverse customer groups in English- and Spanish-speaking markets. Brings a practical, people-focused approach to sales planning, team coordination, and long-term customer retention.</p>',
+    },
+    {
+      id: 'ls-exp', type: 'experience', title: 'Professional Experience', kind: 'entries',
+      entries: [
+        {
+          id: 'ls-e1', heading: 'BrightPath Business Solutions', subheading: 'Sales Manager',
+          location: 'Miami, United States', start: '01/2023', end: 'Present',
+          description: bullets(
+            'Manage a portfolio of mid-market clients across retail and service sectors.',
+            'Lead quarterly sales planning and improved team conversion rates by 14%.',
+            'Build strong client relationships that increased renewals and upsell.'
+          ),
+        },
+        {
+          id: 'ls-e2', heading: 'Horizon Office Supply', subheading: 'Account Manager',
+          location: 'Orlando, United States', start: '03/2020', end: '12/2022',
+          description: bullets(
+            'Owned inbound and outbound sales activity for regional business accounts.',
+            'Delivered tailored product proposals and consistently exceeded revenue goals.',
+            'Coordinated with operations teams to improve customer satisfaction.'
+          ),
+        },
+        {
+          id: 'ls-e3', heading: 'SunPeak Telecom', subheading: 'Sales Coordinator',
+          location: 'Miami, United States', start: '06/2018', end: '02/2020',
+          description: bullets(
+            'Supported account execs with lead tracking, reporting, and proposal preparation.',
+            'Contributed to pipeline organization and improved follow-up consistency.'
+          ),
+        },
+      ],
+    },
+    {
+      id: 'ls-edu', type: 'education', title: 'Education', kind: 'entries',
+      entries: [
+        { id: 'ls-ed1', heading: 'Bachelor of Business Administration', subheading: 'Florida International University', location: 'Miami, United States', start: '2014', end: '2018', description: '' },
+        { id: 'ls-ed2', heading: 'Associate Degree in Marketing', subheading: 'Miami Dade College', location: 'Miami, United States', start: '2012', end: '2014', description: '' },
+      ],
+    },
+    {
+      id: 'ls-skills', type: 'skills', title: 'Skills', kind: 'tags',
+      tags: ['Account Management', 'CRM Management', 'Sales Forecasting', 'Negotiation', 'Client Retention', 'Pipeline Development'],
+    },
+    { id: 'ls-lang', type: 'languages', title: 'Languages', kind: 'tags', tags: ['English (native)', 'Spanish (fluent)'] },
+  ],
+};
+
 TEMPLATE_SAMPLES.meridian = {
   basics: {
     name: 'Wei Ling Tan',
