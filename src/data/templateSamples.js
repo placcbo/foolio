@@ -642,25 +642,19 @@ TEMPLATE_SAMPLES.clover = {
   ],
 };
 
-// Portrait sample — its own persona, with a neutral silhouette avatar as
-// the photo placeholder (a shape, not a fabricated face).
-const PORTRAIT_AVATAR =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='300' viewBox='0 0 240 300'>" +
-  "<rect width='240' height='300' fill='%23e6ecf2'/>" +
-  "<path d='M62 152c0-48 26-80 58-80s58 32 58 80v70H62z' fill='%23241f26'/>" +
-  "<circle cx='120' cy='130' r='41' fill='%238a5a3c'/>" +
-  "<path d='M79 118c5-27 22-40 41-40s36 13 41 40c-10-15-24-23-41-23s-31 8-41 23z' fill='%23241f26'/>" +
-  "<path d='M36 300c0-48 38-79 84-79s84 31 84 79z' fill='%232b4a6f'/>" +
-  "<path d='M105 228l15 25 15-25-15-6z' fill='%23f4f2ee'/></svg>";
+// Portrait sample — its own persona. The photo is an AI-generated headshot
+// (not a real person), saved at public/samples/portrait-daniel.png, so the
+// preview shows the photo slot actually populated instead of skipping it.
+const PORTRAIT_AVATAR = '/samples/portrait-daniel.png';
 
 TEMPLATE_SAMPLES.portrait = {
   basics: {
-    name: 'Wanjiku Mwangi',
+    name: 'Daniel Mwangi',
     title: 'Finance Manager',
-    email: 'wanjiku.mwangi@email.com',
+    email: 'daniel.mwangi@email.com',
     phone: '+254 712 345 678',
     address: 'Nairobi, Kenya',
-    linkedin: 'linkedin.com/in/wanjikumwangi',
+    linkedin: 'linkedin.com/in/danielmwangi',
     photo: PORTRAIT_AVATAR,
     visibleExtra: ['linkedin'],
   },
