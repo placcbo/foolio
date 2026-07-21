@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TemplateCard from './TemplateCard';
 import { TEMPLATES, FILTERS } from '../data/templates';
-import { IconChevronDown, IconX, IconGrid, IconStar, IconBox, IconHexagon, IconPalette, IconUser, IconFlag } from './icons';
+import { IconChevronDown, IconX, IconGrid, IconStar, IconBox, IconHexagon, IconPalette, IconUser, IconFlag, IconCheck } from './icons';
 
 // The grid's container caps at 1280px, which fits exactly three 300px
 // cards per row (a fourth would need 1296px) — so this must stay a
@@ -18,6 +18,17 @@ const FILTER_ICONS = {
   professional: IconUser,
   executive: IconFlag,
 };
+
+// Quick scannable trust signals — deliberately things that are true today
+// without needing real usage numbers, unlike "trusted by X users" claims
+// this app can't back up yet.
+const PROOF_ITEMS = ['ATS-friendly', 'PDF & DOCX export', 'Free to start'];
+
+const HOW_IT_WORKS = [
+  { num: '01', label: 'Pick a template' },
+  { num: '02', label: 'Fill in your details' },
+  { num: '03', label: 'Export to PDF or DOCX' },
+];
 
 export default function TemplatePicker({ onSelectTemplate, onCancel, hasExistingResumes }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -59,6 +70,24 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
       <div className="picker-header">
         <h1>{hasExistingResumes ? 'Pick a design for your new resume' : 'Start building your resume'}</h1>
         <p>Choose a design you like. You can customize or switch it later.</p>
+        <div className="picker-proof-row">
+          {PROOF_ITEMS.map((item) => (
+            <span className="picker-proof-item" key={item}>
+              <IconCheck size={13} />
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="picker-how-it-works">
+        {HOW_IT_WORKS.map((step, i) => (
+          <div className="picker-how-step" key={step.num}>
+            {i > 0 && <span className="picker-how-sep" aria-hidden="true" />}
+            <span className="picker-how-step-num">{step.num}</span>
+            <span className="picker-how-step-label">{step.label}</span>
+          </div>
+        ))}
       </div>
 
       <div className="picker-toolbar">
