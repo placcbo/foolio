@@ -1,17 +1,11 @@
-import { useRef } from 'react';
 import { Logo } from './Logo';
 import { TEMPLATE_COMPONENTS } from './templates';
 import { TEMPLATES } from '../data/templates';
 import { TEMPLATE_SAMPLES } from '../data/templateSamples';
 import { SAMPLE_RESUME } from '../data/sampleResume';
 import { JOB_STATUSES } from './JobTracker';
-import { IconArrowLeft, IconCheck, IconPlus } from './icons';
-
-// Width-fit for the ~232px preview tile, same ratio the real TemplateCard
-// uses. We render the template component directly at low zoom rather than
-// reusing TemplateCard, so the strip stays light — no per-card color state,
-// no hover/preview modal machinery, just the design.
-const PREVIEW_SCALE = 232 / 794;
+import TemplateSlider from './TemplateSlider';
+import { IconCheck, IconPlus } from './icons';
 
 // The homepage leads with a curated handful, not the whole catalogue — the
 // picker is where you browse all of them. Left-to-right reads plainest →
@@ -30,43 +24,71 @@ const DEMO_MATCH = {
 };
 const DEMO_STATUSES = JOB_STATUSES.slice(0, 4);
 
-function TemplateStripCard({ template, onPick }) {
-  const Template = TEMPLATE_COMPONENTS[template.layout];
-  const sample = TEMPLATE_SAMPLES[template.id] || SAMPLE_RESUME;
-  const color = template.swatches[0];
-  const previewResume = { ...sample, templateId: template.layout, accentColor: color };
+// The hero shows the product rather than describing it. Lens is the pick
+// because its sample carries a real headshot in the header band — a resume
+// with a face on it reads as a person's document at a glance, where a wall
+// of grey text just reads as filler. Its big name/photo lockup also survives
+// being scaled down, which the denser text-only templates don't. Only
+// 'lens' and 'portrait' support photos at all; Portrait puts its photo in a
+// sidebar rather than the header.
+const HERO_TEMPLATE_ID = 'lens';
 
-  return (
-    <button
-      type="button"
-      className="home-strip-card"
-      onClick={() => onPick(template.layout, color, template.preset)}
-      aria-label={`Start with the ${template.name} template`}
-    >
-      <span className="home-strip-preview" aria-hidden="true">
-        <span className="home-strip-scale" style={{ zoom: PREVIEW_SCALE }}>
-          <Template resume={previewResume} accentColor={color} />
-        </span>
-      </span>
-      <span className="home-strip-foot">
-        <span className="home-strip-name">{template.name}</span>
-        <span className="home-strip-use">Use this <span aria-hidden="true">&rarr;</span></span>
-      </span>
-    </button>
-  );
-}
+// Claims the app can actually stand behind today. Deliberately no
+// "free forever" — auth and a backend are coming, and copy written now
+// shouldn't become a lie later.
+const BENEFITS = [
+  ['No account needed', 'Start building immediately. Nothing to sign up for.'],
+  ['No watermarks', 'Your exports carry your name, not ours.'],
+  ['Unlimited exports', 'Download as many PDFs and DOCX files as you want.'],
+  ['Fifteen templates', 'Switch design or recolor at any point without retyping.'],
+  ['Bring an old resume', 'Paste in plain text and it fills the sections for you.'],
+  ['Stays on your device', 'Your resume is saved in your browser, not on a server.'],
+];
+
+// Honest answers to the questions a no-account, browser-only tool actually
+// raises — especially the one most builders skip: what happens when the
+// browser is cleared.
+const FAQS = [
+  [
+    'Is it really free?',
+    'Yes. You can build a resume and export it as a PDF or DOCX without an account and without paying. There are no watermarks and no export limits.',
+  ],
+  [
+    'Where is my resume stored?',
+    'In your browser’s local storage, on the device you built it on. It is never uploaded — there is no server holding a copy of it.',
+  ],
+  [
+    'What if I clear my browser or switch devices?',
+    'Your resume would be gone, because the browser is the only place it lives. Export a copy whenever you finish a session. Optional accounts that sync across devices are on the way.',
+  ],
+  [
+    'Will it get through an applicant tracking system?',
+    'Exports are real, selectable text — not a screenshot of a resume — so parsers can read them. No builder can promise a specific ATS will score you well, but the file itself won’t be the problem.',
+  ],
+  [
+    'Can I import a resume I already have?',
+    'Yes. Paste it in as plain text and Draftly splits it into sections you can edit. Copy out of Word, Google Docs, or an existing PDF.',
+  ],
+  [
+    'Can I keep more than one resume?',
+    'Yes. Keep a separate copy per role, duplicate one to tailor it, and link each to a job in the tracker.',
+  ],
+];
 
 export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, isAuthenticated }) {
-  const stripRef = useRef(null);
   const featured = FEATURED_IDS
     .map((id) => TEMPLATES.find((t) => t.id === id))
     .filter(Boolean);
 
-  function scrollStrip(dir) {
-    const el = stripRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 260, behavior: 'smooth' });
-  }
+  const heroTemplate = TEMPLATES.find((t) => t.id === HERO_TEMPLATE_ID);
+  const HeroTemplate = heroTemplate ? TEMPLATE_COMPONENTS[heroTemplate.layout] : null;
+  const heroResume = heroTemplate
+    ? {
+        ...(TEMPLATE_SAMPLES[heroTemplate.id] || SAMPLE_RESUME),
+        templateId: heroTemplate.layout,
+        accentColor: heroTemplate.swatches[0],
+      }
+    : null;
 
   return (
     <div className="home">
@@ -96,51 +118,40 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
 
       <main className="home-main">
         <section className="home-hero">
-          <h1 className="home-hero-title">
-            Build a resume
-            <br />
-            worth reading.
-          </h1>
-          <p className="home-hero-sub">
-            Fifteen designs, real PDF and DOCX export, and an editor that stays out of your way.
-            No signup to start building.
-          </p>
-          <div className="home-hero-cta">
-            <button type="button" className="home-btn-solid home-btn-lg" onClick={onStart}>
-              Build your resume
-            </button>
-            <span className="home-hero-note">Free to start &middot; your data stays in your browser</span>
-          </div>
-        </section>
-
-        <section className="home-strip-section" aria-labelledby="home-strip-label">
-          <div className="home-strip-head">
-            <div>
-              <span className="home-eyebrow" id="home-strip-label">Templates</span>
-              <h2 className="home-section-title">Pick where you start.</h2>
-            </div>
-            <div className="home-strip-arrows" aria-hidden="true">
-              <button type="button" className="home-strip-arrow" onClick={() => scrollStrip(-1)} aria-label="Previous templates">
-                <IconArrowLeft size={18} />
+          <div className="home-hero-copy">
+            <span className="home-eyebrow home-hero-eyebrow">Free online resume builder</span>
+            {/* No hard <br /> — the copy column is narrower now that the shot
+                sits beside it, so a forced break just produces ragged
+                four-line wrapping at some widths. Let it break naturally. */}
+            <h1 className="home-hero-title">Build a resume worth reading.</h1>
+            <p className="home-hero-sub">
+              Fifteen designs, real PDF and DOCX export, and an editor that stays out of your way.
+              No signup to start building.
+            </p>
+            <div className="home-hero-cta">
+              <button type="button" className="home-btn-solid home-btn-lg" onClick={onStart}>
+                Build your resume
               </button>
-              <button type="button" className="home-strip-arrow" onClick={() => scrollStrip(1)} aria-label="More templates">
-                <IconArrowLeft size={18} style={{ transform: 'rotate(180deg)' }} />
-              </button>
+              <span className="home-hero-note">Free to start &middot; your data stays in your browser</span>
             </div>
           </div>
 
-          <div className="home-strip" ref={stripRef}>
-            {featured.map((t) => (
-              <TemplateStripCard key={t.id} template={t} onPick={onSelectTemplate} />
-            ))}
-            <button type="button" className="home-strip-all" onClick={onStart}>
-              <span>See all<br />templates</span>
-              <span className="home-strip-all-arrow" aria-hidden="true">&rarr;</span>
-            </button>
+          <div className="home-hero-shot" aria-hidden="true">
+            <div className="home-hero-shot-paper">
+              <div className="home-hero-shot-scale">
+                {heroTemplate && (
+                  <HeroTemplate resume={heroResume} accentColor={heroResume.accentColor} />
+                )}
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="home-track-section" aria-labelledby="home-track-label">
+        <section className="home-strip-section">
+          <TemplateSlider templates={featured} onPick={onSelectTemplate} onSeeAll={onStart} />
+        </section>
+
+        <section className="home-track-section home-reveal" aria-labelledby="home-track-label">
           <div className="home-track-copy">
             <span className="home-eyebrow" id="home-track-label">Job tracker</span>
             <h2 className="home-section-title">Know what&rsquo;s missing before you send it.</h2>
@@ -193,7 +204,7 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
           </div>
         </section>
 
-        <section className="home-steps-section">
+        <section className="home-steps-section home-reveal">
           <span className="home-eyebrow">How it works</span>
           <ol className="home-steps">
             <li className="home-step">
@@ -209,6 +220,39 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
               <span className="home-step-text">Export to PDF or DOCX, ready to send.</span>
             </li>
           </ol>
+        </section>
+        <section className="home-benefits-section home-reveal" aria-labelledby="home-benefits-label">
+          <span className="home-eyebrow" id="home-benefits-label">What you get</span>
+          <h2 className="home-section-title">No account, no watermark, no catch.</h2>
+          <ul className="home-benefits">
+            {BENEFITS.map(([title, detail]) => (
+              <li className="home-benefit" key={title}>
+                <span className="home-benefit-icon" aria-hidden="true">
+                  <IconCheck size={13} />
+                </span>
+                <span className="home-benefit-body">
+                  <span className="home-benefit-title">{title}</span>
+                  <span className="home-benefit-detail">{detail}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="home-faq-section home-reveal" aria-labelledby="home-faq-label">
+          <span className="home-eyebrow" id="home-faq-label">Questions</span>
+          <h2 className="home-section-title">Before you start.</h2>
+          <div className="home-faq">
+            {FAQS.map(([q, a]) => (
+              <details className="home-faq-item" key={q}>
+                <summary className="home-faq-q">
+                  {q}
+                  <span className="home-faq-marker" aria-hidden="true" />
+                </summary>
+                <p className="home-faq-a">{a}</p>
+              </details>
+            ))}
+          </div>
         </section>
       </main>
 
