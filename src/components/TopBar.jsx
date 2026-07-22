@@ -41,7 +41,7 @@ function ResumeSwitcher({ library, activeResumeId, onSwitch, onCreate, onRename 
   return (
     <div className="resume-switcher" ref={ref}>
       <button type="button" className="resume-select" onClick={() => setOpen((v) => !v)}>
-        {active?.name || 'Resume'}
+        <span className="resume-select-label">{active?.name || 'Resume'}</span>
         <IconChevronDown size={14} />
       </button>
 
@@ -124,7 +124,7 @@ export default function TopBar({
       {onBack && (
         <button type="button" className="back-btn" onClick={onBack}>
           <IconArrowLeft size={16} />
-          Templates
+          <span className="back-btn-label">Templates</span>
         </button>
       )}
 
@@ -132,13 +132,13 @@ export default function TopBar({
         {saveError ? (
           <span className="save-indicator save-indicator-error" title={SAVE_ERROR_MESSAGE[saveError]}>
             <IconInfo size={13} />
-            Not saved
+            <span className="save-indicator-label">Not saved</span>
           </span>
         ) : (
           savedAt && (
             <span className="save-indicator">
               <IconCheck size={13} />
-              Saved
+              <span className="save-indicator-label">Saved</span>
             </span>
           )
         )}

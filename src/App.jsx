@@ -207,6 +207,11 @@ function App() {
   // when a template is actually chosen.
   const [creatingNew, setCreatingNew] = useState(false);
   const [activeTab, setActiveTab] = useState('content');
+  // Mobile-only: the content/customize tabs normally show the edit form and
+  // the live A4 preview side by side, which doesn't fit on a phone screen.
+  // Below the mobile breakpoint this decides which of the two is visible;
+  // above it, both panels show at once and this is never read.
+  const [mobileView, setMobileView] = useState('edit');
   const [savedAt, setSavedAt] = useState(null);
   const [saveError, setSaveError] = useState(null);
   const paperRef = useRef(null);
@@ -423,9 +428,14 @@ function App() {
     );
   }
 
+  function handleTabChange(tab) {
+    setActiveTab(tab);
+    setMobileView('edit');
+  }
+
   return (
     <div className="app-shell">
-      <NavRail activeTab={activeTab} onTabChange={setActiveTab} />
+      <NavRail activeTab={activeTab} onTabChange={handleTabChange} />
 
       <div className="app-main">
         <TopBar
@@ -445,15 +455,51 @@ function App() {
         />
 
         {activeTab === 'content' ? (
-          <div className="editor-body">
-            <ContentPanel resume={resume} dispatch={dispatch} />
-            <ResumePreview resume={resume} paperRef={paperRef} />
-          </div>
+          <>
+            <div className="mobile-view-toggle">
+              <button
+                type="button"
+                className={`mobile-view-toggle-btn${mobileView === 'edit' ? ' active' : ''}`}
+                onClick={() => setMobileView('edit')}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className={`mobile-view-toggle-btn${mobileView === 'preview' ? ' active' : ''}`}
+                onClick={() => setMobileView('preview')}
+              >
+                Preview
+              </button>
+            </div>
+            <div className={`editor-body mobile-view-${mobileView}`}>
+              <ContentPanel resume={resume} dispatch={dispatch} />
+              <ResumePreview resume={resume} paperRef={paperRef} />
+            </div>
+          </>
         ) : activeTab === 'customize' ? (
-          <div className="editor-body editor-body-customize">
-            <CustomizePanel resume={resume} dispatch={dispatch} onFontPreview={handleFontPreview} />
-            <ResumePreview resume={previewResume} paperRef={paperRef} />
-          </div>
+          <>
+            <div className="mobile-view-toggle">
+              <button
+                type="button"
+                className={`mobile-view-toggle-btn${mobileView === 'edit' ? ' active' : ''}`}
+                onClick={() => setMobileView('edit')}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className={`mobile-view-toggle-btn${mobileView === 'preview' ? ' active' : ''}`}
+                onClick={() => setMobileView('preview')}
+              >
+                Preview
+              </button>
+            </div>
+            <div className={`editor-body editor-body-customize mobile-view-${mobileView}`}>
+              <CustomizePanel resume={resume} dispatch={dispatch} onFontPreview={handleFontPreview} />
+              <ResumePreview resume={previewResume} paperRef={paperRef} />
+            </div>
+          </>
         ) : activeTab === 'overview' ? (
           <ResumeLibrary
             library={library}

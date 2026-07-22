@@ -8195,3 +8195,266 @@ body.has-open-preview-modal {
 .mosaic-bullets li:last-child {
   margin-bottom: 0;
 }
+
+/* =========================================================================
+   Mobile responsive
+   Everything below is app chrome only — none of this touches the
+   .{template}-* rules above, since those are fixed-width document layouts
+   that must render identically to the PDF export regardless of viewport.
+   ========================================================================= */
+
+.mobile-view-toggle {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* ---------- app shell: nav rail becomes a bottom tab bar ---------- */
+
+  .app-shell {
+    flex-direction: column-reverse;
+  }
+
+  .nav-rail {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 4px max(4px, env(safe-area-inset-bottom));
+    gap: 0;
+    border-right: none;
+    border-top: 1px solid var(--chrome-border);
+  }
+
+  .nav-rail-mark {
+    display: none;
+  }
+
+  .nav-rail-items {
+    flex-direction: row;
+    width: 100%;
+    gap: 0;
+  }
+
+  .nav-rail-item {
+    flex: 1;
+    width: auto;
+    border-left: none;
+    border-top: 2px solid transparent;
+  }
+
+  .nav-rail-item.active {
+    border-left-color: transparent;
+    border-top-color: var(--lime);
+  }
+
+  /* ---------- top bar ---------- */
+
+  .topbar {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .back-btn {
+    padding: 8px;
+  }
+
+  .back-btn-label,
+  .save-indicator-label,
+  .btn-download-label {
+    display: none;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .resume-select {
+    padding: 8px 10px;
+  }
+
+  .resume-select-label {
+    display: inline-block;
+    max-width: 84px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ---------- content / customize: edit-preview toggle ---------- */
+
+  .mobile-view-toggle {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-view-toggle-btn {
+    flex: 1;
+    padding: 9px 0;
+    border-radius: var(--r-pill);
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .mobile-view-toggle-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .editor-body,
+  .editor-body-customize {
+    display: block;
+    overflow-y: auto;
+  }
+
+  .editor-body.mobile-view-edit .preview-panel,
+  .editor-body-customize.mobile-view-edit .preview-panel {
+    display: none;
+  }
+
+  .editor-body.mobile-view-preview .content-panel,
+  .editor-body-customize.mobile-view-preview .customize-panel {
+    display: none;
+  }
+
+  .content-panel {
+    padding: 18px 16px 60px;
+    border-right: none;
+  }
+
+  .entry-3col {
+    grid-template-columns: 1fr;
+  }
+
+  .customize-panel {
+    display: block;
+    border-right: none;
+  }
+
+  .customize-sidebar {
+    position: static;
+    max-height: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--chrome-border);
+  }
+
+  .customize-sidebar-group {
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .customize-sidebar-group-label {
+    padding: 0;
+  }
+
+  .customize-sidebar-item {
+    white-space: nowrap;
+  }
+
+  .customize-main {
+    padding: 18px 16px 60px;
+  }
+
+  /* ---------- preview panel / preview modal ---------- */
+
+  .preview-panel {
+    padding: 20px 12px;
+  }
+
+  /* Templates render at a fixed 794px (A4-equivalent) width so PDF export
+     stays pixel-for-pixel accurate — they're never made fluid. On a phone
+     that has to be shrunk down bodily instead, the same `zoom` trick the
+     card thumbnails already use elsewhere in this file. */
+  .preview-panel-trigger {
+    zoom: 0.46;
+  }
+
+  .modal-overlay,
+  .preview-modal-overlay,
+  .apply-template-overlay {
+    padding: 12px;
+  }
+
+  .modal,
+  .apply-template-modal {
+    padding: 20px;
+  }
+
+  .import-modal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-modal-template {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .preview-modal-paper-col {
+    padding: 20px 12px;
+  }
+
+  .preview-modal-live {
+    padding: 12px;
+  }
+
+  /* ---------- resume library ---------- */
+
+  .resume-library,
+  .jobs-page {
+    padding: 24px 16px 80px;
+  }
+
+  .resume-featured-card {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-featured-swatch {
+    min-height: 120px;
+  }
+
+  /* ---------- job tracker ---------- */
+
+  .jobs-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .job-fields-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* ---------- template picker ---------- */
+
+  .picker-page {
+    /* .picker-brand sits absolutely positioned near the top of this page —
+       the top padding has to stay tall enough to clear it, or the headline
+       renders right underneath/behind the wordmark. */
+    padding: 84px 16px 60px;
+  }
+
+  .picker-header h1 {
+    font-size: 28px;
+  }
+
+  .template-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}

@@ -87,7 +87,7 @@ export default function DownloadMenu({ resume, paperRef, className = 'btn-downlo
   return (
     <div className="download-menu" ref={ref}>
       <button type="button" className={className} onClick={() => setOpen((v) => !v)}>
-        {exporting ? 'Preparing…' : 'Download'}
+        <span className="btn-download-label">{exporting ? 'Preparing…' : 'Download'}</span>
         {!exporting && <IconDownload size={16} />}
       </button>
 
