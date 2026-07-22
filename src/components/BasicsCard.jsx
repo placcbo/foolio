@@ -58,6 +58,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
               <label>Full name</label>
               <input
                 type="text"
+                autoComplete="name"
                 placeholder="Your name"
                 value={basics.name}
                 onChange={(e) => updateField('name', e.target.value)}
@@ -67,6 +68,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
               <label>Professional title</label>
               <input
                 type="text"
+                autoComplete="organization-title"
                 placeholder="Target position or current role"
                 value={basics.title}
                 onChange={(e) => updateField('title', e.target.value)}
@@ -94,6 +96,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
           <div className="basics-edit-input-row">
             <input
               type="email"
+              autoComplete="email"
               placeholder="Enter email"
               value={basics.email}
               onChange={(e) => updateField('email', e.target.value)}
@@ -109,6 +112,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
           <div className="basics-edit-input-row">
             <input
               type="tel"
+              autoComplete="tel"
               placeholder="Enter Phone"
               value={basics.phone}
               onChange={(e) => updateField('phone', e.target.value)}
@@ -124,6 +128,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
           <div className="basics-edit-input-row">
             <input
               type="text"
+              autoComplete="off"
               placeholder="Enter Location"
               value={basics.address}
               onChange={(e) => updateField('address', e.target.value)}
@@ -223,6 +228,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
         <input
           className="basics-name-input"
           type="text"
+          autoComplete="name"
           placeholder="Your name"
           value={basics.name}
           onChange={(e) => updateField('name', e.target.value)}
@@ -230,6 +236,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
         <input
           className="basics-title-input"
           type="text"
+          autoComplete="organization-title"
           placeholder="Job title"
           value={basics.title}
           onChange={(e) => updateField('title', e.target.value)}
@@ -238,6 +245,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
           <IconMail size={20} />
           <input
             type="email"
+            autoComplete="email"
             placeholder="Email"
             value={basics.email}
             onChange={(e) => updateField('email', e.target.value)}
@@ -247,6 +255,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
           <IconPhone size={20} />
           <input
             type="tel"
+            autoComplete="tel"
             placeholder="Phone"
             value={basics.phone}
             onChange={(e) => updateField('phone', e.target.value)}
@@ -256,6 +265,7 @@ export default function BasicsCard({ basics, dispatch, expanded, onExpandedChang
           <IconPin size={20} />
           <input
             type="text"
+            autoComplete="off"
             placeholder="Address"
             value={basics.address}
             onChange={(e) => updateField('address', e.target.value)}
