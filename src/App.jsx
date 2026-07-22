@@ -303,7 +303,12 @@ function App() {
   }, [page]);
 
   function handleSelectTemplate(templateId, accentColor, preset) {
-    if (creatingNew) {
+    // No active resume means there's nothing for a plain SET_TEMPLATE to
+    // attach to — most commonly a first-time visitor picking their very
+    // first template, where `creatingNew` was never set true. Treat that
+    // the same as explicitly creating new, otherwise the resume being
+    // edited is never saved to the library at all.
+    if (creatingNew || !activeResumeId) {
       const id = nextId();
       const entry = {
         id,
