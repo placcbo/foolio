@@ -1,0 +1,517 @@
+/* =========================================================================
+   Draftly — Home / landing
+   Sits in front of the picker. Same system as the app: Archivo, dark chrome,
+   one lime accent used sparingly, hard offset shadows. The template strip is
+   the signature element — everything else stays quiet around it.
+   ========================================================================= */
+
+.home {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--chrome-bg);
+  color: var(--chrome-text);
+  font-family: var(--sans);
+}
+
+.draftly-logo,
+.draftly-logomark {
+  font-family: var(--heading);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: currentColor;
+  white-space: nowrap;
+}
+.draftly-logo-dot {
+  color: var(--lime);
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px clamp(20px, 5vw, 64px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--chrome-bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--chrome-border);
+}
+.home-header-logo {
+  font-size: 22px;
+}
+.home-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-btn-ghost,
+.home-btn-solid {
+  font-family: var(--heading);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  padding: 10px 16px;
+  transition: transform var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.home-btn-ghost {
+  background: transparent;
+  color: var(--chrome-text);
+  border: 1px solid var(--chrome-border);
+}
+.home-btn-ghost:hover {
+  background: var(--chrome-surface-2);
+}
+.home-btn-solid {
+  background: var(--lime);
+  color: var(--lime-ink);
+  border: 1px solid var(--lime);
+  box-shadow: 3px 3px 0 rgba(215, 255, 63, 0.25);
+}
+.home-btn-solid:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(215, 255, 63, 0.3);
+}
+.home-btn-solid:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(215, 255, 63, 0.25);
+}
+.home-btn-lg {
+  font-size: 16px;
+  padding: 15px 26px;
+}
+
+.home-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+
+.home-hero {
+  padding: clamp(56px, 12vh, 128px) 0 clamp(40px, 8vh, 80px);
+  max-width: 780px;
+}
+.home-hero-title {
+  font-family: var(--heading);
+  font-weight: 900;
+  font-size: clamp(44px, 8vw, 92px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: var(--chrome-text);
+}
+.home-hero-sub {
+  margin: 24px 0 0;
+  font-size: clamp(16px, 2.2vw, 20px);
+  line-height: 1.5;
+  color: var(--chrome-text-dim);
+  max-width: 560px;
+}
+.home-hero-cta {
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.home-hero-note {
+  font-size: 13.5px;
+  color: var(--chrome-text-dim);
+}
+
+.home-eyebrow {
+  display: inline-block;
+  font-family: var(--heading);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+.home-section-title {
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: clamp(26px, 4vw, 40px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 10px 0 0;
+  color: var(--chrome-text);
+}
+
+.home-strip-section {
+  padding: clamp(32px, 6vh, 64px) 0;
+}
+.home-strip-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.home-strip-arrows {
+  display: flex;
+  gap: 8px;
+}
+.home-strip-arrow {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--r-sm);
+  transition: transform var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+.home-strip-arrow:hover {
+  background: var(--chrome-surface-2);
+  transform: translateY(-1px);
+}
+
+.home-strip {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 6px 4px 20px;
+  margin: 0 -4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--chrome-border) transparent;
+}
+.home-strip::-webkit-scrollbar {
+  height: 8px;
+}
+.home-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.home-strip::-webkit-scrollbar-thumb {
+  background: var(--chrome-border);
+  border-radius: 999px;
+}
+
+.home-strip-card {
+  flex: 0 0 auto;
+  width: 232px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.home-strip-preview {
+  display: block;
+  width: 232px;
+  height: 300px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: var(--r-md);
+  border: 1px solid var(--chrome-border);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--med) var(--ease), box-shadow var(--med) var(--ease);
+}
+.home-strip-card:hover .home-strip-preview {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(18, 18, 20, 0.9);
+}
+.home-strip-scale {
+  display: block;
+  width: 794px;
+  transform-origin: top left;
+  pointer-events: none;
+}
+.home-strip-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 2px;
+}
+.home-strip-name {
+  font-family: var(--heading);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--chrome-text);
+}
+.home-strip-use {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--chrome-text-dim);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+.home-strip-card:hover .home-strip-use {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--lime);
+}
+
+.home-strip-all {
+  flex: 0 0 auto;
+  width: 232px;
+  height: 300px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 22px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px dashed var(--chrome-border);
+  border-radius: var(--r-md);
+  font-family: var(--heading);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  transition: background var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.home-strip-all:hover {
+  background: var(--chrome-surface-2);
+  border-color: var(--lime);
+}
+.home-strip-all-arrow {
+  font-size: 28px;
+  color: var(--lime);
+}
+
+/* ---------- job tracker ----------
+   Two columns: the pitch on the left, a still of the real match panel on the
+   right. The demo panel deliberately reuses the tracker's own visual language
+   (score, grouped chips) rather than inventing a marketing graphic. */
+
+.home-track-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 72px);
+  padding: clamp(32px, 6vh, 64px) 0;
+  border-top: 1px solid var(--chrome-border);
+}
+.home-track-text {
+  margin: 18px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--chrome-text-dim);
+  max-width: 46ch;
+}
+.home-track-statuses {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+.home-track-status {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--chrome-text-dim);
+  padding: 6px 12px;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--r-chip);
+}
+.home-track-status:first-child {
+  color: var(--lime);
+  border-color: color-mix(in srgb, var(--lime) 45%, transparent);
+}
+.home-track-note {
+  margin: 22px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--chrome-text-dim);
+  opacity: 0.75;
+  max-width: 44ch;
+}
+
+.home-track-demo {
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.home-track-demo-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.home-track-demo-score {
+  font-family: var(--heading);
+  font-weight: 900;
+  font-size: 36px;
+  letter-spacing: -0.03em;
+  color: var(--lime);
+  line-height: 1;
+}
+.home-track-demo-label {
+  font-size: 12.5px;
+  color: var(--chrome-text-dim);
+}
+.home-track-demo-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.home-track-demo-group-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chrome-text-dim);
+}
+.home-track-demo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.home-track-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: var(--r-chip);
+  border: 1px solid var(--chrome-border);
+  color: var(--chrome-text-dim);
+}
+.home-track-chip-missing {
+  color: #ffb4a2;
+  border-color: rgba(255, 138, 101, 0.4);
+  background: rgba(255, 138, 101, 0.08);
+}
+.home-track-chip-matched {
+  color: var(--chrome-text);
+  background: var(--chrome-surface-2);
+}
+
+.home-steps-section {
+  padding: clamp(32px, 6vh, 64px) 0 clamp(48px, 8vh, 88px);
+  border-top: 1px solid var(--chrome-border);
+}
+.home-steps {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.home-step {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.home-step-num {
+  font-family: var(--heading);
+  font-weight: 900;
+  font-size: 40px;
+  letter-spacing: -0.03em;
+  color: var(--chrome-text);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--lime);
+  width: fit-content;
+}
+.home-step-text {
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--chrome-text-dim);
+  max-width: 26ch;
+}
+
+.home-footer {
+  border-top: 1px solid var(--chrome-border);
+  padding: 28px clamp(20px, 5vw, 64px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.home-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.home-footer-logo {
+  font-size: 18px;
+}
+.home-footer-line {
+  font-size: 13.5px;
+  color: var(--chrome-text-dim);
+}
+.home-footer-nav {
+  display: flex;
+  gap: 22px;
+}
+.home-footer-nav a {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--chrome-text-dim);
+  text-decoration: none;
+  transition: color var(--fast) var(--ease);
+}
+.home-footer-nav a:hover {
+  color: var(--lime);
+}
+
+@media (max-width: 860px) {
+  .home-track-section {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-steps {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .home-track-demo {
+    padding: 20px;
+  }
+  .home-track-demo-score {
+    font-size: 30px;
+  }
+  .home-step-num {
+    font-size: 32px;
+  }
+  .home-hero {
+    padding-top: 48px;
+  }
+  .home-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-btn-solid,
+  .home-strip-preview,
+  .home-strip-card,
+  .home-strip-use,
+  .home-strip-arrow {
+    transition: none;
+  }
+  .home-strip {
+    scroll-behavior: auto;
+  }
+}

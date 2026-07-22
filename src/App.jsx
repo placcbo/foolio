@@ -7,8 +7,10 @@ import ResumeLibrary from './components/ResumeLibrary';
 import JobTracker from './components/JobTracker';
 import ResumePreview from './components/ResumePreview';
 import TemplatePicker from './components/TemplatePicker';
+import Home from './components/Home';
 import { resumeReducer, initialResumeState } from './state/resumeReducer';
 import './App.css';
+import './components/Home.css';
 
 const LIBRARY_KEY = 'draftly:library';
 const ACTIVE_RESUME_KEY = 'draftly:activeResumeId';
@@ -154,7 +156,7 @@ function loadLibrary() {
 }
 
 function loadInitialPage(library) {
-  if (!library.length) return 'picker';
+  if (!library.length) return 'home';
   try {
     return localStorage.getItem(PAGE_STORAGE_KEY) === 'editor' ? 'editor' : 'picker';
   } catch {
@@ -414,6 +416,21 @@ function App() {
 
   function handleDeleteJob(id) {
     setJobs((js) => js.filter((j) => j.id !== id));
+  }
+
+  if (page === 'home') {
+    return (
+      <Home
+        onStart={() => {
+          setCreatingNew(true);
+          setPage('picker');
+        }}
+        onSelectTemplate={handleSelectTemplate}
+        isAuthenticated={false}
+        // Auth isn't wired yet — sign in/up handlers omitted on purpose so
+        // those buttons don't render. Add them when the auth layer lands.
+      />
+    );
   }
 
   if (page === 'picker') {
