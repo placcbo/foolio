@@ -6,12 +6,29 @@
    ========================================================================= */
 
 .home {
+  /* --home-max is the single source of truth for the content column; the
+     slider reads it too, to line its first card up with the text above
+     while still running out to the viewport edge. */
+  --home-max: 1400px;
+  --home-gutter: clamp(20px, 4vw, 48px);
+
+  /* Slide sizing. --slide-n is unitless because the render's `zoom` divides
+     by 794 and calc() can't divide by a length — deriving the width from it
+     keeps frame and zoom locked together. */
+  --slide-n: 340;
+  --slide-w: calc(var(--slide-n) * 1px);
+  --slide-h: 460px;
+
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   background: var(--chrome-bg);
   color: var(--chrome-text);
   font-family: var(--sans);
+  /* `clip`, not `hidden`: the full-bleed slider is 100vw, which can exceed
+     the content box by the scrollbar width. `hidden` would create a scroll
+     container and break the sticky header; `clip` doesn't. */
+  overflow-x: clip;
 }
 
 .draftly-logo,
@@ -31,7 +48,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px clamp(20px, 5vw, 64px);
+  /* Full-width bar, but its contents line up with the centred content
+     column rather than sitting flush to the viewport edge. */
+  padding: 20px max(var(--home-gutter), calc(50% - var(--home-max) / 2 + var(--home-gutter)));
   position: sticky;
   top: 0;
   z-index: 10;
@@ -88,9 +107,9 @@
 .home-main {
   flex: 1;
   width: 100%;
-  max-width: 1120px;
+  max-width: var(--home-max);
   margin: 0 auto;
-  padding: 0 clamp(20px, 5vw, 64px);
+  padding: 0 var(--home-gutter);
 }
 
 .home-hero {
@@ -233,20 +252,24 @@
   cursor: default;
 }
 
+/* Full-bleed: the track runs the whole viewport width so cards scroll out
+   past the page edge instead of stopping inside a narrow column, but its
+   inner padding lines the first card up with the heading above it. --edge is
+   that alignment offset, reused for scroll-padding so the snap positions
+   agree with it — mismatch there is what previously left the first snap at
+   scrollLeft 4 and the "at start" test permanently false. */
 .home-slider-track {
+  --edge: max(var(--home-gutter), calc(50vw - var(--home-max) / 2 + var(--home-gutter)));
+
   display: flex;
-  gap: 18px;
+  gap: 20px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 6px 4px 8px;
-  margin: 0 -4px;
-  /* The 4px side padding (there so the cards' hard offset shadow isn't
-     clipped) also shifts the first card's snap position to scrollLeft 4,
-     which meant the "at start" test never matched and the left arrow never
-     disabled. Insetting the snapport by the same 4px puts it back at 0. */
-  scroll-padding-left: 4px;
-  /* The progress bar below reports position now, so the raw scrollbar is
-     redundant chrome. */
+  padding: 8px var(--edge) 12px;
+  scroll-padding-left: var(--edge);
+  /* The dots below report position now, so the raw scrollbar is redundant. */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -269,7 +292,7 @@
 
 .home-slide {
   flex: 0 0 auto;
-  width: 232px;
+  width: var(--slide-w);
   scroll-snap-align: start;
   /* Deliberately NOT scroll-snap-stop: always. It does stop a fast flick
      skipping cards, but it also caps every programmatic scroll at a single
@@ -292,8 +315,8 @@
 }
 .home-slide-preview {
   display: block;
-  width: 232px;
-  height: 300px;
+  width: var(--slide-w);
+  height: var(--slide-h);
   overflow: hidden;
   background: #fff;
   border-radius: var(--r-md);
@@ -309,7 +332,9 @@
 .home-slide-scale {
   display: block;
   width: 794px;
-  zoom: calc(232 / 794);
+  /* Width-fit off the same variable as the frame, so resizing a card can't
+     silently start cropping the design. */
+  zoom: calc(var(--slide-n) / 794);
   transform-origin: top left;
   pointer-events: none;
 }
@@ -380,8 +405,8 @@
 
 .home-slide-all {
   flex: 0 0 auto;
-  width: 232px;
-  height: 300px;
+  width: var(--slide-w);
+  height: var(--slide-h);
   scroll-snap-align: start;
   cursor: pointer;
   display: flex;
@@ -413,21 +438,31 @@
   transform: translateX(5px);
 }
 
-.home-slider-progress {
-  position: relative;
-  height: 2px;
-  margin-top: 18px;
-  background: var(--chrome-border);
-  border-radius: 999px;
-  overflow: hidden;
+.home-slider-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  margin-top: 28px;
 }
-.home-slider-progress-bar {
-  display: block;
-  height: 100%;
-  background: var(--lime);
+.home-slider-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
   border-radius: 999px;
-  transform-origin: left center;
-  transition: transform var(--fast) linear;
+  background: var(--chrome-border);
+  cursor: pointer;
+  transition: background var(--fast) var(--ease), width var(--med) var(--ease);
+}
+.home-slider-dot:hover {
+  background: var(--chrome-text-dim);
+}
+/* The active dot stretches into a pill rather than just changing colour —
+   readable at a glance without needing a second indicator. */
+.home-slider-dot.is-active {
+  width: 26px;
+  background: var(--lime);
 }
 
 /* ---------- job tracker ----------
@@ -702,7 +737,7 @@
 
 .home-footer {
   border-top: 1px solid var(--chrome-border);
-  padding: 28px clamp(20px, 5vw, 64px);
+  padding: 28px max(var(--home-gutter), calc(50% - var(--home-max) / 2 + var(--home-gutter)));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -832,7 +867,7 @@
   .home-slide-swatches,
   .home-slide-all-arrow,
   .home-slider-arrow,
-  .home-slider-progress-bar,
+  .home-slider-dot,
   .home-reveal {
     transition: none;
   }

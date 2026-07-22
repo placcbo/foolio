@@ -4,10 +4,9 @@ import { TEMPLATE_SAMPLES } from '../data/templateSamples';
 import { SAMPLE_RESUME } from '../data/sampleResume';
 import { IconArrowLeft } from './icons';
 
-// Width-fit for the 232px tile — the render must be scaled to exactly the
-// frame width or the design gets cropped on the right.
-const CARD_W = 232;
-const PREVIEW_SCALE = CARD_W / 794;
+// Fallback only — the real card pitch is measured from the DOM, because the
+// card width is set in CSS (--slide-n) and shrinks at narrow breakpoints.
+const CARD_W_FALLBACK = 340;
 
 // Past this much pointer travel we treat the gesture as a drag, not a click,
 // and swallow the click that follows so dragging across a card doesn't
@@ -67,7 +66,7 @@ function SliderCard({ template, onPick }) {
 
 export default function TemplateSlider({ templates, onPick, onSeeAll }) {
   const trackRef = useRef(null);
-  const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
 
@@ -76,22 +75,66 @@ export default function TemplateSlider({ templates, onPick, onSeeAll }) {
   // a snap point and the browser visibly yanked it back into place.
   const pitch = useCallback(() => {
     const el = trackRef.current;
-    if (!el || el.children.length < 2) return CARD_W;
+    if (!el || el.children.length < 2) return CARD_W_FALLBACK;
     const a = el.children[0].getBoundingClientRect();
     const b = el.children[1].getBoundingClientRect();
-    return Math.round(b.left - a.left) || CARD_W;
+    return Math.round(b.left - a.left) || CARD_W_FALLBACK;
   }, []);
+
+  // How many scroll positions are actually reachable. The last few cards can
+  // never sit at the left edge — the track runs out of scrollable distance
+  // first — so rendering one dot per template produced dots that could never
+  // become active no matter what you clicked. This counts the real snap
+  // positions instead, and recomputes on resize since it depends on how many
+  // cards fit on screen.
+  const snapPositions = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return [0];
+    const max = el.scrollWidth - el.clientWidth;
+    const step = pitch();
+    if (max <= 1 || step <= 0) return [0];
+    const lastAligned = Math.floor(max / step);
+    const out = [];
+    for (let i = 0; i <= lastAligned; i++) out.push(i * step);
+    // The final stretch is usually shorter than a full card; keep it as its
+    // own position so the end of the strip is reachable by dot too.
+    if (max - lastAligned * step > 1) out.push(max);
+    return out;
+  }, [pitch]);
+
+  const [snaps, setSnaps] = useState([0]);
 
   const sync = useCallback(() => {
     const el = trackRef.current;
     if (!el) return;
     const max = el.scrollWidth - el.clientWidth;
-    setProgress(max > 0 ? el.scrollLeft / max : 0);
+    const positions = snapPositions();
+    setSnaps(positions);
+    // Nearest reachable position, so the marker never points at something
+    // the scroll container can't actually be in.
+    let nearest = 0;
+    positions.forEach((posLeft, i) => {
+      if (Math.abs(posLeft - el.scrollLeft) < Math.abs(positions[nearest] - el.scrollLeft)) nearest = i;
+    });
+    setActive(nearest);
     // 1px of slack: fractional scroll positions mean an exact === comparison
     // leaves the arrow enabled-but-dead at the very end.
     setAtStart(el.scrollLeft <= 1);
     setAtEnd(el.scrollLeft >= max - 1);
-  }, []);
+  }, [snapPositions]);
+
+  const scrollToIndex = useCallback(
+    (i) => {
+      const el = trackRef.current;
+      if (!el) return;
+      const positions = snapPositions();
+      el.scrollTo({
+        left: positions[Math.min(i, positions.length - 1)],
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      });
+    },
+    [snapPositions]
+  );
 
   useEffect(() => {
     const el = trackRef.current;
@@ -217,13 +260,22 @@ export default function TemplateSlider({ templates, onPick, onSeeAll }) {
         </button>
       </div>
 
-      {/* Replaces the raw scrollbar: same information, and it also reflects
-          arrow and keyboard paging, not just dragging. */}
-      <div className="home-slider-progress" aria-hidden="true">
-        <span className="home-slider-progress-bar" style={{ transform: `scaleX(${Math.max(progress, 0.06)})` }} />
+      {/* Replaces the raw scrollbar. One dot per REACHABLE scroll position —
+          not per template — so every dot maps to a place the strip can
+          actually stop, and clicking one jumps there. */}
+      <div className="home-slider-dots">
+        {snaps.map((posLeft, i) => (
+          <button
+            type="button"
+            key={posLeft}
+            className={`home-slider-dot${i === active ? ' is-active' : ''}`}
+            onClick={() => scrollToIndex(i)}
+            aria-label={`Scroll position ${i + 1} of ${snaps.length}`}
+            aria-current={i === active}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-export { PREVIEW_SCALE };
