@@ -58,7 +58,7 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
     <div className="picker-page">
       <div className="picker-brand" aria-hidden="true">
         <span className="picker-brand-mark">C</span>
-        candidly
+        draftly
       </div>
 
       {onCancel && (

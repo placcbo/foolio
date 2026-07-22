@@ -10,14 +10,14 @@ import TemplatePicker from './components/TemplatePicker';
 import { resumeReducer, initialResumeState } from './state/resumeReducer';
 import './App.css';
 
-const LIBRARY_KEY = 'candidly:library';
-const ACTIVE_RESUME_KEY = 'candidly:activeResumeId';
-const PAGE_STORAGE_KEY = 'candidly:page';
-const JOBS_KEY = 'candidly:jobs';
+const LIBRARY_KEY = 'draftly:library';
+const ACTIVE_RESUME_KEY = 'draftly:activeResumeId';
+const PAGE_STORAGE_KEY = 'draftly:page';
+const JOBS_KEY = 'draftly:jobs';
 // Pre-multi-resume save location — only ever read once, to migrate an
 // existing single resume into the new library on someone's first load
 // after this update. Never written to again after that.
-const LEGACY_RESUME_KEY = 'candidly:resume';
+const LEGACY_RESUME_KEY = 'draftly:resume';
 
 // Bump this whenever a default value or settings shape changes in a way that
 // should NOT be silently inherited from an old save — otherwise stale
@@ -26,12 +26,38 @@ const LEGACY_RESUME_KEY = 'candidly:resume';
 const RESUME_SCHEMA_VERSION = 3;
 
 function resumeKey(id) {
-  return `candidly:resume:${id}`;
+  return `draftly:resume:${id}`;
 }
 
 function nextId() {
   return `resume-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
 }
+
+// The Candidly → Draftly rename changed the storage key prefix. Anyone who
+// already had a resume/job data saved under the old "candidly:*" keys would
+// otherwise find an apparently-empty app on their next load — this copies
+// every old-prefixed key across once, non-destructively (old keys are left
+// in place, matching the same one-time-copy pattern LEGACY_RESUME_KEY below
+// already uses), so nothing existing is lost.
+function migrateLegacyNamespace() {
+  try {
+    if (localStorage.getItem(LIBRARY_KEY) != null) return; // already on draftly:*, or fresh install
+    const oldKeys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('candidly:')) oldKeys.push(key);
+    }
+    oldKeys.forEach((oldKey) => {
+      const newKey = `draftly:${oldKey.slice('candidly:'.length)}`;
+      if (localStorage.getItem(newKey) == null) {
+        localStorage.setItem(newKey, localStorage.getItem(oldKey));
+      }
+    });
+  } catch {
+    // best effort — worst case the legacy-resume migration below still runs
+  }
+}
+migrateLegacyNamespace();
 
 // Shared by initial boot and by switching/duplicating resumes later — a
 // schema mismatch means the SETTINGS shape/defaults changed underneath an
