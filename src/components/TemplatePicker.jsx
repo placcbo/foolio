@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import TemplateCard from './TemplateCard';
+import ImportResumeModal from './ImportResumeModal';
 import { TEMPLATES, FILTERS } from '../data/templates';
-import { IconChevronDown, IconX, IconGrid, IconStar, IconBox, IconHexagon, IconPalette, IconUser, IconFlag, IconCheck } from './icons';
+import { IconChevronDown, IconX, IconGrid, IconStar, IconBox, IconHexagon, IconPalette, IconUser, IconFlag, IconCheck, IconUpload } from './icons';
 
 // The grid's container caps at 1280px, which fits exactly three 300px
 // cards per row (a fourth would need 1296px) — so this must stay a
@@ -30,10 +31,18 @@ const HOW_IT_WORKS = [
   { num: '03', label: 'Export to PDF or DOCX' },
 ];
 
-export default function TemplatePicker({ onSelectTemplate, onCancel, hasExistingResumes }) {
+export default function TemplatePicker({
+  onSelectTemplate,
+  onImportResume,
+  pendingImportName,
+  onCancelImport,
+  onCancel,
+  hasExistingResumes,
+}) {
   const [activeFilter, setActiveFilter] = useState('all');
   const [showAll, setShowAll] = useState(false);
   const [query, setQuery] = useState('');
+  const [importOpen, setImportOpen] = useState(false);
   // A filter pill for an empty category is a promise the page can't keep —
   // only show categories that actually contain templates. The row grows on
   // its own as templates are added.
@@ -68,27 +77,66 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
       )}
 
       <div className="picker-header">
-        <h1>{hasExistingResumes ? 'Pick a design for your new resume' : 'Start building your resume'}</h1>
-        <p>Choose a design you like. You can customize or switch it later.</p>
-        <div className="picker-proof-row">
-          {PROOF_ITEMS.map((item) => (
-            <span className="picker-proof-item" key={item}>
-              <IconCheck size={13} />
-              {item}
-            </span>
-          ))}
-        </div>
+        {pendingImportName != null ? (
+          <>
+            <h1>Now pick a design</h1>
+            <p>
+              {pendingImportName
+                ? `${pendingImportName}'s resume is imported.`
+                : 'Your resume is imported.'}{' '}
+              Choose a design for it — you can switch or customize later.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1>{hasExistingResumes ? 'Pick a design for your new resume' : 'Start building your resume'}</h1>
+            <p>Choose a design you like. You can customize or switch it later.</p>
+            <div className="picker-proof-row">
+              {PROOF_ITEMS.map((item) => (
+                <span className="picker-proof-item" key={item}>
+                  <IconCheck size={13} />
+                  {item}
+                </span>
+              ))}
+            </div>
+            {onImportResume && (
+              <p className="picker-import-line">
+                Already have a resume?{' '}
+                <button type="button" className="picker-import-link" onClick={() => setImportOpen(true)}>
+                  <IconUpload size={14} />
+                  Import it instead
+                </button>
+              </p>
+            )}
+          </>
+        )}
       </div>
 
-      <div className="picker-how-it-works">
-        {HOW_IT_WORKS.map((step, i) => (
-          <div className="picker-how-step" key={step.num}>
-            {i > 0 && <span className="picker-how-sep" aria-hidden="true" />}
-            <span className="picker-how-step-num">{step.num}</span>
-            <span className="picker-how-step-label">{step.label}</span>
-          </div>
-        ))}
-      </div>
+      {pendingImportName != null ? (
+        <div className="picker-import-banner">
+          <span className="picker-import-banner-check">
+            <IconCheck size={14} />
+          </span>
+          <span className="picker-import-banner-text">
+            Resume imported — your content is ready. Pick any template below to continue.
+          </span>
+          {onCancelImport && (
+            <button type="button" className="picker-import-banner-cancel" onClick={onCancelImport}>
+              Discard import
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="picker-how-it-works">
+          {HOW_IT_WORKS.map((step, i) => (
+            <div className="picker-how-step" key={step.num}>
+              {i > 0 && <span className="picker-how-sep" aria-hidden="true" />}
+              <span className="picker-how-step-num">{step.num}</span>
+              <span className="picker-how-step-label">{step.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="picker-toolbar">
         <nav className="filter-tabs">
@@ -154,6 +202,16 @@ export default function TemplatePicker({ onSelectTemplate, onCancel, hasExisting
             Skip for now — go to editor
           </button>
         </div>
+      )}
+
+      {importOpen && onImportResume && (
+        <ImportResumeModal
+          onClose={() => setImportOpen(false)}
+          onImport={(parsed) => {
+            setImportOpen(false);
+            onImportResume(parsed);
+          }}
+        />
       )}
     </div>
   );

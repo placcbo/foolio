@@ -1,16 +1,51 @@
-import { useMemo, useState } from 'react';
-import { IconX, IconUpload, IconCheck } from './icons';
+import { useMemo, useRef, useState } from 'react';
+import { IconX, IconUpload, IconCheck, IconFileText, IconInfo } from './icons';
 import { parseResumeText } from '../utils/resumeParser';
+import { extractTextFromFile } from '../utils/extractResumeFile';
 
-const SAMPLE_HINT = `Paste your resume as plain text — copy it out of Word, Google Docs, LinkedIn's
-"Save to PDF", or an old resume. Keep section headings like "Experience" or
-"Education" on their own line so they're easy to spot.`;
+const SAMPLE_HINT = `Upload a PDF or DOCX, or paste your resume as plain text. For a paste, copy it
+out of Word, Google Docs, or an old resume, and keep section headings like
+"Experience" or "Education" on their own line.`;
+
+const FILE_ERROR = {
+  unsupported: 'That file type isn’t supported — upload a PDF or DOCX, or paste the text.',
+  empty: 'We couldn’t find any text in that file. Try pasting the resume instead.',
+  failed: 'We couldn’t read that file. Try pasting the resume text instead.',
+  scanned:
+    'We couldn’t detect selectable text — this looks like a scanned or photographed PDF. Please copy/paste the resume or upload a DOCX.',
+};
 
 export default function ImportResumeModal({ onImport, onClose }) {
   const [text, setText] = useState('');
   const [touched, setTouched] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [fileError, setFileError] = useState(null);
+  const [dragging, setDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
   const parsed = useMemo(() => (text.trim() ? parseResumeText(text) : null), [text]);
+
+  async function handleFile(file) {
+    if (!file) return;
+    setFileError(null);
+    setBusy(true);
+    const result = await extractTextFromFile(file);
+    setBusy(false);
+    if (result.text) {
+      setText(result.text);
+      setTouched(true);
+      return;
+    }
+    // scanned / unsupported / empty / failed all surface as a message, and
+    // the paste path stays fully available underneath.
+    setFileError(FILE_ERROR[result.scanned ? 'scanned' : result.error] || FILE_ERROR.failed);
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    setDragging(false);
+    handleFile(e.dataTransfer.files?.[0]);
+  }
 
   function handleImport() {
     if (!parsed) return;
@@ -30,6 +65,50 @@ export default function ImportResumeModal({ onImport, onClose }) {
         <div className="import-modal-body">
           <div className="import-modal-paste-col">
             <p className="import-modal-hint">{SAMPLE_HINT}</p>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              hidden
+              onChange={(e) => handleFile(e.target.files?.[0])}
+            />
+            <button
+              type="button"
+              className={`import-modal-drop${dragging ? ' is-dragging' : ''}${busy ? ' is-busy' : ''}`}
+              onClick={() => fileInputRef.current?.click()}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setDragging(true);
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={onDrop}
+              disabled={busy}
+            >
+              {busy ? (
+                <span className="import-modal-drop-label">Reading your file…</span>
+              ) : (
+                <>
+                  <IconFileText size={20} />
+                  <span className="import-modal-drop-label">
+                    <strong>Upload a PDF or DOCX</strong>
+                    <span>or drag it here</span>
+                  </span>
+                </>
+              )}
+            </button>
+
+            {fileError && (
+              <p className="import-modal-file-error" role="alert">
+                <IconInfo size={14} />
+                {fileError}
+              </p>
+            )}
+
+            <div className="import-modal-or" aria-hidden="true">
+              <span>or paste text</span>
+            </div>
+
             <textarea
               className="import-modal-textarea"
               placeholder="Paste your resume text here…"
@@ -38,7 +117,6 @@ export default function ImportResumeModal({ onImport, onClose }) {
                 setText(e.target.value);
                 setTouched(true);
               }}
-              autoFocus
             />
           </div>
 

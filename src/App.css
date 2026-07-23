@@ -430,6 +430,90 @@
   color: var(--lime);
 }
 
+/* "Already have a resume? Import it instead" — a quiet secondary path for
+   people who aren't starting from scratch, kept visually subordinate to the
+   template grid that is the page's main job. */
+.picker-import-line {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.picker-import-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-h);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border);
+}
+
+.picker-import-link:hover {
+  text-decoration-color: var(--text-h);
+}
+
+.picker-import-link svg {
+  flex-shrink: 0;
+}
+
+/* Shown in place of the "how it works" steps once content has been imported —
+   confirms the import took and points at the next action (pick a template). */
+.picker-import-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 640px;
+  margin: 22px auto 34px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--ink);
+  background: var(--accent-bg);
+}
+
+.picker-import-banner-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+}
+
+.picker-import-banner-text {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.picker-import-banner-cancel {
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.picker-import-banner-cancel:hover {
+  color: var(--text-h);
+}
+
 /* ---------- how it works ---------- */
 
 .picker-how-it-works {
@@ -3740,9 +3824,94 @@ body.has-open-preview-modal {
   color: var(--text-dim);
 }
 
+/* ---------- file drop zone ---------- */
+
+.import-modal-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px;
+  border-radius: var(--r-sm);
+  border: 1.5px dashed var(--border);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color var(--fast) var(--ease), background var(--fast) var(--ease);
+}
+
+.import-modal-drop:hover,
+.import-modal-drop.is-dragging {
+  border-color: var(--ink);
+  background: var(--accent-bg);
+}
+
+.import-modal-drop.is-busy {
+  cursor: progress;
+}
+
+.import-modal-drop svg {
+  flex-shrink: 0;
+  color: var(--violet);
+}
+
+.import-modal-drop-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.3;
+}
+
+.import-modal-drop-label strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.import-modal-drop-label span {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.import-modal-file-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #b3541e;
+}
+
+.import-modal-file-error svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Thin "or paste text" divider between the upload and the textarea. */
+.import-modal-or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.import-modal-or::before,
+.import-modal-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-soft);
+}
+
 .import-modal-textarea {
   flex: 1;
-  min-height: 320px;
+  min-height: 180px;
   resize: none;
   padding: 14px;
   border-radius: var(--r-sm);

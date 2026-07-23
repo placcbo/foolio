@@ -208,6 +208,12 @@ function App() {
   // both land on the same TemplatePicker, this just decides what happens
   // when a template is actually chosen.
   const [creatingNew, setCreatingNew] = useState(false);
+  // Content parsed from an import (paste/PDF/DOCX) that's waiting for the
+  // person to choose a design before it becomes a real resume. Held here
+  // rather than committed immediately so the flow is import → pick a template
+  // → editor, instead of dropping them into the editor on a template they
+  // never chose.
+  const [pendingImport, setPendingImport] = useState(null);
   const [activeTab, setActiveTab] = useState('content');
   // Mobile-only: the content/customize tabs normally show the edit form and
   // the live A4 preview side by side, which doesn't fit on a phone screen.
@@ -314,22 +320,41 @@ function App() {
       const id = nextId();
       const entry = {
         id,
-        name: `Resume ${library.length + 1}`,
+        // A pending import already knows the person's name — use it for the
+        // library card rather than the generic "Resume N".
+        name: pendingImport?.basics?.name || `Resume ${library.length + 1}`,
         updatedAt: Date.now(),
         templateId,
         accentColor: accentColor ?? '#000000',
-        nameManuallySet: false,
+        nameManuallySet: Boolean(pendingImport?.basics?.name),
       };
       setLibrary((lib) => [...lib, entry]);
       setActiveResumeId(id);
       dispatch({ type: 'LOAD_RESUME', resume: initialResumeState });
       dispatch({ type: 'SET_TEMPLATE', templateId, accentColor, preset });
+      // If they got here by importing, drop the parsed content onto the
+      // template they just chose, then clear the holding slot.
+      if (pendingImport) {
+        dispatch({ type: 'IMPORT_RESUME', basics: pendingImport.basics, sections: pendingImport.sections });
+        setPendingImport(null);
+      }
       setCreatingNew(false);
     } else {
       dispatch({ type: 'SET_TEMPLATE', templateId, accentColor, preset });
     }
     setActiveTab('content');
     setPage('editor');
+  }
+
+  // Import: parse now, but don't build the resume yet — stash the content and
+  // send the person to the picker to choose a design. handleSelectTemplate
+  // then commits the pending content onto whatever template they pick. The
+  // creatingNew flag makes that a brand-new resume rather than overwriting
+  // whatever was previously open.
+  function handleImportResume(parsed) {
+    setPendingImport(parsed);
+    setCreatingNew(true);
+    setPage('picker');
   }
 
   function handleStartNewResume() {
@@ -437,14 +462,25 @@ function App() {
     return (
       <TemplatePicker
         onSelectTemplate={handleSelectTemplate}
+        onImportResume={handleImportResume}
+        pendingImportName={pendingImport ? pendingImport.basics?.name || '' : null}
+        onCancelImport={() => setPendingImport(null)}
         hasExistingResumes={library.length > 0}
         onCancel={
-          library.length
+          // With a pending import there's no editor to fall back to yet, so
+          // cancel means "discard the import" rather than "return to editor".
+          pendingImport
             ? () => {
+                setPendingImport(null);
                 setCreatingNew(false);
-                setPage('editor');
+                if (library.length) setPage('editor');
               }
-            : undefined
+            : library.length
+              ? () => {
+                  setCreatingNew(false);
+                  setPage('editor');
+                }
+              : undefined
         }
       />
     );
