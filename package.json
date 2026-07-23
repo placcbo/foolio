@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "import:test": "node src/importer/__tests__/run.js",
+    "import:test:unit": "node --test \"src/importer/**/*.test.mjs\""
   },
   "dependencies": {
     "docx": "^9.7.1",

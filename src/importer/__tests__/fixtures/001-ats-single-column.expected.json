@@ -1,0 +1,51 @@
+{
+  "basics": {
+    "name": "Amara Okafor",
+    "headline": "Senior Backend Engineer",
+    "email": "amara.okafor@example.com",
+    "phone": "+254 712 345 678",
+    "location": "Nairobi, Kenya",
+    "linkedin": "https://linkedin.com/in/amaraokafor",
+    "github": "https://github.com/amaraokafor",
+    "website": ""
+  },
+  "summary": "Backend engineer with 7 years building payment and data platforms in fintech. Focused on reliability, clean APIs, and mentoring.",
+  "experience": [
+    {
+      "company": "Kopo Pay Ltd",
+      "title": "Senior Backend Engineer",
+      "location": "Nairobi, Kenya",
+      "dates": { "start": "2021", "end": null, "current": true, "rawText": "Jan 2021 - Present" },
+      "bullets": [
+        "Led migration of the payments ledger to an event-sourced design, cutting reconciliation errors by 90%.",
+        "Owned the public REST API used by 40+ partner integrations."
+      ],
+      "description": ""
+    },
+    {
+      "company": "DataForge Solutions",
+      "title": "Backend Engineer",
+      "location": "Nairobi, Kenya",
+      "dates": { "start": "2017", "end": "2020", "current": false, "rawText": "Aug 2017 - Dec 2020" },
+      "bullets": [
+        "Built ETL pipelines processing 2M events/day on a small team.",
+        "Reduced p99 API latency from 800ms to 120ms."
+      ],
+      "description": ""
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Nairobi",
+      "degree": "BSc",
+      "field": "Computer Science",
+      "location": "Nairobi, Kenya",
+      "dates": { "start": "2013", "end": "2017", "current": false, "rawText": "2013 - 2017" },
+      "grade": "First Class Honours",
+      "bullets": []
+    }
+  ],
+  "skills": [
+    { "category": "", "items": ["Python", "Go", "PostgreSQL", "Kafka", "Docker", "Kubernetes", "REST APIs"] }
+  ]
+}

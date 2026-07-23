@@ -1,0 +1,53 @@
+{
+  "basics": {
+    "name": "Liam Chen",
+    "headline": "Product Designer",
+    "email": "liam.chen@example.com",
+    "phone": "+1 415 555 0134",
+    "location": "San Francisco, CA",
+    "linkedin": "https://linkedin.com/in/liamchen",
+    "github": "",
+    "website": "https://liamchen.design"
+  },
+  "summary": "Product designer blending research and visual craft to ship consumer apps used by millions.",
+  "experience": [
+    {
+      "company": "Brightloop Inc",
+      "title": "Senior Product Designer",
+      "location": "San Francisco, CA",
+      "dates": { "start": "2020", "end": null, "current": true, "rawText": "2020 - Present" },
+      "bullets": [
+        "Redesigned onboarding, lifting activation 22%.",
+        "Built and maintained the design system across web and mobile."
+      ],
+      "description": ""
+    },
+    {
+      "company": "Novaquest",
+      "title": "Product Designer",
+      "location": "Remote",
+      "dates": { "start": "2018", "end": "2020", "current": false, "rawText": "2018 - 2020" },
+      "bullets": ["Shipped 3 major features from research to launch."],
+      "description": ""
+    }
+  ],
+  "education": [
+    {
+      "institution": "Rhode Island School of Design",
+      "degree": "BFA",
+      "field": "Graphic Design",
+      "location": "Providence, RI",
+      "dates": { "start": "2014", "end": "2018", "current": false, "rawText": "2014 - 2018" },
+      "grade": "",
+      "bullets": []
+    }
+  ],
+  "skills": [
+    { "category": "Design", "items": ["Figma", "Prototyping", "Design Systems", "User Research"] },
+    { "category": "Frontend", "items": ["HTML", "CSS", "React"] }
+  ],
+  "languages": [
+    { "name": "English", "level": "Native" },
+    { "name": "Mandarin", "level": "Fluent" }
+  ]
+}

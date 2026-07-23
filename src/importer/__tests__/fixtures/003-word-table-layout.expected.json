@@ -1,0 +1,51 @@
+{
+  "basics": {
+    "name": "Priya Nair",
+    "headline": "Project Manager",
+    "email": "priya.nair@example.com",
+    "phone": "+44 20 7946 0958",
+    "location": "London, UK",
+    "linkedin": "https://linkedin.com/in/priyanair",
+    "github": "",
+    "website": ""
+  },
+  "summary": "PMP-certified project manager delivering enterprise software programs on time and under budget.",
+  "experience": [
+    {
+      "company": "Meridian Consulting",
+      "title": "Senior Project Manager",
+      "location": "London, UK",
+      "dates": { "start": "2019", "end": null, "current": true, "rawText": "2019 - Present" },
+      "bullets": [
+        "Managed a 3M GBP digital transformation across 5 teams.",
+        "Introduced agile ceremonies that cut cycle time 30%."
+      ],
+      "description": ""
+    },
+    {
+      "company": "Acme Corp",
+      "title": "Project Coordinator",
+      "location": "Manchester, UK",
+      "dates": { "start": "2016", "end": "2019", "current": false, "rawText": "2016 - 2019" },
+      "bullets": ["Coordinated vendor deliverables across 12 concurrent projects."],
+      "description": ""
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Manchester",
+      "degree": "BA",
+      "field": "Business Management",
+      "location": "Manchester, UK",
+      "dates": { "start": "2012", "end": "2016", "current": false, "rawText": "2012 - 2016" },
+      "grade": "2:1",
+      "bullets": []
+    }
+  ],
+  "skills": [
+    { "category": "", "items": ["Agile", "Scrum", "Stakeholder Management", "Budgeting", "JIRA", "Risk Management"] }
+  ],
+  "certifications": [
+    { "name": "PMP", "issuer": "PMI", "date": "2018", "url": "" }
+  ]
+}
