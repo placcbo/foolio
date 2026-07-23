@@ -27,8 +27,12 @@
  * @typedef {import('../layout/lines.js').Line} Line
  */
 
+import { findDateRanges } from '../patterns/dates.js';
+
 const HARD_BREAK = 1.6;
-const SOFT_LIMIT = 1.3;
+// Single-spaced wrapped text sits around 1.15–1.35 line-heights; the hard
+// paragraph break is 1.6, so we merge up to 1.45 and leave a gap between.
+const SOFT_LIMIT = 1.45;
 const INDENT_TOLERANCE = 6; // pt
 
 const CONNECTORS = new Set([
@@ -131,13 +135,11 @@ function isHeadingish(line) {
 }
 
 /**
- * Conservative date-range guard — a stand-in for Phase 5's date matcher.
+ * A line carries a date — never merge a date line into prose above it. Uses the
+ * Phase 5 matcher (this replaces the earlier conservative stand-in).
  * @param {string} text
  * @returns {boolean}
  */
 function hasDateRange(text) {
-  if (/\b(19|20)\d{2}\b/.test(text)) return true;
-  if (/\b(present|current|ongoing|now|to date)\b/i.test(text)) return true;
-  if (/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\w*\.?\s+\d/i.test(text)) return true;
-  return false;
+  return findDateRanges(text).length > 0;
 }
