@@ -17,6 +17,7 @@ import { assembleLines } from './layout/lines.js';
 import { assignColumns } from './layout/columns.js';
 import { removeArtifacts } from './layout/artifacts.js';
 import { extractDocx } from './extract/docx.js';
+import { normalizeLines } from './normalize/index.js';
 
 /**
  * @typedef {import('./layout/lines.js').Line} Line
@@ -52,33 +53,32 @@ export async function importResume(file, opts = {}) {
     const format = detectFormat(file);
     resume._meta.sourceFormat = format;
 
+    /** @type {Line[]} */
+    let extracted;
     if (format === 'pdf') {
       const pdfjs = opts.pdfjs || (await loadPdfjs());
       const buffer = await file.arrayBuffer();
-      const { lines, rawText, pageCount, multiColumn, warnings } = await runPdfPipeline(
-        buffer,
-        pdfjs,
-      );
+      const { lines, pageCount, multiColumn, warnings } = await runPdfPipeline(buffer, pdfjs);
       resume._meta.pageCount = pageCount;
       resume._meta.multiColumn = multiColumn;
       for (const w of warnings) resume._meta.warnings.push(w);
-      resume._meta.warnings.push('parsers not implemented yet (Phase 1): resume is empty');
-      return { resume, meta: resume._meta, rawText, rawLines: lines };
+      extracted = lines;
+    } else {
+      const buffer = await file.arrayBuffer();
+      const { lines, pageCount, warnings } = await extractDocx(buffer, { mammoth: opts.mammoth });
+      resume._meta.pageCount = pageCount;
+      resume._meta.multiColumn = false;
+      for (const w of warnings) resume._meta.warnings.push(w);
+      extracted = lines;
     }
 
-    // DOCX path.
-    const buffer = await file.arrayBuffer();
-    const { lines, pageCount, warnings } = await extractDocx(buffer, { mammoth: opts.mammoth });
-    resume._meta.pageCount = pageCount;
-    resume._meta.multiColumn = false;
-    for (const w of warnings) resume._meta.warnings.push(w);
-    resume._meta.warnings.push('parsers not implemented yet (Phase 1/2): resume is empty');
-    return {
-      resume,
-      meta: resume._meta,
-      rawText: lines.map((l) => l.text).join('\n'),
-      rawLines: lines,
-    };
+    // Phase 3: normalize (unicode/whitespace/dashes, bullets, wrapped-line
+    // merge). `rawLines` are the normalized parse copies parsers will consume;
+    // `rawText` keeps the original display text for the "Original text" drawer.
+    const rawLines = normalizeLines(extracted);
+    const rawText = rawLines.map((l) => l.displayText ?? l.text).join('\n');
+    resume._meta.warnings.push('parsers not implemented yet (Phase 1–3): resume is empty');
+    return { resume, meta: resume._meta, rawText, rawLines };
   } catch (err) {
     resume._meta.warnings.push(
       `import failed: ${err instanceof Error ? err.message : String(err)}`,
