@@ -29,6 +29,7 @@ import {
   TableCell,
   WidthType,
   BorderStyle,
+  Header,
 } from 'docx';
 
 const DIR = dirname(fileURLToPath(import.meta.url));
@@ -270,10 +271,18 @@ async function buildTableDocx() {
   const doc = new Document({
     sections: [
       {
+        // Contact info lives in the document HEADER — where some Word templates
+        // put it and where mammoth silently drops it. The XML walk must recover
+        // it as a docx-header candidate line.
+        headers: {
+          default: new Header({
+            children: [para('priya.nair@example.com | +44 20 7946 0958')],
+          }),
+        },
         children: [
           new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun('Priya Nair')] }),
           para('Project Manager'),
-          para('priya.nair@example.com | +44 20 7946 0958 | London, UK'),
+          para('London, UK'),
           para('linkedin.com/in/priyanair'),
 
           new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun('Summary')] }),

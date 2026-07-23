@@ -16,6 +16,7 @@ import { extractItems } from './extract/pdf.js';
 import { assembleLines } from './layout/lines.js';
 import { assignColumns } from './layout/columns.js';
 import { removeArtifacts } from './layout/artifacts.js';
+import { extractDocx } from './extract/docx.js';
 
 /**
  * @typedef {import('./layout/lines.js').Line} Line
@@ -65,9 +66,19 @@ export async function importResume(file, opts = {}) {
       return { resume, meta: resume._meta, rawText, rawLines: lines };
     }
 
-    // DOCX path lands in Phase 2.
-    resume._meta.warnings.push('docx extraction not implemented yet (Phase 2)');
-    return { resume, meta: resume._meta, rawText: '', rawLines: [] };
+    // DOCX path.
+    const buffer = await file.arrayBuffer();
+    const { lines, pageCount, warnings } = await extractDocx(buffer, { mammoth: opts.mammoth });
+    resume._meta.pageCount = pageCount;
+    resume._meta.multiColumn = false;
+    for (const w of warnings) resume._meta.warnings.push(w);
+    resume._meta.warnings.push('parsers not implemented yet (Phase 1/2): resume is empty');
+    return {
+      resume,
+      meta: resume._meta,
+      rawText: lines.map((l) => l.text).join('\n'),
+      rawLines: lines,
+    };
   } catch (err) {
     resume._meta.warnings.push(
       `import failed: ${err instanceof Error ? err.message : String(err)}`,

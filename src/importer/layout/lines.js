@@ -40,6 +40,8 @@ import { READING_GROUPS } from './columns.js';
  * @property {number} spaceAbove   // gap to previous line, in line-heights
  * @property {number} page
  * @property {number} column       // filled by columns.js; 0 here
+ * @property {string} styleName    // DOCX w:pStyle (e.g. "Heading1"); "" for PDF
+ * @property {string} source       // provenance, e.g. "docx-header"; "" normally
  */
 
 const SPACE_GAP = 0.9; // char widths
@@ -193,6 +195,8 @@ function buildLine(cluster, page) {
     spaceAbove: 99,
     page: page.page,
     column: 0,
+    styleName: '',
+    source: '',
   };
 }
 
@@ -216,5 +220,7 @@ function emptyLine(page) {
     spaceAbove: 99,
     page: page.page,
     column: 0,
+    styleName: '',
+    source: '',
   };
 }
