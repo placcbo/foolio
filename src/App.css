@@ -4977,6 +4977,19 @@ body.has-open-preview-modal {
   color: var(--text-h);
 }
 
+/* Clickable logo (returns to the home page) — reset button chrome and keep the
+   same visual as the static brand. */
+.picker-brand-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity var(--fast) var(--ease);
+}
+.picker-brand-btn:hover {
+  opacity: 0.75;
+}
+
 .picker-brand-mark {
   display: inline-flex;
   align-items: center;

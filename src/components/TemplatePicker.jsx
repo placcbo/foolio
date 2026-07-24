@@ -37,6 +37,7 @@ export default function TemplatePicker({
   pendingImportName,
   onCancelImport,
   onCancel,
+  onHome,
   hasExistingResumes,
 }) {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -65,10 +66,17 @@ export default function TemplatePicker({
 
   return (
     <div className="picker-page">
-      <div className="picker-brand" aria-hidden="true">
-        <span className="picker-brand-mark">C</span>
-        draftly
-      </div>
+      {onHome ? (
+        <button type="button" className="picker-brand picker-brand-btn" onClick={onHome} aria-label="Go to home page">
+          <span className="picker-brand-mark">C</span>
+          draftly
+        </button>
+      ) : (
+        <div className="picker-brand" aria-hidden="true">
+          <span className="picker-brand-mark">C</span>
+          draftly
+        </div>
+      )}
 
       {onCancel && (
         <button type="button" className="picker-cancel-btn" onClick={onCancel} aria-label="Cancel">

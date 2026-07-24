@@ -470,6 +470,11 @@ function App() {
         onImportResume={handleImportResume}
         pendingImportName={pendingImport ? pendingImport.basics?.name || '' : null}
         onCancelImport={() => setPendingImport(null)}
+        onHome={() => {
+          setCreatingNew(false);
+          setPendingImport(null);
+          setPage('home');
+        }}
         hasExistingResumes={library.length > 0}
         onCancel={
           // With a pending import there's no editor to fall back to yet, so
