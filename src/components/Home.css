@@ -761,14 +761,22 @@
   display: flex;
   gap: 22px;
 }
-.home-footer-nav a {
+.home-footer-nav a,
+.home-footer-nav button {
   font-size: 13.5px;
   font-weight: 600;
   color: var(--chrome-text-dim);
   text-decoration: none;
   transition: color var(--fast) var(--ease);
+  /* button reset so the picker link matches the anchors */
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
 }
-.home-footer-nav a:hover {
+.home-footer-nav a:hover,
+.home-footer-nav button:hover {
   color: var(--lime);
 }
 

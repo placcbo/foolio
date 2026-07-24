@@ -7,6 +7,21 @@ import { JOB_STATUSES } from './JobTracker';
 import TemplateSlider from './TemplateSlider';
 import { IconCheck, IconPlus } from './icons';
 
+// Keep count-based copy honest by deriving it from the registered templates,
+// so "fifteen" can't quietly drift out of sync as templates are added/removed.
+const NUMBER_WORDS = [
+  'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+  'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen',
+  'seventeen', 'eighteen', 'nineteen', 'twenty', 'twenty-one', 'twenty-two',
+  'twenty-three', 'twenty-four', 'twenty-five', 'twenty-six', 'twenty-seven',
+  'twenty-eight', 'twenty-nine', 'thirty',
+];
+function numberWord(n) {
+  const w = NUMBER_WORDS[n];
+  return w ? w[0].toUpperCase() + w.slice(1) : String(n);
+}
+const TEMPLATE_WORD = numberWord(TEMPLATES.length);
+
 // The homepage leads with a curated handful, not the whole catalogue — the
 // picker is where you browse all of them. Left-to-right reads plainest →
 // most designed, so the strip shows breadth at a glance.
@@ -40,8 +55,8 @@ const BENEFITS = [
   ['No account needed', 'Start building immediately. Nothing to sign up for.'],
   ['No watermarks', 'Your exports carry your name, not ours.'],
   ['Unlimited exports', 'Download as many PDFs and DOCX files as you want.'],
-  ['Fifteen templates', 'Switch design or recolor at any point without retyping.'],
-  ['Bring an old resume', 'Paste in plain text and it fills the sections for you.'],
+  [`${TEMPLATE_WORD} templates`, 'Switch design or recolor at any point without retyping.'],
+  ['Import your old resume', 'Upload a PDF or Word file and it fills every section for you.'],
   ['Stays on your device', 'Your resume is saved in your browser, not on a server.'],
 ];
 
@@ -67,7 +82,7 @@ const FAQS = [
   ],
   [
     'Can I import a resume I already have?',
-    'Yes. Paste it in as plain text and Draftly splits it into sections you can edit. Copy out of Word, Google Docs, or an existing PDF.',
+    'Yes. Upload your existing PDF or Word file and Draftly reads it into editable sections — name, experience, skills and the rest — right in your browser, nothing uploaded. It flags anything it is unsure about so you can fix it in seconds. Prefer to paste plain text? That still works too.',
   ],
   [
     'Can I keep more than one resume?',
@@ -106,9 +121,15 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
                   Sign in
                 </button>
               )}
-              {onSignUp && (
+              {onSignUp ? (
                 <button type="button" className="home-btn-solid" onClick={onSignUp}>
                   Sign up
+                </button>
+              ) : (
+                // Until auth exists, keep a persistent CTA in the header rather
+                // than an empty nav — clicking it starts the build flow.
+                <button type="button" className="home-btn-solid" onClick={onStart}>
+                  Build your resume
                 </button>
               )}
             </>
@@ -125,7 +146,7 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
                 four-line wrapping at some widths. Let it break naturally. */}
             <h1 className="home-hero-title">Build a resume worth reading.</h1>
             <p className="home-hero-sub">
-              Fifteen designs, real PDF and DOCX export, and an editor that stays out of your way.
+              {TEMPLATE_WORD} designs, real PDF and DOCX export, and an editor that stays out of your way.
               No signup to start building.
             </p>
             <div className="home-hero-cta">
@@ -262,9 +283,8 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
           <span className="home-footer-line">Built in Nairobi. Your data never leaves your browser.</span>
         </div>
         <nav className="home-footer-nav">
-          <a href="#">Privacy</a>
-          <a href="#">Templates</a>
-          <a href="#">GitHub</a>
+          <button type="button" onClick={onStart}>Templates</button>
+          <a href="#home-faq-label">Privacy &amp; data</a>
         </nav>
       </footer>
     </div>
