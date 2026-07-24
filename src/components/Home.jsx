@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Logo } from './Logo';
 import { TEMPLATE_COMPONENTS } from './templates';
 import { TEMPLATES } from '../data/templates';
@@ -5,7 +6,7 @@ import { TEMPLATE_SAMPLES } from '../data/templateSamples';
 import { SAMPLE_RESUME } from '../data/sampleResume';
 import { JOB_STATUSES } from './JobTracker';
 import TemplateSlider from './TemplateSlider';
-import { IconCheck, IconPlus } from './icons';
+import { IconCheck, IconPlus, IconEyeOff, IconUser, IconBox, IconDownload, IconX } from './icons';
 
 // Keep count-based copy honest by deriving it from the registered templates,
 // so "fifteen" can't quietly drift out of sync as templates are added/removed.
@@ -52,12 +53,38 @@ const HERO_TEMPLATE_ID = 'lens';
 // "free forever" — auth and a backend are coming, and copy written now
 // shouldn't become a lie later.
 const BENEFITS = [
-  ['No account needed', 'Start building immediately. Nothing to sign up for.'],
+  ['No account to start', 'Start building right away — nothing to sign up for. Optional accounts to sync across devices are on the way.'],
   ['No watermarks', 'Your exports carry your name, not ours.'],
   ['Unlimited exports', 'Download as many PDFs and DOCX files as you want.'],
   [`${TEMPLATE_WORD} templates`, 'Switch design or recolor at any point without retyping.'],
   ['Import your old resume', 'Upload a PDF or Word file and it fills every section for you.'],
   ['Stays on your device', 'Your resume is saved in your browser, not on a server.'],
+];
+
+// The privacy story is this tool's real differentiator — everything, including
+// importing a PDF/DOCX, runs in the browser. Every claim here is architectural
+// (no server, no account, local storage), so it stays true as the app grows.
+const PRIVACY_POINTS = [
+  [
+    IconEyeOff,
+    'Nothing is uploaded today',
+    'Editing, importing a PDF or Word file, and exporting all happen on your device. Right now your file’s contents never touch a server.',
+  ],
+  [
+    IconUser,
+    'No account to start',
+    'You can build a full resume without signing up — no email, password, or profile required to begin.',
+  ],
+  [
+    IconBox,
+    'Saved locally, just for you',
+    'Your work lives in this browser’s local storage, on this device. Cloud sync will be opt-in when it arrives.',
+  ],
+  [
+    IconDownload,
+    'You hold the only copy',
+    'Export to PDF or DOCX anytime for your own backup — so a copy is always yours, whatever you sync later.',
+  ],
 ];
 
 // Honest answers to the questions a no-account, browser-only tool actually
@@ -70,7 +97,7 @@ const FAQS = [
   ],
   [
     'Where is my resume stored?',
-    'In your browser’s local storage, on the device you built it on. It is never uploaded — there is no server holding a copy of it.',
+    'Today, in your browser’s local storage on the device you built it on — it is never uploaded, and there is no server holding a copy. When optional accounts arrive, syncing to the cloud will be opt-in, and only for what you choose to save.',
   ],
   [
     'What if I clear my browser or switch devices?',
@@ -90,10 +117,15 @@ const FAQS = [
   ],
 ];
 
-export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, isAuthenticated }) {
+export default function Home({ onStart, onOpenTemplate, onSignIn, onSignUp, isAuthenticated }) {
   const featured = FEATURED_IDS
     .map((id) => TEMPLATES.find((t) => t.id === id))
     .filter(Boolean);
+
+  // Accounts land with the backend later; until then the header's Sign in/up
+  // show a "coming soon" note rather than a dead end.
+  const [authNotice, setAuthNotice] = useState(false);
+  const handleAuth = (handler) => () => (handler ? handler() : setAuthNotice(true));
 
   const heroTemplate = TEMPLATES.find((t) => t.id === HERO_TEMPLATE_ID);
   const HeroTemplate = heroTemplate ? TEMPLATE_COMPONENTS[heroTemplate.layout] : null;
@@ -116,26 +148,33 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
             </button>
           ) : (
             <>
-              {onSignIn && (
-                <button type="button" className="home-btn-ghost" onClick={onSignIn}>
-                  Sign in
-                </button>
-              )}
-              {onSignUp ? (
-                <button type="button" className="home-btn-solid" onClick={onSignUp}>
-                  Sign up
-                </button>
-              ) : (
-                // Until auth exists, keep a persistent CTA in the header rather
-                // than an empty nav — clicking it starts the build flow.
-                <button type="button" className="home-btn-solid" onClick={onStart}>
-                  Build your resume
-                </button>
-              )}
+              <button type="button" className="home-btn-ghost" onClick={handleAuth(onSignIn)}>
+                Sign in
+              </button>
+              <button type="button" className="home-btn-solid" onClick={handleAuth(onSignUp)}>
+                Sign up
+              </button>
             </>
           )}
         </nav>
       </header>
+
+      {authNotice && (
+        <div className="home-auth-notice" role="status">
+          <span>
+            Accounts are coming soon. For now Draftly works fully without one &mdash; start building
+            straight away, and your resume stays on this device.
+          </span>
+          <button
+            type="button"
+            className="home-auth-notice-close"
+            onClick={() => setAuthNotice(false)}
+            aria-label="Dismiss"
+          >
+            <IconX size={15} />
+          </button>
+        </div>
+      )}
 
       <main className="home-main">
         <section className="home-hero">
@@ -153,7 +192,7 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
               <button type="button" className="home-btn-solid home-btn-lg" onClick={onStart}>
                 Build your resume
               </button>
-              <span className="home-hero-note">Free to start &middot; your data stays in your browser</span>
+              <span className="home-hero-note">Free to start &middot; no account needed today</span>
             </div>
           </div>
 
@@ -169,7 +208,7 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
         </section>
 
         <section className="home-strip-section">
-          <TemplateSlider templates={featured} onPick={onSelectTemplate} onSeeAll={onStart} />
+          <TemplateSlider templates={featured} onPick={onOpenTemplate} onSeeAll={onStart} />
         </section>
 
         <section className="home-track-section home-reveal" aria-labelledby="home-track-label">
@@ -260,6 +299,32 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
           </ul>
         </section>
 
+        <section className="home-privacy-section home-reveal" aria-labelledby="home-privacy-label">
+          <span className="home-eyebrow" id="home-privacy-label">Your data</span>
+          <h2 className="home-section-title">Right now, your resume stays on your device.</h2>
+          <p className="home-privacy-lead">
+            Today Draftly runs entirely in your browser &mdash; no server holds a copy of your
+            resume, and nothing you type or import is sent anywhere. Optional accounts that sync
+            across devices are coming, and they&rsquo;ll be exactly that: opt-in, and only what you
+            choose to save.
+          </p>
+          <ul className="home-privacy-grid">
+            {PRIVACY_POINTS.map(([Icon, title, detail]) => (
+              <li className="home-privacy-card" key={title}>
+                <span className="home-privacy-icon" aria-hidden="true">
+                  <Icon size={16} />
+                </span>
+                <span className="home-privacy-title">{title}</span>
+                <span className="home-privacy-detail">{detail}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="home-privacy-note">
+            The trade-off of a local-first tool: until you opt into an account, clearing your browser
+            clears the only copy there is &mdash; so export one to keep it safe.
+          </p>
+        </section>
+
         <section className="home-faq-section home-reveal" aria-labelledby="home-faq-label">
           <span className="home-eyebrow" id="home-faq-label">Questions</span>
           <h2 className="home-section-title">Before you start.</h2>
@@ -280,7 +345,7 @@ export default function Home({ onStart, onSelectTemplate, onSignIn, onSignUp, is
       <footer className="home-footer">
         <div className="home-footer-left">
           <Logo className="home-footer-logo" />
-          <span className="home-footer-line">Built in Nairobi. Your data never leaves your browser.</span>
+          <span className="home-footer-line">Built in Nairobi. Local-first today &mdash; optional sync coming.</span>
         </div>
         <nav className="home-footer-nav">
           <button type="button" onClick={onStart}>Templates</button>

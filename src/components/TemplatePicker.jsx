@@ -33,6 +33,7 @@ const HOW_IT_WORKS = [
 
 export default function TemplatePicker({
   onSelectTemplate,
+  onOpenTemplate,
   onImportResume,
   pendingImportName,
   onCancelImport,
@@ -182,7 +183,7 @@ export default function TemplatePicker({
           </p>
           <div className="template-grid">
             {visible.map((t) => (
-              <TemplateCard key={t.id} template={t} onSelect={onSelectTemplate} />
+              <TemplateCard key={t.id} template={t} onSelect={onSelectTemplate} onOpen={onOpenTemplate} />
             ))}
           </div>
           {hasMore && (

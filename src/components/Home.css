@@ -660,6 +660,73 @@
   color: var(--chrome-text-dim);
 }
 
+/* ---------- privacy / your data ---------- */
+.home-privacy-section {
+  padding: clamp(32px, 6vh, 64px) 0;
+  border-top: 1px solid var(--chrome-border);
+}
+.home-privacy-lead {
+  margin: 14px 0 0;
+  max-width: 640px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--chrome-text-dim);
+}
+.home-privacy-grid {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.home-privacy-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--r-md);
+  background: var(--chrome-surface);
+}
+.home-privacy-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--lime-ink);
+  background: var(--lime);
+}
+.home-privacy-title {
+  font-family: var(--heading);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--chrome-text);
+}
+.home-privacy-detail {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--chrome-text-dim);
+}
+.home-privacy-note {
+  margin: 20px 0 0;
+  max-width: 640px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--chrome-text-dim);
+}
+@media (max-width: 1000px) {
+  .home-privacy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .home-privacy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- faq ----------
    Native <details> so there's no open/closed state to manage and keyboard
    plus screen-reader behaviour comes for free. The default disclosure
@@ -889,4 +956,38 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------- accounts coming-soon notice ---------- */
+.home-auth-notice {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: var(--home-max);
+  margin: 0 auto;
+  padding: 10px clamp(20px, 4vw, 48px);
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border-bottom: 1px solid var(--chrome-border);
+}
+.home-auth-notice span {
+  flex: 1;
+}
+.home-auth-notice-close {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--chrome-text-dim);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 6px;
+}
+.home-auth-notice-close:hover {
+  color: var(--chrome-text);
 }

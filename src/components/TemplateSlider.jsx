@@ -28,8 +28,8 @@ function SliderCard({ template, onPick }) {
       <button
         type="button"
         className="home-slide-btn"
-        onClick={() => onPick(template.layout, color, template.preset)}
-        aria-label={`Start with the ${template.name} template`}
+        onClick={() => onPick(template, color)}
+        aria-label={`View the ${template.name} template`}
       >
         <span className="home-slide-preview" aria-hidden="true">
           <span className="home-slide-scale">
@@ -37,7 +37,7 @@ function SliderCard({ template, onPick }) {
           </span>
         </span>
         <span className="home-slide-overlay" aria-hidden="true">
-          Use this template
+          View template
         </span>
       </button>
 

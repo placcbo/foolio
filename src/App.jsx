@@ -7,6 +7,7 @@ import ResumeLibrary from './components/ResumeLibrary';
 import JobTracker from './components/JobTracker';
 import ResumePreview from './components/ResumePreview';
 import TemplatePicker from './components/TemplatePicker';
+import TemplateDetail from './components/TemplateDetail';
 import Home from './components/Home';
 import { resumeReducer, initialResumeState } from './state/resumeReducer';
 import './App.css';
@@ -156,12 +157,19 @@ function loadLibrary() {
 }
 
 function loadInitialPage(library) {
-  if (!library.length) return 'home';
+  let saved = null;
   try {
-    return localStorage.getItem(PAGE_STORAGE_KEY) === 'editor' ? 'editor' : 'picker';
+    saved = localStorage.getItem(PAGE_STORAGE_KEY);
   } catch {
-    return 'picker';
+    // localStorage unavailable — fall through to the defaults below.
   }
+  // No resumes yet: land on the marketing home (or the picker if that's where
+  // they last were). The editor needs a resume, so it's never a cold-start page.
+  if (!library.length) return saved === 'picker' ? 'picker' : 'home';
+  // With resumes, restore exactly where they left off — including the home page,
+  // which is now reachable from the logo. Previously this dropped a saved 'home'
+  // and forced the picker, so refreshing on home bounced you to templates.
+  return saved === 'home' || saved === 'editor' ? saved : 'picker';
 }
 
 function loadInitialActiveId(library) {
@@ -214,6 +222,10 @@ function App() {
   // → editor, instead of dropping them into the editor on a template they
   // never chose.
   const [pendingImport, setPendingImport] = useState(null);
+  // The template a user is viewing on the full-page detail view (page ===
+  // 'template'), plus the accent they had previewed when they opened it.
+  const [detailTemplate, setDetailTemplate] = useState(null);
+  const [detailColor, setDetailColor] = useState(null);
   const [activeTab, setActiveTab] = useState('content');
   // Mobile-only: the content/customize tabs normally show the edit form and
   // the live A4 preview side by side, which doesn't fit on a phone screen.
@@ -351,6 +363,14 @@ function App() {
     setPage('editor');
   }
 
+  // Clicking a template opens its full-page detail view rather than jumping
+  // straight into the editor — a beat to preview and recolor before committing.
+  function handleOpenTemplateDetail(template, color) {
+    setDetailTemplate(template);
+    setDetailColor(color || template.swatches[0]);
+    setPage('template');
+  }
+
   // Import: parse now, but don't build the resume yet — stash the content and
   // send the person to the picker to choose a design. handleSelectTemplate
   // then commits the pending content onto whatever template they pick. The
@@ -456,9 +476,30 @@ function App() {
           setPage('picker');
         }}
         onSelectTemplate={handleSelectTemplate}
+        onOpenTemplate={(template, color) => {
+          // From the marketing home, viewing a template is a "start a new
+          // resume" intent — mark it so Use this template creates one rather
+          // than re-skinning whatever resume happens to be active.
+          setCreatingNew(true);
+          handleOpenTemplateDetail(template, color);
+        }}
         isAuthenticated={false}
-        // Auth isn't wired yet — sign in/up handlers omitted on purpose so
-        // those buttons don't render. Add them when the auth layer lands.
+      />
+    );
+  }
+
+  if (page === 'template' && detailTemplate) {
+    return (
+      <TemplateDetail
+        template={detailTemplate}
+        initialColor={detailColor}
+        onUse={handleSelectTemplate}
+        onShowAll={() => setPage('picker')}
+        onHome={() => {
+          setCreatingNew(false);
+          setPendingImport(null);
+          setPage('home');
+        }}
       />
     );
   }
@@ -467,6 +508,7 @@ function App() {
     return (
       <TemplatePicker
         onSelectTemplate={handleSelectTemplate}
+        onOpenTemplate={handleOpenTemplateDetail}
         onImportResume={handleImportResume}
         pendingImportName={pendingImport ? pendingImport.basics?.name || '' : null}
         onCancelImport={() => setPendingImport(null)}
