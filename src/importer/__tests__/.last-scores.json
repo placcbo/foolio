@@ -1,9 +1,9 @@
 {
   "fixtures": {
-    "001-ats-single-column": 0,
-    "002-canva-two-column": 0,
-    "003-word-table-layout": 0
+    "001-ats-single-column": 0.9600000000000001,
+    "002-canva-two-column": 0.8303571428571428,
+    "003-word-table-layout": 0.8516666666666668
   },
-  "mean": 0,
-  "ts": "2026-07-23T16:24:22.202Z"
+  "mean": 0.8806746031746032,
+  "ts": "2026-07-24T14:04:25.167Z"
 }

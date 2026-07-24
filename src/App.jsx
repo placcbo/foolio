@@ -335,7 +335,12 @@ function App() {
       // If they got here by importing, drop the parsed content onto the
       // template they just chose, then clear the holding slot.
       if (pendingImport) {
-        dispatch({ type: 'IMPORT_RESUME', basics: pendingImport.basics, sections: pendingImport.sections });
+        dispatch({
+          type: 'IMPORT_RESUME',
+          basics: pendingImport.basics,
+          sections: pendingImport.sections,
+          meta: pendingImport._import || null,
+        });
         setPendingImport(null);
       }
       setCreatingNew(false);

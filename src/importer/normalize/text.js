@@ -19,7 +19,9 @@
  */
 
 // Zero-width / BOM: remove entirely. (ZWSP, ZWNJ, ZWJ, word-joiner, BOM.)
-const ZERO_WIDTH_RE = /[​‌‍⁠﻿]/g;
+// Written with explicit escapes and alternation (not a class) to avoid a
+// misleading zero-width-joiner character class.
+const ZERO_WIDTH_RE = /​|‌|‍|⁠|﻿/g;
 // Non-breaking / en..hair / narrow / medium-math / ideographic spaces -> space.
 const NBSP_RE = /[   -   　]/g;
 

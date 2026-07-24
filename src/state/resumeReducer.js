@@ -94,6 +94,9 @@ export const initialResumeState = {
   accentColor: '#000000',
   basics: { name: '', title: '', email: '', phone: '', address: '', photo: null, visibleExtra: [] },
   sections: [],
+  // Transient metadata from an import (confidence, review flags, original text)
+  // — drives the post-import banner; cleared on dismiss. null when not imported.
+  _import: null,
   settings: {
     language: 'English (UK)',
     dateFormat: 'DD/MM/YYYY',
@@ -417,7 +420,11 @@ export function resumeReducer(state, action) {
         ...state,
         basics: { ...state.basics, ...action.basics },
         sections: action.sections,
+        _import: action.meta || null,
       };
+
+    case 'DISMISS_IMPORT':
+      return { ...state, _import: null };
 
     default:
       return state;

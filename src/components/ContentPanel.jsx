@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import BasicsCard from './BasicsCard';
 import SectionCard from './SectionCard';
 import AddContentModal from './AddContentModal';
+import ImportBanner from './ImportBanner';
 import { IconPlus, IconArrowLeft } from './icons';
 import { isHtmlEmpty } from './templates/shared';
 import { templateSupportsPhoto } from '../data/templates';
@@ -80,6 +81,7 @@ export default function ContentPanel({ resume, dispatch }) {
 
   return (
     <div className="content-panel">
+      <ImportBanner meta={resume._import} dispatch={dispatch} />
       <BasicsCard
         basics={resume.basics}
         dispatch={dispatch}

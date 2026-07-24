@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { IconX, IconUpload, IconCheck, IconFileText, IconInfo } from './icons';
 import { parseResumeText } from '../utils/resumeParser';
-import { extractTextFromFile } from '../utils/extractResumeFile';
 
 const SAMPLE_HINT = `Upload a PDF or DOCX, or paste your resume as plain text. For a paste, copy it
 out of Word, Google Docs, or an old resume, and keep section headings like
@@ -19,26 +18,54 @@ export default function ImportResumeModal({ onImport, onClose }) {
   const [text, setText] = useState('');
   const [touched, setTouched] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [busyLabel, setBusyLabel] = useState('Reading your file…');
   const [fileError, setFileError] = useState(null);
   const [dragging, setDragging] = useState(false);
+  // App-model result from a FILE import (structured, with confidence flags).
+  // When present it takes precedence over the pasted-text parse.
+  const [fileResult, setFileResult] = useState(null);
   const fileInputRef = useRef(null);
 
-  const parsed = useMemo(() => (text.trim() ? parseResumeText(text) : null), [text]);
+  const pastedParse = useMemo(() => (text.trim() ? parseResumeText(text) : null), [text]);
+  const parsed = fileResult || pastedParse;
 
   async function handleFile(file) {
     if (!file) return;
-    setFileError(null);
-    setBusy(true);
-    const result = await extractTextFromFile(file);
-    setBusy(false);
-    if (result.text) {
-      setText(result.text);
-      setTouched(true);
+    const name = (file.name || '').toLowerCase();
+    if (!name.endsWith('.pdf') && !name.endsWith('.docx')) {
+      setFileError(FILE_ERROR.unsupported);
       return;
     }
-    // scanned / unsupported / empty / failed all surface as a message, and
-    // the paste path stays fully available underneath.
-    setFileError(FILE_ERROR[result.scanned ? 'scanned' : result.error] || FILE_ERROR.failed);
+    setFileError(null);
+    setFileResult(null);
+    setBusy(true);
+    try {
+      // Lazy-load the importer (pdf.js/jszip are heavy) only on first use.
+      setBusyLabel('Extracting text…');
+      const [{ importResume }, { toAppResume }] = await Promise.all([
+        import('../importer/index.js'),
+        import('../utils/importAdapter.js'),
+      ]);
+      setBusyLabel('Analyzing layout…');
+      const result = await importResume(file);
+      setBusyLabel('Parsing sections…');
+      const app = toAppResume(result.resume);
+      app._import.rawText = result.rawText || '';
+
+      const hasContent = app.basics.name || app.sections.length;
+      if (!hasContent && !result.rawText) {
+        setFileError(FILE_ERROR.scanned);
+      } else {
+        setFileResult(app);
+        setTouched(true);
+      }
+    } catch (e) {
+      console.warn('Resume import failed.', e);
+      setFileError(FILE_ERROR.failed);
+    } finally {
+      setBusy(false);
+      setBusyLabel('Reading your file…');
+    }
   }
 
   function onDrop(e) {
@@ -86,7 +113,7 @@ export default function ImportResumeModal({ onImport, onClose }) {
               disabled={busy}
             >
               {busy ? (
-                <span className="import-modal-drop-label">Reading your file…</span>
+                <span className="import-modal-drop-label">{busyLabel}</span>
               ) : (
                 <>
                   <IconFileText size={20} />
@@ -116,6 +143,7 @@ export default function ImportResumeModal({ onImport, onClose }) {
               onChange={(e) => {
                 setText(e.target.value);
                 setTouched(true);
+                setFileResult(null); // typing switches back to the paste parse
               }}
             />
           </div>

@@ -18,6 +18,8 @@ import { assignColumns } from './layout/columns.js';
 import { removeArtifacts } from './layout/artifacts.js';
 import { extractDocx } from './extract/docx.js';
 import { normalizeLines } from './normalize/index.js';
+import { detectSections } from './detect/sections.js';
+import { assembleResume } from './parse/assemble.js';
 
 /**
  * @typedef {import('./layout/lines.js').Line} Line
@@ -72,13 +74,22 @@ export async function importResume(file, opts = {}) {
       extracted = lines;
     }
 
-    // Phase 3: normalize (unicode/whitespace/dashes, bullets, wrapped-line
-    // merge). `rawLines` are the normalized parse copies parsers will consume;
-    // `rawText` keeps the original display text for the "Original text" drawer.
+    // Normalize (unicode/whitespace/dashes, bullets, wrapped-line merge), detect
+    // sections, then assemble the canonical Resume. `rawLines` are the normalized
+    // parse copies; `rawText` keeps the original display text for the drawer.
     const rawLines = normalizeLines(extracted);
     const rawText = rawLines.map((l) => l.displayText ?? l.text).join('\n');
-    resume._meta.warnings.push('parsers not implemented yet (Phase 1–3): resume is empty');
-    return { resume, meta: resume._meta, rawText, rawLines };
+
+    const detected = detectSections(rawLines);
+    const { resume: parsed } = assembleResume(detected);
+
+    // Carry the extraction-level meta over the assembled resume's meta.
+    parsed._meta.sourceFormat = resume._meta.sourceFormat;
+    parsed._meta.pageCount = resume._meta.pageCount;
+    parsed._meta.multiColumn = resume._meta.multiColumn;
+    parsed._meta.warnings = resume._meta.warnings.concat(parsed._meta.warnings);
+
+    return { resume: parsed, meta: parsed._meta, rawText, rawLines };
   } catch (err) {
     resume._meta.warnings.push(
       `import failed: ${err instanceof Error ? err.message : String(err)}`,
